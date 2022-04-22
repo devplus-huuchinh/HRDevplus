@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserService
@@ -38,5 +39,24 @@ class UserService
     public function findOne($id)
     {
         return $this->userRepo->find($id);
+    }
+
+
+    public function login($loginFormData)
+    {
+        if (!Auth::attempt($loginFormData)) {
+            return response()->json([
+                'message' => 'incorrect_username_password'
+            ]);
+        }
+
+        $foundUser = $this->userRepo->findOneByEmail($loginFormData['email ']);
+        $token = $this->userRepo->createToken($foundUser);
+        return $token;
+    }
+
+    public function register($userData)
+    {
+        return $this->userRepo->createUser($userData);
     }
 }

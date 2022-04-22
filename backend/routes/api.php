@@ -15,20 +15,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::prefix('/v1/user')->group(
+    function () {
+        Route::controller(UserController::class)->group(
+            function () {
+                Route::post('/register', 'register');
+                Route::post('/login', 'login');
+            }
+        );
+        Route::middleware(['auth:sanctum'])->group(
+            function () {
+                Route::controller(UserController::class)->group(
+                    function () {
+                        Route::get('/', 'index');
+                    }
+                );
+            }
+        );
+    }
+);
 
 
-Route::name('api.users.')->group(function () {
-    Route::get('v1/users', [UserController::class, 'index'])->name('index');
-    Route::post('v1/users', [UserController::class, 'store'])->name('store');
-    Route::get('v1/users/{id}', [UserController::class, 'show'])->name('show');
-    Route::put('v1/users/{id}', [UserController::class, 'update'])->name('update');
-    Route::delete('v1/users/{id}', [UserController::class, 'destroy'])->name('destroy');
-});
+// Route::name('api.users.')->group(function () {
+//     Route::get('v1/users', [UserController::class, 'index'])->name('index');
+//     Route::post('v1/users', [UserController::class, 'store'])->name('store');
+//     Route::get('v1/users/{id}', [UserController::class, 'show'])->name('show');
+//     Route::put('v1/users/{id}', [UserController::class, 'update'])->name('update');
+//     Route::delete('v1/users/{id}', [UserController::class, 'destroy'])->name('destroy');
+// });
 
 Route::name('api.posts.')->group(function () {
     Route::get('v1/posts', [UserController::class, 'index'])->name('index');
 });
-
