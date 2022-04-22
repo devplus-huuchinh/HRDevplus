@@ -30,7 +30,7 @@ export default ({ setVoice }) => (
       />
     </div>
 
-    <div className="isoAlgoliaSidebarItem">
+    {/* <div className="isoAlgoliaSidebarItem">
       <h3 className="isoAlgoliaSidebarTitle" style={{ marginBottom: 10 }}>
         Slider
       </h3>
@@ -63,7 +63,7 @@ export default ({ setVoice }) => (
     <div className="isoAlgoliaSidebarItem isoInline">
       <h3 className="isoAlgoliaSidebarTitle">Toggle</h3>
       <Toggle attributeName="free_shipping" label="Free Shipping" />
-    </div>
+    </div> */}
 
     <ClearAll />
   </SidebarWrapper>
