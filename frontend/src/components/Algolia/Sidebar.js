@@ -1,36 +1,27 @@
 import React from 'react';
-import {
-  RefinementList,
-  StarRating,
-  Toggle,
-  HierarchicalMenu,
-  SearchBox,
-  MultiRange,
-  ClearAll,
-} from 'react-instantsearch/dom';
-import RangeSlider from './RangeSlider';
-import VoiceRecognition from './VoiceRecognition';
+import { ClearAll, MultiRange, SearchBox } from 'react-instantsearch/dom';
 import { SidebarWrapper } from './AlgoliaComponent.style';
+import VoiceRecognition from './VoiceRecognition';
 
 export default ({ setVoice }) => (
-  <SidebarWrapper className="isoAlgoliaSidebar">
-    <SearchBox translations={{ placeholder: 'Search here' }} />
-    <VoiceRecognition setVoice={setVoice} />
+   <SidebarWrapper className='isoAlgoliaSidebar'>
+      <SearchBox translations={{ placeholder: 'Search here' }} />
+      <VoiceRecognition setVoice={setVoice} />
 
-    <div className="isoAlgoliaSidebarItem">
-      <h3 className="isoAlgoliaSidebarTitle">Multi Range</h3>
-      <MultiRange
-        attributeName="price"
-        items={[
-          { end: 10, label: '<$10' },
-          { start: 10, end: 100, label: '$10-$100' },
-          { start: 100, end: 500, label: '$100-$500' },
-          { start: 500, label: '>$500' },
-        ]}
-      />
-    </div>
+      <div className='isoAlgoliaSidebarItem'>
+         <h3 className='isoAlgoliaSidebarTitle'>Multi Range</h3>
+         <MultiRange
+            attributeName='price'
+            items={[
+               { end: 10, label: '<$10' },
+               { start: 10, end: 100, label: '$10-$100' },
+               { start: 100, end: 500, label: '$100-$500' },
+               { start: 500, label: '>$500' },
+            ]}
+         />
+      </div>
 
-    {/* <div className="isoAlgoliaSidebarItem">
+      {/* <div className="isoAlgoliaSidebarItem">
       <h3 className="isoAlgoliaSidebarTitle" style={{ marginBottom: 10 }}>
         Slider
       </h3>
@@ -65,6 +56,6 @@ export default ({ setVoice }) => (
       <Toggle attributeName="free_shipping" label="Free Shipping" />
     </div> */}
 
-    <ClearAll />
-  </SidebarWrapper>
+      <ClearAll />
+   </SidebarWrapper>
 );

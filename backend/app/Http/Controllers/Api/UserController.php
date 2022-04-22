@@ -109,7 +109,13 @@ class UserController extends Controller
                 'password' => 'required'
             ]);
 
-            $token = $this->userService->login($request->all());
+            if (!Auth::attempt($request->all())) {
+                return response()->json([
+                    'message' => 'incorrect_username_password'
+                ]);
+            }
+
+            $token = $this->userService->loginAuthentication($request->all());
 
             return response()->json([
                 'access_token' => $token,
