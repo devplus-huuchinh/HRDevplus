@@ -7,17 +7,17 @@ import Routes from './router';
 import AppProvider from './AppProvider';
 
 const App = () => (
-  <Provider store={store}>
-    <AppProvider>
-      <>
-        <GlobalStyles />
-        <Routes />
-      </>
-    </AppProvider>
-  </Provider>
+   <Provider store={store}>
+      <AppProvider>
+         <>
+            <GlobalStyles />
+            <Routes />
+         </>
+      </AppProvider>
+   </Provider>
 );
 Boot()
-  .then(() => App())
-  .catch(error => console.error(error));
+   .then(() => App())
+   .catch((error) => console.error(error));
 
 export default App;
