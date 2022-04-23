@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,8 @@ Route::name('api.users.')->group(function () {
 Route::name('api.posts.')->group(function () {
     Route::get('v1/posts', [UserController::class, 'index'])->name('index');
 });
-
+Route::prefix('/profiles')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/', 'all');//input 
+    });
+});
