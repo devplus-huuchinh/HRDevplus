@@ -44,4 +44,9 @@ class UserRepo extends EloquentRepo
     {
         return $user->createToken('authToken')->plainTextToken;
     }
+
+    public function userInRole($user)
+    {
+        return $this->model->where('id', $user->id)->with('role')->first();
+    }
 }

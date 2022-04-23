@@ -53,4 +53,9 @@ class UserService
     {
         return $this->userRepo->createUser($userData);
     }
+
+    public function findUserInRole($user)
+    {
+        return $this->userRepo->userInRole($user);
+    }
 }

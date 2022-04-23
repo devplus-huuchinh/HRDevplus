@@ -10,6 +10,16 @@ const authApi = {
       const url = '/auth/login';
       return axiosClient.post(url, data);
    },
+
+   logout: () => {
+      const url = '/auth/logout';
+      return axiosClient.post(url);
+   },
+
+   userInfo: () => {
+      const url = '/auth';
+      return axiosClient.get(url);
+   },
 };
 
 export default authApi;

@@ -21,13 +21,14 @@ Route::prefix('/v1/auth')->group(
             function () {
                 Route::post('/register', 'register');
                 Route::post('/login', 'login');
+                Route::post('/logout', 'logout');
             }
         );
         Route::middleware(['auth:sanctum'])->group(
             function () {
                 Route::controller(UserController::class)->group(
                     function () {
-                        Route::get('/', 'index');
+                        Route::get('/', 'getCurrentUser');
                     }
                 );
             }

@@ -6,49 +6,61 @@ import IntlMessages from '@iso/components/utility/intlMessages';
 import userpic from '@iso/assets/images/user1.png';
 import authAction from '@iso/redux/auth/actions';
 import TopbarDropdownWrapper from './TopbarDropdown.styles';
+import authApi from '../../api/authApi';
+import { message } from 'antd';
 
 const { logout } = authAction;
 
 export default function TopbarUser() {
-  const [visible, setVisibility] = React.useState(false);
-  const dispatch = useDispatch();
-  function handleVisibleChange() {
-    setVisibility(visible => !visible);
-  }
+   const [visible, setVisibility] = React.useState(false);
+   const dispatch = useDispatch();
+   function handleVisibleChange() {
+      setVisibility((visible) => !visible);
+   }
 
-  const content = (
-    <TopbarDropdownWrapper className="isoUserDropdown">
-      <Link className="isoDropdownLink" to={'/dashboard/my-profile'}>
-        <IntlMessages id="topbar.myprofile" />
-      </Link>
-      <a className="isoDropdownLink" href="# ">
-        <IntlMessages id="themeSwitcher.settings" />
-      </a>
-      <a className="isoDropdownLink" href="# ">
-        <IntlMessages id="sidebar.feedback" />
-      </a>
-      <a className="isoDropdownLink" href="# ">
-        <IntlMessages id="topbar.help" />
-      </a>
-      <div className="isoDropdownLink" onClick={() => dispatch(logout())}>
-        <IntlMessages id="topbar.logout" />
-      </div>
-    </TopbarDropdownWrapper>
-  );
+   const onClickLogout = async () => {
+      const response = await authApi.logout();
+      if (response.message === 'logout_error') {
+         return message.error('Something when wrong!');
+      }
 
-  return (
-    <Popover
-      content={content}
-      trigger="click"
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
-      arrowPointAtCenter={true}
-      placement="bottomLeft"
-    >
-      <div className="isoImgWrapper">
-        <img alt="user" src={userpic} />
-        <span className="userActivity online" />
-      </div>
-    </Popover>
-  );
+      dispatch(logout());
+      return message.success('logout was successful');
+   };
+
+   const content = (
+      <TopbarDropdownWrapper className='isoUserDropdown'>
+         <Link className='isoDropdownLink' to={'/dashboard/my-profile'}>
+            <IntlMessages id='topbar.myprofile' />
+         </Link>
+         <a className='isoDropdownLink' href='# '>
+            <IntlMessages id='themeSwitcher.settings' />
+         </a>
+         <a className='isoDropdownLink' href='# '>
+            <IntlMessages id='sidebar.feedback' />
+         </a>
+         <a className='isoDropdownLink' href='# '>
+            <IntlMessages id='topbar.help' />
+         </a>
+         <div className='isoDropdownLink' onClick={onClickLogout}>
+            <IntlMessages id='topbar.logout' />
+         </div>
+      </TopbarDropdownWrapper>
+   );
+
+   return (
+      <Popover
+         content={content}
+         trigger='click'
+         visible={visible}
+         onVisibleChange={handleVisibleChange}
+         arrowPointAtCenter={true}
+         placement='bottomLeft'
+      >
+         <div className='isoImgWrapper'>
+            <img alt='user' src={userpic} />
+            <span className='userActivity online' />
+         </div>
+      </Popover>
+   );
 }
