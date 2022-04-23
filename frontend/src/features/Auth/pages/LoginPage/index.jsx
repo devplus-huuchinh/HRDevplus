@@ -24,7 +24,7 @@ function LoginPage(props) {
          setIsLoading(true);
          await authApi.csrfCookie();
          const response = await authApi.login(formData);
-         localStorage.setItem('idToken', response.access_token);
+         localStorage.setItem('idToken', response.id_token);
          if (!response.access_token) {
             setIsLoading(false);
             return message.error('Incorrect username or password.');

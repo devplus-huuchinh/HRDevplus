@@ -144,6 +144,19 @@ class UserController extends Controller
         }
     }
 
+    public function changePassword(Request $request)
+    {
+        try {
+            $result = $this->userService->changeUserPassword($request->all(), $request->user());
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'change_error',
+                'error' => $th,
+            ], 500);
+        }
+    }
+
     public function getCurrentUser(Request $request)
     {
         try {

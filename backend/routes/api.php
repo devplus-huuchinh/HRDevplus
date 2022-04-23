@@ -28,6 +28,7 @@ Route::prefix('/v1/auth')->group(
             function () {
                 Route::controller(UserController::class)->group(
                     function () {
+                        Route::patch('/change-password', 'changePassword');
                         Route::get('/', 'getCurrentUser');
                     }
                 );

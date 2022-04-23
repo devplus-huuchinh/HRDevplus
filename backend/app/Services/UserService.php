@@ -58,4 +58,17 @@ class UserService
     {
         return $this->userRepo->userInRole($user);
     }
+
+    public function changeUserPassword($changePasswordFormData, $user)
+    {
+        if (!$this->userRepo->checkOldPassword($changePasswordFormData, $user)) {
+            return ['message' => 'change_password_fail'];
+        }
+
+        $foundUser = $this->userRepo->find($user->id);
+        $this->userRepo->createNewPassword($changePasswordFormData, $foundUser);
+        return [
+            'message' => 'change_password_success',
+        ];
+    }
 }
