@@ -1,16 +1,15 @@
+import Menu from '@iso/components/uielements/menu';
+import Scrollbars from '@iso/components/utility/customScrollBar';
+import Logo from '@iso/components/utility/logo';
+import appActions from '@iso/redux/app/actions';
+import { Layout } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Layout } from 'antd';
 import options from './options';
-import Scrollbars from '@iso/components/utility/customScrollBar';
-import Menu from '@iso/components/uielements/menu';
-import IntlMessages from '@iso/components/utility/intlMessages';
-import appActions from '@iso/redux/app/actions';
-import Logo from '@iso/components/utility/logo';
 import SidebarWrapper from './Sidebar.styles';
 import SidebarMenu from './SidebarMenu';
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+// const SubMenu = Menu.SubMenu;
+// const MenuItemGroup = Menu.ItemGroup;
 const { Sider } = Layout;
 
 const { toggleOpenDrawer, changeOpenKeys, changeCurrent, toggleCollapsed } =
