@@ -6,7 +6,7 @@ import actions from './actions';
 import authApi from '../../api/authApi';
 
 const history = createBrowserHistory();
-const fakeApiCall = true; // auth0 or express JWT
+// const fakeApiCall = true; // auth0 or express JWT
 
 export function* loginRequest() {
    yield takeEvery('LOGIN_REQUEST', function* ({ payload }) {
@@ -18,15 +18,15 @@ export function* loginRequest() {
             profile: 'Profile',
          });
       } else {
-         if (fakeApiCall) {
-            yield put({
-               type: actions.LOGIN_SUCCESS,
-               token: 'secret token',
-               profile: 'Profile',
-            });
-         } else {
-            yield put({ type: actions.LOGIN_ERROR });
-         }
+         // if (fakeApiCall) {
+         //    yield put({
+         //       type: actions.LOGIN_SUCCESS,
+         //       token: 'secret token',
+         //       profile: 'Profile',
+         //    });
+         // } else {
+         // }
+         yield put({ type: actions.LOGIN_ERROR });
       }
    });
 }
