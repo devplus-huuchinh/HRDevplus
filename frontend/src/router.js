@@ -86,7 +86,7 @@ export default function Routes() {
    useEffect(() => {
       const action = authActions.getUserDataRequest();
       dispatch(action);
-   }, []);
+   }, [dispatch]);
 
    return (
       <ErrorBoundary>
