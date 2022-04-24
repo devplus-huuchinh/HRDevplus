@@ -340,6 +340,10 @@ const routes = [
       path: 'blank_page',
       component: lazy(() => import('@iso/containers/BlankPage')),
    },
+   {
+      path: 'user-profile',
+      component: lazy(() => import('@iso/features/UserProfile')),
+   },
 ];
 
 export default function AppRouter() {

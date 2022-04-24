@@ -12,11 +12,11 @@ import profileActions from '@iso/redux/profile/actions';
 
 const MyProfile = () => {
    const data = useSelector((state) => state.profile.data);
-   const loading = useSelector((state) => state.profile.loading);
+   // const loading = useSelector((state) => state.profile.loading);
 
    const userData = useSelector((state) => state.Auth.userData);
    const isUserDataLoading = useSelector((state) => state.Auth.loading);
-   console.log('🚀 ~ isUserDataLoading', isUserDataLoading);
+
    const dispatch = useDispatch();
    const getProfile = useCallback(
       () => dispatch(profileActions.fetchProfileDataStart()),
@@ -51,7 +51,7 @@ const MyProfile = () => {
 
    return (
       <Wrapper>
-         {isUserDataLoading !== true ? (
+         {isUserDataLoading !== true && data !== true ? (
             <>
                <Banner
                   className='profile-banner'

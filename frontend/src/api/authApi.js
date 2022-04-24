@@ -20,6 +20,11 @@ const authApi = {
       const url = '/auth';
       return axiosClient.get(url);
    },
+
+   changePassword: (data) => {
+      const url = '/auth/change-password';
+      return axiosClient.patch(url, data);
+   },
 };
 
 export default authApi;

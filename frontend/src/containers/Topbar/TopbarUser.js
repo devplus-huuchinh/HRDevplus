@@ -12,6 +12,7 @@ const { logout } = authAction;
 
 export default function TopbarUser() {
    const [visible, setVisibility] = React.useState(false);
+
    const userAvatar = useSelector((state) => state.Auth.userData?.avatar);
    const blankAvatar = 'https://www.pngrepo.com/download/5125/avatar.png';
 
@@ -44,6 +45,12 @@ export default function TopbarUser() {
          <a className='isoDropdownLink' href='# '>
             <IntlMessages id='topbar.help' />
          </a>
+         <Link
+            className='isoDropdownLink'
+            to='/dashboard/user-profile/change-password'
+         >
+            <IntlMessages id='topbar.changePassword' />
+         </Link>
          <div className='isoDropdownLink' onClick={onClickLogout}>
             <IntlMessages id='topbar.logout' />
          </div>

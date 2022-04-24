@@ -66,9 +66,10 @@ class UserService
         }
 
         $foundUser = $this->userRepo->find($user->id);
-        $this->userRepo->createNewPassword($changePasswordFormData, $foundUser);
+        $changePassword = $this->userRepo->createNewPassword($changePasswordFormData, $foundUser);
         return [
             'message' => 'change_password_success',
+            'data' =>  $changePassword,
         ];
     }
 }
