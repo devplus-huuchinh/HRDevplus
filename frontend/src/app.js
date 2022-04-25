@@ -1,21 +1,23 @@
+import GlobalStyles from '@iso/assets/styles/globalStyle';
 import React from 'react';
 import { Provider } from 'react-redux';
-import GlobalStyles from '@iso/assets/styles/globalStyle';
-import { store } from './redux/store';
-import Boot from './redux/boot';
-import Routes from './router';
 import AppProvider from './AppProvider';
+import Boot from './redux/boot';
+import { store } from './redux/store';
+import Routes from './router';
 
-const App = () => (
-   <Provider store={store}>
-      <AppProvider>
-         <>
-            <GlobalStyles />
-            <Routes />
-         </>
-      </AppProvider>
-   </Provider>
-);
+const App = () => {
+   return (
+      <Provider store={store}>
+         <AppProvider>
+            <>
+               <GlobalStyles />
+               <Routes />
+            </>
+         </AppProvider>
+      </Provider>
+   );
+};
 Boot()
    .then(() => App())
    .catch((error) => console.error(error));

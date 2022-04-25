@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +23,15 @@ Route::prefix('/v1/auth')->group(
             function () {
                 Route::post('/register', 'register');
                 Route::post('/login', 'login');
+                Route::post('/logout', 'logout');
             }
         );
         Route::middleware(['auth:sanctum'])->group(
             function () {
                 Route::controller(UserController::class)->group(
                     function () {
-                        Route::get('/', 'index');
+                        Route::patch('/change-password', 'changePassword');
+                        Route::get('/', 'getCurrentUser');
                     }
                 );
             }
@@ -43,6 +46,15 @@ Route::prefix('/v1/campaigns')->group(
             function () {
                 Route::get('', 'findCampaignActive');
                 Route::get("/{id}", 'showCampaignDetail');
+            }
+        );
+    }
+);
+Route::prefix('/v1/mail')->group(
+    function () {
+        Route::controller(EmailController::class)->group(
+            function () {
+                Route::get('/test', 'index');
             }
         );
     }

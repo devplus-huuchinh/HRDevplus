@@ -344,6 +344,10 @@ const routes = [
       path: 'home',
       component: lazy(() => import('@iso/features/Home')),
    },
+   {
+      path: 'user-profile',
+      component: lazy(() => import('@iso/features/UserProfile')),
+   },
 ];
 
 export default function AppRouter() {

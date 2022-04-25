@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 import { Row, Col, Typography, Image, Button, Space } from 'antd';
@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 import { Section } from '../../components/Section/Section.styles';
 import { Container } from '../../components/Container/Container.styles';
 import { SettingOutlined, CalendarOutlined } from '@ant-design/icons';
+import campaignApi from '../../../../api/campaignApi';
 const { Title, Text } = Typography;
 const CampaignDetailPageWrapper = styled.div`
    width: 100%;
@@ -21,10 +22,29 @@ const CampaignDetailPageWrapper = styled.div`
 
 function CampaignDetailPage(props) {
    const { campaignId } = useParams();
+
+   const [campaignDetail, setCampaignDetail] = useState({});
    console.log(
-      '🚀 ~ file: index.jsx ~ line 24 ~ CampaignDetailPage ~ campaignId',
-      campaignId
+      '🚀 ~ file: index.jsx ~ line 27 ~ CampaignDetailPage ~ campaignDetail',
+      campaignDetail.name
    );
+
+   useEffect(() => {
+      const getCampaignById = async () => {
+         try {
+            const responseCampaignDetail = await campaignApi.getCampainDetail(
+               campaignId
+            );
+            setCampaignDetail(responseCampaignDetail);
+         } catch (error) {
+            console.log(
+               '🚀 ~ file: index.jsx ~ line 36 ~ getCampaignById ~ error',
+               error
+            );
+         }
+      };
+      getCampaignById();
+   }, [campaignId]);
 
    const viewPageCompany = () => {
       const url = 'https://stunited.vn/';
@@ -38,6 +58,7 @@ function CampaignDetailPage(props) {
                <Row gutter={[8, 0]} style={{ padding: '20px' }}>
                   <Col sm={24} lg={18}></Col>
                   <Col
+                     xs={0}
                      sm={0}
                      lg={6}
                      style={{

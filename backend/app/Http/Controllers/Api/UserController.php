@@ -128,4 +128,46 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function logout()
+    {
+        try {
+            Auth::logout();
+            return response()->json([
+                'message' => 'logout_successful'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'logout_error',
+                'error' => $th,
+            ], 500);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        try {
+            $result = $this->userService->changeUserPassword($request->all(), $request->user());
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'change_error',
+                'error' => $th,
+            ], 500);
+        }
+    }
+
+    public function getCurrentUser(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $userInRole = $this->userService->findUserInRole($user);
+            return response()->json($userInRole);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'logout_error',
+                'error' => $th,
+            ], 500);
+        }
+    }
 }

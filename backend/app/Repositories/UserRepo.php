@@ -46,4 +46,22 @@ class UserRepo extends EloquentRepo
     {
         return $user->createToken('authToken')->plainTextToken;
     }
+
+    public function userInRole($user)
+    {
+        return $this->model->where('id', $user->id)->with('role')->first();
+    }
+
+    public function checkOldPassword($changePasswordFormData, $user)
+    {
+        return Hash::check($changePasswordFormData['old_password'], $user->password);
+    }
+
+    public function createNewPassword($changePasswordFormData, $foundUser)
+    {
+        $foundUser->password = Hash::make($changePasswordFormData['new_password']);
+        $foundUser->save();
+
+        return $foundUser;
+    }
 }
