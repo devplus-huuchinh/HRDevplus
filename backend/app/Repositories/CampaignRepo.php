@@ -6,6 +6,7 @@ use App\Models\Campaign;
 
 class CampaignRepo extends EloquentRepo
 {
+    private $id;
     /**
      * @inheritDoc
      */
@@ -31,5 +32,10 @@ class CampaignRepo extends EloquentRepo
     public function findCampaign($campaignId)
     {
         return $this->model->where('is_active', 1)->get();
+
+    }
+    public function showCampaign($campaignId)
+    {
+        return $this->model->where('id', $campaignId)->get();
     }
 }

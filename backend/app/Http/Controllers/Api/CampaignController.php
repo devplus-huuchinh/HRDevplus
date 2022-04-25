@@ -9,6 +9,7 @@ use App\Services\CampaignService;
 class CampaignController extends Controller
 {
     private $campaignService;
+
     public function __construct(CampaignService $campaignService)
     {
         $this->campaignService = $campaignService;
@@ -24,4 +25,15 @@ class CampaignController extends Controller
     {
         return $this->campaignService->findCampaignActive($request->id);
     }
+
+    public function sortCampaignByName(Request $request)
+    {
+        return $this->campaignService->findCampaignActive($request->id);
+    }
+
+    public function showCampaignDetail(Request $request)
+    {
+        return $this->campaignService->showCampaignDetail($request->id);
+    }
+
 }

@@ -51,4 +51,9 @@ class CampaignService
     {
         return $this->campaignRepo->findCampaign($id);
     }
+
+    public function showCampaignDetail($id)
+    {
+        return $this->campaignRepo->showCampaign($id);
+    }
 }
