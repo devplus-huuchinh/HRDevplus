@@ -1,6 +1,6 @@
 import Loader from '@iso/components/utility/loader';
-import React, { lazy, Suspense, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
 import {
    BrowserRouter as Router,
    Redirect,
@@ -8,7 +8,6 @@ import {
    Switch,
 } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
-import authActions from './redux/auth/actions';
 import { PUBLIC_ROUTE } from './route.constants';
 
 const Dashboard = lazy(() => import('./containers/Dashboard/Dashboard'));
@@ -81,13 +80,6 @@ function PrivateRoute({ children, ...rest }) {
 }
 
 export default function Routes() {
-   const dispatch = useDispatch();
-
-   useEffect(() => {
-      const action = authActions.getUserDataRequest();
-      dispatch(action);
-   }, [dispatch]);
-
    return (
       <ErrorBoundary>
          <Suspense fallback={<Loader />}>

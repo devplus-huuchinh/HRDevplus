@@ -68,6 +68,7 @@ export function* getUserDataRequest() {
 
 export function* getUserDataSuccess() {
    try {
+      if (!localStorage.getItem('id_token')) return;
       const response = yield call(authApi.userInfo);
       yield put({
          type: actions.GET_USER_DATA_SUCCESSFUL,
