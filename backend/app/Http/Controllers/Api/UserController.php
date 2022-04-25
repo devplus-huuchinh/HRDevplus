@@ -176,21 +176,9 @@ class UserController extends Controller
     public function forgotPassword(Request $request)
     {
         $request->validate(['email' => 'required|email']);
+        $result = $this->userService->forgotUserPassword($request);
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return response()->json([
-                'result' => __($status),
-                'message' => 'generate_link_success'
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'generate_link_error'
-        ]);
+        return response()->json($result);
     }
 
     public function resetPassword(Request $request)
@@ -201,27 +189,8 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                ])->save();
+        $result = $this->userService->resetUserPassword($request);
 
-                $user->tokens()->delete();
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        if ($status == Password::PASSWORD_RESET) {
-            return response([
-                'message' => 'Password reset successfully'
-            ]);
-        }
-
-        return response([
-            'message' => __($status)
-        ], 500);
+        return response()->json($result);
     }
 }

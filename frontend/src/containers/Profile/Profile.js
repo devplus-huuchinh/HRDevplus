@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import Spin from '@iso/ui/Antd/Spin/Spin';
-import Modal from '@iso/ui/Antd/Modal/Modal';
-import Container from '@iso/ui/UI/Container/Container';
 import AvatarCard from '@iso/components/AvatarCard/AvatarCard';
-import Posts from './Posts/Posts';
+import profileActions from '@iso/redux/profile/actions';
+import Modal from '@iso/ui/Antd/Modal/Modal';
+import Spin from '@iso/ui/Antd/Spin/Spin';
+import Container from '@iso/ui/UI/Container/Container';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Followers from './Followers/Followers';
 import Following from './Following/Following';
-import Wrapper, { Banner, Navigation, ContentWrapper } from './Profile.styles';
-import { useSelector, useDispatch } from 'react-redux';
-import profileActions from '@iso/redux/profile/actions';
+import Wrapper, { Banner, ContentWrapper, Navigation } from './Profile.styles';
 
 const MyProfile = () => {
    const data = useSelector((state) => state.profile.data);

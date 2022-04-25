@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 /**
  * Class UserService
@@ -70,6 +71,37 @@ class UserService
         return [
             'message' => 'change_password_success',
             'data' =>  $changePassword,
+        ];
+    }
+
+    public function resetUserPassword($request)
+    {
+        $status = $this->userRepo->passwordReset($request);
+
+        if ($status == Password::PASSWORD_RESET) {
+            return [
+                'message' => 'Password reset successfully'
+            ];
+        }
+
+        return [
+            'message' => __($status)
+        ];
+    }
+
+    public function forgotUserPassword($request)
+    {
+        $status = $this->userRepo->forgotPassword($request);
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return [
+                'result' => __($status),
+                'message' => 'generate_link_success'
+            ];
+        }
+
+        return [
+            'message' => 'generate_link_error'
         ];
     }
 }
