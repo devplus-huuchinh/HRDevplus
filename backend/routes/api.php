@@ -40,8 +40,14 @@ Route::prefix('/v1/auth')->group(
 Route::name('api.posts.')->group(function () {
     Route::get('v1/posts', [UserController::class, 'index'])->name('index');
 });
-Route::prefix('/profiles')->group(function () {
+Route::prefix('/v1/profiles')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
-        Route::get('/', 'all'); //input 
+        Route::get('/dropdownlist', 'dropdownlistData');
+        Route::get('/', 'all');
+    });
+});
+Route::prefix('/v1/profile')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::patch('/', 'editProfile');
     });
 });

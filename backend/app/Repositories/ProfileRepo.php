@@ -13,6 +13,20 @@ class ProfileRepo extends EloquentRepo
 
    public function getByCampaignId($id)
    {
-      return $this->model->where('campaign_id', $id)->get();
+      return $this->model->where('campaign_id', $id)->with('position')->get();
+   }
+
+   public function editStepById($id, $value)
+   {
+      $profile = $this->model->find($id);
+      $profile->step = $value;
+      $profile->save();
+   }
+
+   public function editStatusById($id, $value)
+   {
+      $profile = $this->model->find($id);
+      $profile->status = $value;
+      $profile->save();
    }
 }
