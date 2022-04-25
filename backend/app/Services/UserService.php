@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserService
@@ -38,5 +39,37 @@ class UserService
     public function findOne($id)
     {
         return $this->userRepo->find($id);
+    }
+
+
+    public function loginAuthentication($loginFormData)
+    {
+        $foundUser = $this->userRepo->findOneByEmail($loginFormData['email']);
+        $token = $this->userRepo->createToken($foundUser);
+        return $token;
+    }
+
+    public function register($userData)
+    {
+        return $this->userRepo->createUser($userData);
+    }
+
+    public function findUserInRole($user)
+    {
+        return $this->userRepo->userInRole($user);
+    }
+
+    public function changeUserPassword($changePasswordFormData, $user)
+    {
+        if (!$this->userRepo->checkOldPassword($changePasswordFormData, $user)) {
+            return ['message' => 'change_password_fail'];
+        }
+
+        $foundUser = $this->userRepo->find($user->id);
+        $changePassword = $this->userRepo->createNewPassword($changePasswordFormData, $foundUser);
+        return [
+            'message' => 'change_password_success',
+            'data' =>  $changePassword,
+        ];
     }
 }

@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +22,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'password',
+        'role_id',
         'password',
     ];
 
@@ -47,8 +51,16 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function posts()
+    // public function posts()
+    // {
+    //     return $this->hasMany('App\Models\Post');
+    // }
+    public function role()
     {
-        return $this->hasMany('App\Models\Post');
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+    public function campaign()
+    {
+        return $this->hasMany(Campaign::class);
     }
 }

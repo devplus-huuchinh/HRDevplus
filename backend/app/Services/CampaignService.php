@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\CampaignRepo;
-
+use App\Repositories\TechRepo;
 /**
  * Class UserService
  * @package App\Services
@@ -14,10 +14,11 @@ class CampaignService
      * @var UserRepo
      */
     private $CampaignRepo;
-
-    public function __construct(CampaignRepo $campaignRepo)
+    private $TechRepo;
+    public function __construct(CampaignRepo $campaignRepo,TechRepo $techRepo)
     {
         $this->CampaignRepo =  $campaignRepo;
+        $this->techRepo = $techRepo;
     }
 
     /**
