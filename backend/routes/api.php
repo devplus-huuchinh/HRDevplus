@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CampaignController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
 Route::name('api.users.')->group(function () {
     Route::get('v1/users', [UserController::class, 'index'])->name('index');
     Route::post('v1/users', [UserController::class, 'store'])->name('store');
@@ -27,7 +26,12 @@ Route::name('api.users.')->group(function () {
     Route::put('v1/users/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('v1/users/{id}', [UserController::class, 'destroy'])->name('destroy');
 });
-
+Route::prefix('v1/campaign')->group(function () {
+    Route::controller(CampaignController::class)->group(function () {
+        Route::get('/', 'index');
+        // Route::post('/', 'store');
+    });
+});
 Route::name('api.posts.')->group(function () {
     Route::get('v1/posts', [UserController::class, 'index'])->name('index');
 });
