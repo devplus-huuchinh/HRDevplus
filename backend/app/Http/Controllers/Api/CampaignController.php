@@ -27,7 +27,7 @@ class CampaignController extends Controller
         catch (\Throwable $error) {
             return response()->json(
                 [
-                'message' => 'Addition_fail',
+                'message' => 'Getting_data_fail',
                 'error' => $error,
                 ]
             );
