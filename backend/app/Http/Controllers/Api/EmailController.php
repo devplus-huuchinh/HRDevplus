@@ -9,14 +9,14 @@ use App\Mail\ChangePassword;
 
 class EmailController extends Controller
 {
-    public function index()
+    public function resetPassword(Request $request)
     {
         $mailData = [
             'title' => 'Change password',
             'body' => 'Testing.'
         ];
 
-
-        Mail::to('facebook662311@gmail.com')->send(new ChangePassword($mailData));
+        $changePassword = new ChangePassword($mailData);
+        Mail::to('facebook662311@gmail.com')->send($changePassword);
     }
 }

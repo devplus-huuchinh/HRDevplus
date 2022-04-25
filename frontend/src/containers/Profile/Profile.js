@@ -55,7 +55,7 @@ const MyProfile = () => {
             <>
                <Banner
                   className='profile-banner'
-                  style={{ backgroundImage: `url(${data.profile_bg})` }}
+                  style={{ backgroundImage: `url(${data?.profile_bg})` }}
                >
                   <Container className='container'>
                      <AvatarCard
@@ -73,19 +73,19 @@ const MyProfile = () => {
                            className={active === 'post' ? 'active' : ''}
                            onClick={() => handleMenu('post')}
                         >
-                           <strong>{data.post.length}</strong> Posts
+                           <strong>{data?.post.length}</strong> Posts
                         </li>
                         <li
                            className={active === 'followers' ? 'active' : ''}
                            onClick={() => handleMenu('followers')}
                         >
-                           <strong>{data.followers.length}</strong> Followers
+                           <strong>{data?.followers.length}</strong> Followers
                         </li>
                         <li
                            className={active === 'following' ? 'active' : ''}
                            onClick={() => handleMenu('following')}
                         >
-                           <strong>{data.following.length}</strong> Following
+                           <strong>{data?.following.length}</strong> Following
                         </li>
                      </ul>
                   </Container>
@@ -93,11 +93,11 @@ const MyProfile = () => {
 
                <ContentWrapper>
                   <Container className='container'>
-                     <Posts
-                        avatar={data.avatar}
-                        username={data.username}
-                        data={data.post}
-                     />
+                     {/* <Posts
+                        avatar={data?.avatar}
+                        username={data?.username}
+                        data={data?.post}
+                     /> */}
                      <Modal
                         wrapClassName='follow-modal'
                         visible={visible}
@@ -105,10 +105,10 @@ const MyProfile = () => {
                         footer={null}
                      >
                         {active === 'followers' && (
-                           <Followers data={data.followers} />
+                           <Followers data={data?.followers} />
                         )}
                         {active === 'following' && (
-                           <Following data={data.following} />
+                           <Following data={data?.following} />
                         )}
                      </Modal>
                   </Container>

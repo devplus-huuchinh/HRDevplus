@@ -25,6 +25,16 @@ const authApi = {
       const url = '/auth/change-password';
       return axiosClient.patch(url, data);
    },
+
+   forgotPassword: (params) => {
+      const url = '/auth/forgot-password';
+      return axiosClient.get(url, { params });
+   },
+
+   resetPassword: (data) => {
+      const url = '/auth/reset-password';
+      return axiosClient.post(url, data);
+   },
 };
 
 export default authApi;

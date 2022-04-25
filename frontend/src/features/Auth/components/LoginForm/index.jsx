@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form, Input, Button, Checkbox, Typography } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
-import './LoginForm.scss';
+import { Button, Checkbox, Form, Input } from 'antd';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './LoginForm.scss';
 
 LoginForm.propTypes = {
    handleLoginFormSubmit: PropTypes.func,
@@ -14,7 +14,6 @@ LoginForm.defaultProps = {
 };
 
 function LoginForm(props) {
-   const { Text } = Typography;
    const { handleLoginFormSubmit } = props;
 
    const onFinishFailed = (errorInfo) => {
@@ -82,8 +81,7 @@ function LoginForm(props) {
                </Button>
             </Form.Item>
             <Form.Item className='login-form--signUp'>
-               <Text>Don't have a account? </Text>
-               <Link to='/user/register'>Sign up for free!</Link>
+               <Link to='/auth/forgot-password'>Forgot password?</Link>
             </Form.Item>
          </Form>
       </>

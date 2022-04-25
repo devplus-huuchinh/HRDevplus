@@ -24,6 +24,8 @@ Route::prefix('/v1/auth')->group(
                 Route::post('/register', 'register');
                 Route::post('/login', 'login');
                 Route::post('/logout', 'logout');
+                Route::get('/forgot-password', 'forgotPassword');
+                Route::post('/reset-password', 'resetPassword');
             }
         );
         Route::middleware(['auth:sanctum'])->group(
@@ -54,7 +56,7 @@ Route::prefix('/v1/mail')->group(
     function () {
         Route::controller(EmailController::class)->group(
             function () {
-                Route::get('/test', 'index');
+                // Route::get('/reset-password', 'resetPassword');
             }
         );
     }

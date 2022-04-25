@@ -32,7 +32,7 @@ function LoginPage(props) {
          dispatch(clearMenu());
          dispatch(login(response.access_token));
          setIsLoading(false);
-         return history.push('/dashboard');
+         return (window.location = '/dashboard');
       } catch (error) {
          console.log(error);
       }
