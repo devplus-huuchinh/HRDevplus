@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Button, Space, Row, Col, Image } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, CalendarOutlined } from '@ant-design/icons';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 const { Title, Text } = Typography;
 
