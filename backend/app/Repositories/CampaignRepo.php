@@ -36,6 +36,6 @@ class CampaignRepo extends EloquentRepo
     }
     public function showCampaign($campaignId)
     {
-        return $this->model->where('id', $campaignId)->get();
+        return $this->model->where('id', $campaignId)->first();
     }
 }

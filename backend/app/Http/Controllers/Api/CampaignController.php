@@ -35,5 +35,4 @@ class CampaignController extends Controller
     {
         return $this->campaignService->showCampaignDetail($request->id);
     }
-
 }

@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 
 const { Text, Title } = Typography;
+
 const FooterWrapper = styled.div`
    width: 100%;
    padding-top: 60px;
@@ -20,6 +21,7 @@ const FooterWrapper = styled.div`
       color: #fff;
    }
 `;
+
 const FooterCoppyRight = styled.div`
    width: 100%;
    background: #eee;

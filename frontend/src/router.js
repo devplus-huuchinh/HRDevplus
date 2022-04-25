@@ -94,17 +94,18 @@ export default function Routes() {
          <Suspense fallback={<Loader />}>
             <Router>
                <Switch>
+                  <Route path='/home'>
+                     <Home />
+                  </Route>
+
                   {publicRoutes.map((route, index) => (
                      <Route key={index} path={route.path} exact={route.exact}>
                         <route.component />
                      </Route>
                   ))}
-                  <PrivateRoute path='/dashboard'>
+                  <PrivateRoute exact path='/dashboard'>
                      <Dashboard />
                   </PrivateRoute>
-                  <Route path='/home'>
-                     <Home />
-                  </Route>
                </Switch>
             </Router>
          </Suspense>

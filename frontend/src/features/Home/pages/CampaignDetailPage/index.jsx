@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Row, Col, Typography, Image, Button, Space } from 'antd';
-// import CampaignDetail from '../../components/CampaignDetail';
+import { Row, Col, Breadcrumb, Space, Spin } from 'antd';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Section } from '../../components/Section/Section.styles';
 import { Container } from '../../components/Container/Container.styles';
-import { SettingOutlined, CalendarOutlined } from '@ant-design/icons';
 import campaignApi from '../../../../api/campaignApi';
-const { Title, Text } = Typography;
+import Company from '../../components/Company';
+import CampaignDetail from '../../components/CampaignDetail';
+
 const CampaignDetailPageWrapper = styled.div`
    width: 100%;
    height: 100%;
@@ -24,10 +25,7 @@ function CampaignDetailPage(props) {
    const { campaignId } = useParams();
 
    const [campaignDetail, setCampaignDetail] = useState({});
-   console.log(
-      '🚀 ~ file: index.jsx ~ line 27 ~ CampaignDetailPage ~ campaignDetail',
-      campaignDetail.name
-   );
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
       const getCampaignById = async () => {
@@ -36,6 +34,7 @@ function CampaignDetailPage(props) {
                campaignId
             );
             setCampaignDetail(responseCampaignDetail);
+            setLoading(true);
          } catch (error) {
             console.log(
                '🚀 ~ file: index.jsx ~ line 36 ~ getCampaignById ~ error',
@@ -46,66 +45,70 @@ function CampaignDetailPage(props) {
       getCampaignById();
    }, [campaignId]);
 
-   const viewPageCompany = () => {
-      const url = 'https://stunited.vn/';
-      window.open(url, '_blank');
-   };
    return (
-      <CampaignDetailPageWrapper campaignId={campaignId}>
-         <Header />
-         <Section>
-            <Container>
-               <Row gutter={[8, 0]} style={{ padding: '20px' }}>
-                  <Col sm={24} lg={18}></Col>
-                  <Col
-                     xs={0}
-                     sm={0}
-                     lg={6}
-                     style={{
-                        padding: '20px 10px',
-                        boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-                        borderRadius: '8px',
-                     }}
-                  >
+      <React.Fragment>
+         {loading ? (
+            <CampaignDetailPageWrapper campaignId={campaignId}>
+               <Header />
+               <Section style={{ paddingTop: '20px' }}>
+                  <Container>
                      <Space
                         direction='vertical'
                         size='middle'
-                        style={{
-                           display: 'flex',
-                           justifyContent: 'center',
-                           alignItems: 'center',
-                        }}
+                        style={{ width: '100%' }}
                      >
-                        <Image
-                           src='https://source.unsplash.com/random'
-                           preview={false}
-                           className='campaign__detail--image'
-                        />
-                        <Title level={4}>ST United</Title>
-                        <Row>
-                           <Space size={'middle'}>
-                              <Text>
-                                 <SettingOutlined /> Products
-                              </Text>
-                              <Text>
-                                 <CalendarOutlined /> Monday - Friday
-                              </Text>
-                           </Space>
+                        <Breadcrumb>
+                           <Breadcrumb.Item>
+                              <Link to={'/home'}> Home</Link>
+                           </Breadcrumb.Item>
+                           <Breadcrumb.Item>
+                              {campaignDetail.name}
+                           </Breadcrumb.Item>
+                        </Breadcrumb>
+                        <Row gutter={[8, 8]} style={{ padding: '20px 0' }}>
+                           <Col xs={24} sm={24} lg={18}>
+                              <CampaignDetail
+                                 campaignId={campaignDetail.id}
+                                 campaignName={campaignDetail.name}
+                                 campaignAdd={campaignDetail.address}
+                                 campaignStartDate={campaignDetail.start_date}
+                                 campaignEndDate={campaignDetail.end_date}
+                                 campaignImage={
+                                    campaignDetail.image_url === 'null' || ''
+                                       ? 'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png'
+                                       : campaignDetail.image_url
+                                 }
+                                 campaignDescription={
+                                    campaignDetail.description
+                                 }
+                              />
+                           </Col>
+                           <Col xs={0} sm={0} lg={6}>
+                              <Company />
+                           </Col>
                         </Row>
-                        <Text>368 Tran Hung Dao - Da Nang</Text>
-                        <Button
-                           type='primary'
-                           onClick={() => viewPageCompany()}
-                        >
-                           View Our Company Page
-                        </Button>
                      </Space>
-                  </Col>
-               </Row>
-            </Container>
-         </Section>
-         <Footer />
-      </CampaignDetailPageWrapper>
+                  </Container>
+               </Section>
+               <Footer />
+            </CampaignDetailPageWrapper>
+         ) : (
+            <Spin
+               tip='Loading...'
+               size='large'
+               style={{
+                  width: '100vw',
+                  height: '100vh',
+                  maxHeight: 'unset',
+                  display: 'flex',
+                  gap: '20px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+               }}
+            />
+         )}
+      </React.Fragment>
    );
 }
 

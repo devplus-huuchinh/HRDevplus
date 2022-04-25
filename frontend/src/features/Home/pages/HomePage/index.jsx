@@ -8,7 +8,6 @@ import Footer from '../../components/Footer';
 import { CampaignListWrapper, HomepageContainer } from './Homepage.styles';
 import { Container } from '../../components/Container/Container.styles';
 import { CaretRightOutlined, FilterOutlined } from '@ant-design/icons';
-import Slider from '../../components/Slider';
 import { Section } from '../../components/Section/Section.styles';
 
 const { Title, Text } = Typography;
@@ -16,10 +15,6 @@ const { Option } = Select;
 
 function HomePage(props) {
    const [campaigns, setCampaigns] = useState([]);
-   console.log(
-      '🚀 ~ file: index.jsx ~ line 16 ~ HomePage ~ campaigns',
-      campaigns
-   );
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
@@ -41,12 +36,7 @@ function HomePage(props) {
          {loading ? (
             <HomepageContainer style={{}}>
                <Header />
-               {/* <Section style={{ padding: '20px 0' }}>
-                  <Container>
-                     <Slider />
-                  </Container>
-               </Section> */}
-               <Section style={{ paddingTop: '40px', paddingBottom: '170px' }}>
+               <Section style={{ paddingTop: '40px', paddingBottom: '70px' }}>
                   <Container>
                      <Space
                         direction='vertical'
