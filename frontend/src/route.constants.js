@@ -10,6 +10,7 @@ export const PUBLIC_ROUTE = {
    LOGIN: '/auth',
    HOME: '/home',
    CAMPAIGN: '/campaign',
+   SEARCH: '/search',
 };
 
 export const PRIVATE_ROUTE = {

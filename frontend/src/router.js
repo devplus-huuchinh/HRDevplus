@@ -27,6 +27,10 @@ const publicRoutes = [
       component: lazy(() => import('@iso/features/Auth')),
    },
    {
+      path: PUBLIC_ROUTE.SEARCH,
+      component: lazy(() => import('@iso/features/Search')),
+   },
+   {
       path: PUBLIC_ROUTE.LANDING,
       exact: true,
       component: lazy(() => import('@iso/features/Home')),
