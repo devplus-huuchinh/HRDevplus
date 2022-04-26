@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class UserRepo extends EloquentRepo
 {
@@ -63,5 +65,35 @@ class UserRepo extends EloquentRepo
         $foundUser->save();
 
         return $foundUser;
+    }
+
+
+    public function passwordReset($request)
+    {
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user) use ($request) {
+                $user->forceFill(
+                    [
+                    'password' => Hash::make($request->password),
+                    ]
+                )->save();
+
+                $user->tokens()->delete();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status;
+    }
+
+    public function forgotPassword($request)
+    {
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status;
     }
 }

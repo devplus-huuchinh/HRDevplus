@@ -34,7 +34,7 @@ function ResetPasswordForm(props) {
                ]}
                label='Email'
             >
-               <Input placeholder='Please enter your account email' />
+               <Input placeholder='Enter your account email' />
             </Form.Item>
             <Form.Item
                name='password'
@@ -47,7 +47,7 @@ function ResetPasswordForm(props) {
                ]}
                hasFeedback
             >
-               <Input.Password />
+               <Input.Password placeholder='Enter your new password' />
             </Form.Item>
 
             <Form.Item
@@ -74,7 +74,7 @@ function ResetPasswordForm(props) {
                   }),
                ]}
             >
-               <Input.Password />
+               <Input.Password placeholder='Re-enter your new password' />
             </Form.Item>
             <Form.Item className='forgot-form--submit'>
                <Button type='primary' htmlType='submit' block>

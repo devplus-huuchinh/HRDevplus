@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Button, Space, Row, Col, Image } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, CalendarOutlined } from '@ant-design/icons';
@@ -35,6 +35,9 @@ function CampaignDetail(props) {
       campaignImage,
       campaignDescription,
    } = props;
+
+   const openApplyForm = () => {};
+   const [isOpen, setIsOpen] = useState(false);
    return (
       <CampaignDetailWrapper>
          <Space
@@ -57,6 +60,7 @@ function CampaignDetail(props) {
                   width: '100%',
                   maxWidth: '700px',
                }}
+               onclick={() => openApplyForm()}
             >
                Apply Now
             </Button>

@@ -3,7 +3,6 @@ import authAction from '@iso/redux/auth/actions';
 import { message, Spin, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import authApi from '../../../../api/authApi';
 import loginImgBackground from '../../../../assets/images/sign.jpg';
 import LoginForm from '../../components/LoginForm';
@@ -13,7 +12,6 @@ const { Text, Title } = Typography;
 
 function LoginPage(props) {
    const dispatch = useDispatch();
-   const history = useHistory();
 
    const [isLoading, setIsLoading] = useState(false);
    const { login } = authAction;
