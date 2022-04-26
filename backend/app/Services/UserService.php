@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Password;
 
 /**
  * Class UserService
+ *
  * @package App\Services
  */
 class UserService
@@ -23,7 +24,7 @@ class UserService
     }
 
     /**
-     * @param $params
+     * @param  $params
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findAll($params)
@@ -34,7 +35,7 @@ class UserService
     }
 
     /**
-     * @param $id
+     * @param  $id
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function findOne($id)

@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 import { PUBLIC_ROUTE } from './route.constants';
+import Home from './features/Home';
 
 const Dashboard = lazy(() => import('./containers/Dashboard/Dashboard'));
 
@@ -85,6 +86,9 @@ export default function Routes() {
          <Suspense fallback={<Loader />}>
             <Router>
                <Switch>
+                  <Route path={'/home'}>
+                     <Home />
+                  </Route>
                   {publicRoutes.map((route, index) => (
                      <Route key={index} path={route.path} exact={route.exact}>
                         <route.component />
