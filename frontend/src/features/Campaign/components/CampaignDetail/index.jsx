@@ -37,7 +37,7 @@ function CampaignDetail(props) {
    } = props;
 
    const openApplyForm = () => {};
-   const [isOpen, setIsOpen] = useState(false);
+   // const [isOpen, setIsOpen] = useState(false);
    return (
       <CampaignDetailWrapper>
          <Space
@@ -60,7 +60,7 @@ function CampaignDetail(props) {
                   width: '100%',
                   maxWidth: '700px',
                }}
-               onclick={() => openApplyForm()}
+               onClick={() => openApplyForm()}
             >
                Apply Now
             </Button>
