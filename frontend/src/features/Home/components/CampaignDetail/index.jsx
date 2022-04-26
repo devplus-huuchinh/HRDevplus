@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Typography, Button, Space, Row, Col, Image } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, CalendarOutlined } from '@ant-design/icons';
+import ApplyForm from '../ApplyForm';
 
 const { Title, Text } = Typography;
 
@@ -36,10 +37,14 @@ function CampaignDetail(props) {
       campaignDescription,
    } = props;
 
-   const openApplyForm = () => {};
-   const [isOpen, setIsOpen] = useState(false);
+   const [isOpen, setIsOpen] = useState(true);
+   const openApplyForm = () => {
+      // setIsOpen(true);
+   };
+
    return (
       <CampaignDetailWrapper>
+         {isOpen ? <ApplyForm /> : ''}
          <Space
             direction='vertical'
             size={'middle'}
@@ -54,13 +59,13 @@ function CampaignDetail(props) {
          >
             <Title level={3}>{campaignName}</Title>
             <Button
+               onClick={() => openApplyForm()}
                type='primary'
                danger
                style={{
                   width: '100%',
                   maxWidth: '700px',
                }}
-               onclick={() => openApplyForm()}
             >
                Apply Now
             </Button>
