@@ -16,13 +16,7 @@ function CreateCampaign(props) {
          <Header style={{ backgroundColor: 'white', textDecoration: 'bold' }}>
             Crate Campaign
          </Header>
-         <Content
-         // style={{
-         //    display: 'flex',
-         //    flexDirection: 'column',
-         //    alignItems: 'center',
-         // }}
-         >
+         <Content>
             <Form
                name='wrap'
                labelCol={{ flex: '110px' }}
