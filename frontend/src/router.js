@@ -9,15 +9,27 @@ import {
 } from 'react-router-dom';
 import ErrorBoundary from './ErrorBoundary';
 import { PUBLIC_ROUTE } from './route.constants';
-import Home from './features/Home';
 
 const Dashboard = lazy(() => import('./containers/Dashboard/Dashboard'));
 
 const publicRoutes = [
    {
+      path: PUBLIC_ROUTE.HOME,
+      exact: true,
+      component: lazy(() => import('@iso/features/Home')),
+   },
+   {
+      path: PUBLIC_ROUTE.CAMPAIGN,
+      component: lazy(() => import('@iso/features/Campaign')),
+   },
+   {
+      path: PUBLIC_ROUTE.LOGIN,
+      component: lazy(() => import('@iso/features/Auth')),
+   },
+   {
       path: PUBLIC_ROUTE.LANDING,
       exact: true,
-      component: lazy(() => import('@iso/containers/Pages/SignIn/SignIn')),
+      component: lazy(() => import('@iso/features/Home')),
    },
    {
       path: PUBLIC_ROUTE.PAGE_404,
@@ -53,10 +65,6 @@ const publicRoutes = [
          import('@iso/containers/Authentication/Auth0/Auth0Callback')
       ),
    },
-   {
-      path: PUBLIC_ROUTE.LOGIN,
-      component: lazy(() => import('@iso/features/Auth')),
-   },
 ];
 function PrivateRoute({ children, ...rest }) {
    const isLoggedIn = useSelector((state) => state.Auth.idToken);
@@ -86,9 +94,6 @@ export default function Routes() {
          <Suspense fallback={<Loader />}>
             <Router>
                <Switch>
-                  <Route path={'/home'}>
-                     <Home />
-                  </Route>
                   {publicRoutes.map((route, index) => (
                      <Route key={index} path={route.path} exact={route.exact}>
                         <route.component />
