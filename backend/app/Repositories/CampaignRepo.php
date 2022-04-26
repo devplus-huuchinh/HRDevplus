@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Campaign;
-use App\Models\Technique;
-use App\Models\Position;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 class CampaignRepo extends EloquentRepo
 {
@@ -22,11 +20,24 @@ class CampaignRepo extends EloquentRepo
         $firstConnect = $this->model
         ->with(['position:name','technique:name'])
         ->offset($offset)->limit($limit)->get();
-        // $data = $firstConnect->with(['positions','techniques'])->get();
-        // ->join('position_campaigns','campaigns.id','=','position_campaigns.campaign_id')
-        // ->with(['Position'])
-        // ->toArray();
         return $firstConnect;
+    }
+
+    public function create($array)
+    {
+        $user = $this->model->find(1);
+        return $this->model->create(
+            [
+                'name'=> $array['name'],
+                'address'=> $array['address'],
+                'start_ate'=> $array['start_date'],
+                'end_ate'=> $array['end_date'],
+                'is_active'=>1,
+                'user_id'=> $user->user->id,
+                'description'=> $array['description'],
+                'image_url'=> $array['image_url'],
+            ]
+        );
     }
 
     public function findCampaign($campaignId)

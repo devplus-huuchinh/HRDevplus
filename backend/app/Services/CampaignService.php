@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\CampaignRepo;
+use Illuminate\Http\Request;
 
 class CampaignService
 {
@@ -18,6 +19,11 @@ class CampaignService
         $limit = $params['limit'] ?? 10;
         $offset = $params['offset'] ?? 0;
         return $this->campaignRepo->findAll((int)$offset, (int)$limit);
+    }
+
+    public function create($array)
+    {
+        return $this->campaignRepo->create($array);
     }
 
     public function findOne($id)

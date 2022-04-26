@@ -19,7 +19,7 @@ class CampaignController extends Controller
     // show all campaign
     public function index(Request $request)
     {
-         // dd('dasdads');
+         
          $user = $request->user();
          try{
              return $this->campaignService->findAll($request->all());
@@ -28,6 +28,25 @@ class CampaignController extends Controller
              return response()->json(
                  [
                  'message' => 'Getting_data_fail',
+                 'error' => $error,
+                 ]
+             );
+         }
+    }
+
+    public function store(Request $request)
+    {     
+        // dd($this->campaignService->findAll($request->all()));
+        $user = $request->user();
+        try{
+            $data = $this->campaignService->create($request);
+            $data->save();
+            return $data;
+        }
+        catch (\Throwable $error) {
+             return response()->json(
+                 [
+                 'message' => 'adding_data_fail',
                  'error' => $error,
                  ]
              );

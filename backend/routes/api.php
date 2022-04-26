@@ -68,8 +68,10 @@ Route::name('api.posts.')->group(
     }
 );
 Route::prefix('v1/campaign')->group(function () {
-    Route::controller(CampaignController::class)->group(function () {
-        Route::get('/', 'index');
-        // Route::post('/', 'store');
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::controller(CampaignController::class)->group(function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store');
+        });
     });
 });
