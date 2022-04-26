@@ -348,6 +348,10 @@ const routes = [
       path: 'user-profile',
       component: lazy(() => import('@iso/features/UserProfile')),
    },
+   {
+      path: 'campaign_page',
+      component: lazy(() => import('@iso/features/HR')),
+   },
 ];
 
 export default function AppRouter() {

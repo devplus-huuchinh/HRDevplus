@@ -67,3 +67,9 @@ Route::name('api.posts.')->group(
         Route::get('v1/posts', [UserController::class, 'index'])->name('index');
     }
 );
+Route::prefix('v1/campaign')->group(function () {
+    Route::controller(CampaignController::class)->group(function () {
+        Route::get('/', 'index');
+        // Route::post('/', 'store');
+    });
+});

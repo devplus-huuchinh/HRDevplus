@@ -9,6 +9,10 @@ const campaignApi = {
       const url = '/campaigns';
       return axiosClient.get(url, data);
    },
+   getCampainsForHr: () => {
+      const url = '/campaign';
+      return axiosClient.get(url);
+   },
 };
 
 export default campaignApi;

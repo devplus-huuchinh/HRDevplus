@@ -22,7 +22,14 @@ class CampaignRepo extends EloquentRepo
      */
     public function findAll($offset, $limit)
     {
-        return $this->model->offset($offset)->limit($limit)->get();
+         $data = $this->model
+        ->join('campaign_techniques','campaigns.id','=','campaign_id')
+        ->join('techniques','campaign_techniques.technique_id','=','technique_id')
+        ->join('position_campaigns','campaigns.id','=','position_campaigns.campaign_id')
+        ->join('positions','position_campaigns.position_id','=','position_id')
+        ->select('campaigns.*','techniques.name as tags','positions.name as positions')
+        ->offset($offset)->limit($limit)->distinct()->get()->toArray();
+        return $data;
     }
 
     /**

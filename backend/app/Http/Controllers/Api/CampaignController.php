@@ -17,7 +17,19 @@ class CampaignController extends Controller
 
     public function index(Request $request)
     {
-        return $this->campaignService->findAll($request->all());
+         // dd('dasdads');
+         $user = $request->user();
+         try{
+             return $this->campaignService->findAll($request->all());
+         }
+         catch (\Throwable $error) {
+             return response()->json(
+                 [
+                 'message' => 'Getting_data_fail',
+                 'error' => $error,
+                 ]
+             );
+         }
     }
 
 
