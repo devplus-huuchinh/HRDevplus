@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Campaign extends Model
 {
     use HasFactory;
+    protected $with = ['position','technique'];
+    protected $hidden = ['pivot'];
     protected $fillable = [
         'name',
         'address',
@@ -33,5 +35,11 @@ class Campaign extends Model
     public function campaign_technique()
     {
         return $this->hasMany(campaign_technique::class);
+    }
+    public function position(){
+        return $this->belongsToMany(position::class,'position_campaigns');
+    }
+    public function technique(){
+        return $this->belongsToMany(technique::class,'campaign_techniques');
     }
 }

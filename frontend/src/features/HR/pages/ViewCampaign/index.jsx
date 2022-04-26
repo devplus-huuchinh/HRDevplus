@@ -3,52 +3,67 @@ import PropTypes from 'prop-types';
 import { Table, Tag, Space, Input, Button, Layout } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
 import campaignApi from '../../../../api/campaignApi';
+import './index.scss';
 const { Header, Content } = Layout;
 const { Column, ColumnGroup } = Table;
 const { Search } = Input;
 ViewCampaign.propTypes = {};
-const dataSource = [
-   {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-   },
-   {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-   },
-];
-
 function ViewCampaign(props) {
    const columns = [
       {
          title: 'Name',
          dataIndex: 'name',
-         width: '30%',
+         width: '25%',
       },
       {
          title: 'Position',
-         dataIndex: 'positions',
+         dataIndex: 'position',
+         render: (tags) => (
+            <>
+               {tags.map((tag) => {
+                  let color = tag.length > 5 ? 'geekblue' : 'green';
+                  if (tag.name === 'Intern') {
+                     color = 'volcano';
+                  }
+                  return <Tag color={color}>{tag.name.toUpperCase()}</Tag>;
+               })}
+            </>
+         ),
+         width: '20%',
       },
       {
          title: 'Address',
          dataIndex: 'address',
-         width: '20%',
+         width: '15%',
       },
       {
          title: 'Start Date',
          dataIndex: 'start_date',
+         width: '20%',
       },
       {
          title: 'End Date',
          dataIndex: 'end_date',
+         width: '20%',
       },
       {
          title: 'Technology',
-         dataIndex: 'tags',
+         dataIndex: 'technique',
+         render: (tags) => (
+            <>
+               {tags.map((tag) => {
+                  let color = tag.length > 5 ? 'geekblue' : 'green';
+                  if (tag.name === 'PHP') {
+                     color = 'volcano';
+                  }
+                  return (
+                     <Tag color={color} key={tag}>
+                        {tag.name}
+                     </Tag>
+                  );
+               })}
+            </>
+         ),
       },
       {
          title: '',
@@ -74,21 +89,16 @@ function ViewCampaign(props) {
       handleData();
    }, []);
    console.log(data);
-   console.log(dataSource);
    return (
       <Layout>
-         <Header
-            style={{
-               backgroundColor: '#ffffff',
-               display: 'flex',
-               justifyContent: 'flex-end',
-            }}
-         >
-            <div className='header-btn'>
-               <Search
-                  placeholder='input search text'
-                  style={{ width: 400, margin: '15px' }}
-               />
+         <Header>
+            <Search
+               placeholder='input search text'
+               allowClear
+               enterButton='Search'
+               size='middle'
+            />
+            <div className='search-create-header'>
                <Button type='primary' shape='round' icon={<PlusCircleFilled />}>
                   Create Compaign
                </Button>

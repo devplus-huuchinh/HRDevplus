@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\CampaignRepo;
-use App\Repositories\TechCampRepo;
-use App\Repositories\TechRepo;
 /**
  * Class UserService
  *
@@ -16,13 +14,9 @@ class CampaignService
      * @var CampaignRepo
      */
     private $campaignRepo;
-    private $techCampRepo;
-    private $techRepo;
-    public function __construct(CampaignRepo $campaignRepo,TechCampRepo $techCampRepo, TechRepo $techRepo )
+    public function __construct(CampaignRepo $campaignRepo)
     {
         $this->campaignRepo = $campaignRepo;
-        $this->techCampRepo = $techCampRepo;
-        $this->techRepo = $techRepo;
     }
 
     /**
@@ -33,9 +27,6 @@ class CampaignService
     {
         $limit = $params['limit'] ?? 10;
         $offset = $params['offset'] ?? 0;
-        // $techCamp=  $this->techCampRepo->findAll((int)$offset, (int)$limit);
-        // $tech= $this->techRepo->findAll((int)$offset, (int)$limit);
-        // $this->campaignRepo->findAll((int)$offset, (int)$limit);
         return $this->campaignRepo->findAll((int)$offset, (int)$limit);
     }
 

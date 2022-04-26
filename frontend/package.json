@@ -4,6 +4,8 @@
 	"private": true,
 	"dependencies": {
 		"@ant-design/compatible": "^1.0.5",
+		"@ckeditor/ckeditor5-build-classic": "^34.0.0",
+		"@ckeditor/ckeditor5-react": "^5.0.0",
 		"@glidejs/glide": "^3.4.1",
 		"@redq/js-info-bubble": "^0.8.1",
 		"@uppy/core": "^1.13.2",
