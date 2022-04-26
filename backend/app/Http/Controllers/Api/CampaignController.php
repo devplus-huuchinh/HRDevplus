@@ -10,11 +10,13 @@ class CampaignController extends Controller
 {
     private $campaignService;
 
+    // constructor
     public function __construct(CampaignService $campaignService)
     {
         $this->campaignService = $campaignService;
     }
 
+    // show all campaign
     public function index(Request $request)
     {
          // dd('dasdads');
@@ -31,7 +33,6 @@ class CampaignController extends Controller
              );
          }
     }
-
 
     public function findCampaignActive(Request $request)
     {

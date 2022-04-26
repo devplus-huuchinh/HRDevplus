@@ -5,7 +5,6 @@ import { Layout } from 'antd';
 import { Form, Input, Button, Select, DatePicker, TreeSelect, Tag } from 'antd';
 import { Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-// import FormItem from 'antd/lib/form/FormItem';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const { Header, Content } = Layout;

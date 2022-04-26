@@ -17,11 +17,6 @@ class CampaignRepo extends EloquentRepo
         return Campaign::class;
     }
 
-    /**
-     * @param  $offset
-     * @param  $limit
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
     public function findAll($offset, $limit)
     {
         $firstConnect = $this->model
@@ -33,15 +28,13 @@ class CampaignRepo extends EloquentRepo
         // ->toArray();
         return $firstConnect;
     }
-    /**
-     * @param  $id
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+
     public function findCampaign($campaignId)
     {
         return $this->model->where('is_active', 1)->get();
 
     }
+    
     public function showCampaign($campaignId)
     {
         return $this->model->where('id', $campaignId)->first();
