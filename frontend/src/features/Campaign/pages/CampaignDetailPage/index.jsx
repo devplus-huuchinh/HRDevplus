@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
 import { Row, Col, Breadcrumb, Space, Spin, Button, Typography } from 'antd';
@@ -54,6 +54,22 @@ function CampaignDetailPage(props) {
       history.push(`${campaignId}/apply`);
    };
 
+   const [isSticky, setSticky] = useState(false);
+
+   const ref = useRef(null);
+
+   const handleScroll = () => {
+      if (ref.current) {
+         setSticky(ref.current.getBoundingClientRect().top <= 0);
+      }
+   };
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', () => handleScroll);
+      };
+   }, []);
+
    return (
       <React.Fragment>
          {loading ? (
@@ -75,7 +91,10 @@ function CampaignDetailPage(props) {
                            </Breadcrumb.Item>
                         </Breadcrumb>
 
-                        <Row gutter={[8, 8]} style={{ padding: '20px 0' }}>
+                        <Row
+                           gutter={[8, 8]}
+                           style={{ padding: '20px 0', position: 'relative' }}
+                        >
                            <Col xs={24} sm={24} lg={18}>
                               <CampaignDetail
                                  campaignId={campaignDetail.id}
@@ -96,11 +115,27 @@ function CampaignDetailPage(props) {
                                        );
                                     }
                                  )}
+                                 campaignPosition={campaignDetail.position.map(
+                                    (pos) => {
+                                       return (
+                                          <Button key={pos.name}>
+                                             {pos.name}
+                                          </Button>
+                                       );
+                                    }
+                                 )}
                                  onClick={() => openApplyForm()}
                               />
                            </Col>
                            <Col xs={0} sm={0} lg={6}>
-                              <Company />
+                              <div
+                                 className={`sticky-wrapper${
+                                    isSticky ? ' sticky' : ''
+                                 }`}
+                                 ref={ref}
+                              >
+                                 <Company />
+                              </div>
                            </Col>
                         </Row>
                      </Space>

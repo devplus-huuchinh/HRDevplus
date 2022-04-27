@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Typography, Button, Space, Row, Col, Image } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, CalendarOutlined } from '@ant-design/icons';
+import './CampaignDetail.scss';
 
 const { Title, Text } = Typography;
 
@@ -11,6 +12,7 @@ const CampaignDetailWrapper = styled.div`
    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
    background-color: #fff;
    border-radius: 10px;
+   position: relative;
    .campaign__detail--header {
       wwidth: 100%;
       .ant-space-item {
@@ -35,6 +37,7 @@ function CampaignDetail(props) {
       campaignImage,
       campaignDescription,
       campaignTechnique,
+      campaignPosition,
       onClick,
    } = props;
 
@@ -42,38 +45,63 @@ function CampaignDetail(props) {
       ev.target.src =
          'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
    };
+   const [isSticky, setSticky] = useState(false);
 
+   const ref = useRef(null);
+
+   const handleScroll = () => {
+      if (ref.current) {
+         setSticky(ref.current.getBoundingClientRect().top <= 0);
+      }
+   };
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', () => handleScroll);
+      };
+   }, []);
    return (
       <CampaignDetailWrapper>
-         <Space
-            direction='vertical'
-            size={'middle'}
-            style={{
-               width: '100%',
-               alignItems: 'center',
-               justifyContent: 'center',
-               paddingBottom: '20px',
-               borderBottom: '1px solid #e8e8e8',
-            }}
-            className='campaign__detail--header'
+         <div
+            className={`sticky-wrapper${isSticky ? ' sticky' : ''}`}
+            ref={ref}
          >
-            <Title level={3}>{campaignName}</Title>
-            <Button
-               type='primary'
-               danger
+            <Space
+               direction='vertical'
+               size={'small'}
                style={{
                   width: '100%',
-                  maxWidth: '700px',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '20px 0',
+                  borderBottom: '1px solid #e8e8e8',
+                  backgroundColor: '#fff',
                }}
-               onClick={onClick}
+               className='campaign__detail--header'
             >
-               Apply Now
-            </Button>
-         </Space>
-         <Row style={{ alignItems: 'center' }}>
-            <Col sm={24} md={12}>
+               <Title level={3}>{campaignName}</Title>
+
+               <Button
+                  type='primary'
+                  danger
+                  style={{
+                     width: '100%',
+                     maxWidth: '700px',
+                  }}
+                  onClick={onClick}
+               >
+                  Apply Now
+               </Button>
+            </Space>
+         </div>
+         <Row style={{ alignItems: 'center', paddingBottom: '20px' }}>
+            <Col xs={24} sm={24} md={12}>
                <div style={{ padding: '20px 0' }}>
-                  <Space direction='vertical' size={'middle'}>
+                  <Space
+                     direction='vertical'
+                     size={'middle'}
+                     style={{ display: 'flex' }}
+                  >
                      <Title level={4}>ST SOFTWARE</Title>
                      <Text>
                         <Space sise={'small'}>
@@ -103,17 +131,40 @@ function CampaignDetail(props) {
                            </Text>
                         </Space>
                      </Text>
-                     <div>
+                     <Space
+                        style={{
+                           width: '100%',
+                           paddingBottom: '15px',
+                           borderBottom: '1px solid #ccc',
+                        }}
+                     >
+                        <Text strong style={{ display: 'flex', width: '75px' }}>
+                           Position:
+                        </Text>
+                        <Space size={'small'} wrap>
+                           {campaignPosition}
+                        </Space>
+                     </Space>
+                     <Space
+                        style={{
+                           width: '100%',
+                           paddingBottom: '15px',
+                           borderBottom: '1px solid #ccc',
+                        }}
+                     >
+                        <Text strong style={{ display: 'flex', width: '75px' }}>
+                           Technique:
+                        </Text>
                         <Space size={'small'} wrap>
                            {campaignTechnique}
                         </Space>
-                     </div>
+                     </Space>
                   </Space>
                </div>
             </Col>
-            <Col sm={24} md={12}>
+            <Col xs={24} sm={24} md={12}>
                <div
-                  style={{ padding: '20px 0' }}
+                  style={{ padding: '0 15px' }}
                   className='campaign__detail--image--wrapper'
                >
                   <Image
@@ -131,7 +182,14 @@ function CampaignDetail(props) {
                </div>
             </Col>
          </Row>
-         <Text>{campaignDescription} </Text>
+         <Space
+            direction='vertical'
+            size={'middle'}
+            style={{ display: 'flex' }}
+         >
+            <Title level={4}>Description</Title>
+            <Text>{campaignDescription} </Text>
+         </Space>
       </CampaignDetailWrapper>
    );
 }
