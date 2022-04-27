@@ -29,4 +29,7 @@ class ProfileRepo extends EloquentRepo
       $profile->status = $value;
       $profile->save();
    }
+   public function applyToCampaign()
+   {
+   }
 }

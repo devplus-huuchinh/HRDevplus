@@ -1,0 +1,8 @@
+.ant-breadcrumb {
+   margin: 16px 0;
+   &-link {
+      &:first-child {
+         cursor: pointer;
+      }
+   }
+}

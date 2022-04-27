@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\EmailController;
 
 use Illuminate\Http\Request;
@@ -38,6 +39,27 @@ Route::prefix('/v1/auth')->group(
                         Route::get('/', 'getCurrentUser');
                     }
                 );
+            }
+        );
+    }
+);
+
+
+Route::prefix('/v1/campaigns')->group(
+    function () {
+        Route::controller(CampaignController::class)->group(
+            function () {
+                Route::get('', 'findCampaignActive');
+                Route::get("/{id}", 'showCampaignDetail');
+            }
+        );
+    }
+);
+Route::prefix('/v1/profile')->group(
+    function () {
+        Route::controller(ProfileController::class)->group(
+            function () {
+                Route::post('', 'applyToCampaign');
             }
         );
     }

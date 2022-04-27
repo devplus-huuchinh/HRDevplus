@@ -1,9 +1,7 @@
-import { Button, Result, Typography } from 'antd';
+import { Button, Result } from 'antd';
 import React from 'react';
 import { useParams } from 'react-router';
 import './CheckYourEmailPage.scss';
-
-const { Text } = Typography;
 
 const CheckYourEmailPage = () => {
    const { email } = useParams();

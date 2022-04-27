@@ -27,4 +27,8 @@ class ProfileService
          return $this->profileRepo->editStatusById($request->data['id'], $request->data['value']);
       }
    }
+   public function applyToCampaign($id)
+   {
+      return $this->campaignRepo->applyToCampaign($id);
+   }
 }
