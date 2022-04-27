@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\ProfileService;
 use App\Repositories\ProfileRepo;
 use App\Enums\ProfileStatus;
 use App\Enums\ProfileStep;
+use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {

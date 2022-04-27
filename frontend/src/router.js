@@ -1,15 +1,14 @@
+import Loader from '@iso/components/utility/loader';
 import React, { lazy, Suspense } from 'react';
+import { useSelector } from 'react-redux';
 import {
-   Route,
-   Redirect,
    BrowserRouter as Router,
+   Redirect,
+   Route,
    Switch,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
 import ErrorBoundary from './ErrorBoundary';
 import { PUBLIC_ROUTE } from './route.constants';
-import Loader from '@iso/components/utility/loader';
 
 const Dashboard = lazy(() => import('./containers/Dashboard/Dashboard'));
 

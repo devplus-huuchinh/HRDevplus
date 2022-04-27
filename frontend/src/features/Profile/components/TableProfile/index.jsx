@@ -2,19 +2,35 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Avatar, Tag, Select, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
 TableProfile.propTypes = {
    profiles: PropTypes.array,
    step: PropTypes.array,
    status: PropTypes.array,
    editProfile: PropTypes.func,
-   handleSelected: PropTypes.func,
+   handleSingleRow: PropTypes.func,
+   handleMultiRow: PropTypes.func,
+   setSelected: PropTypes.array,
+   tableLoading: PropTypes.bool,
 };
 
 function TableProfile(props) {
    //PROPS
-   const { profiles, status, step, editProfile, handleSelected } = props;
-   //STATE
+   const {
+      profiles,
+      status,
+      step,
+      editProfile,
+      handleSingleRow,
+      handleMultiRow,
+      selected,
+      tableLoading,
+   } = props;
+
+   //USE HISTORY
+   const history = useHistory();
+
    const columns = [
       {
          title: 'Avatar',
@@ -89,29 +105,26 @@ function TableProfile(props) {
       },
       {
          title: 'Detail',
-         // dataIndex: 'detail',
-         render: (record) => <Button type='primary'>Detail</Button>,
+         dataIndex: 'id',
+         render: (record) => (
+            <Button type='primary' onClick={() => handleShowDetail(record)}>
+               Detail
+            </Button>
+         ),
       },
    ];
 
    const rowSelection = {
-      // onChange: (selectedRowKeys, selectedRows) => {
-      //    console.log(
-      //       // `selectedRowKeys: ${selectedRowKeys}`,
-      //       'selectedRows: ',
-      //       selectedRows
-      //    );
-      // },
+      selectedRowKeys: selected.map[(1, 2)],
       getCheckboxProps: (record) => ({
          disabled: record.name === 'Disabled User',
-         // Column configuration not to be checked
          name: record.name,
       }),
       onSelect: (record, selected, selectedRows, nativeEvent) => {
-         console.log('record', record);
-         console.log('selected', selected);
-         console.log('selectedRows', selectedRows);
-         console.log('nativeEvent', nativeEvent);
+         handleSingleRow(selected, record);
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+         handleMultiRow(selected, changeRows);
       },
    };
 
@@ -126,6 +139,10 @@ function TableProfile(props) {
       editProfile('status', data);
    }
 
+   const handleShowDetail = (id) => {
+      return history.push(`/dashboard/profile/detail/${id}`);
+   };
+
    return (
       <div>
          <Table
@@ -136,6 +153,8 @@ function TableProfile(props) {
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={profiles}
+            pagination={{ pageSize: 5 }}
+            loading={tableLoading}
          />
       </div>
    );

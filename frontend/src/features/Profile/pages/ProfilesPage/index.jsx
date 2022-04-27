@@ -15,6 +15,8 @@ function ProfilesPage(props) {
    const [step, setStep] = useState([]);
    const [status, setStatus] = useState([]);
    const [selected, setSelected] = useState([]);
+   const [tableLoading, setTableLoading] = useState(true);
+
    //EFFECT
    useEffect(() => {
       const getAllProfileInDb = async () => {
@@ -23,8 +25,7 @@ function ProfilesPage(props) {
          });
          const dropProfile = await profileApi.dropdownData();
          console.log('ProfilesRes', ProfilesRes);
-         console.log('Step', dropProfile.step);
-         console.log('Status', dropProfile.status);
+         setTableLoading(false);
          setProfiles(ProfilesRes);
          setStep(dropProfile.step);
          setStatus(dropProfile.status);
@@ -36,6 +37,7 @@ function ProfilesPage(props) {
    const openNotificationWithIcon = (type) => {
       notification[type]({
          message: 'Update successful',
+         duration: 2,
       });
    };
 
@@ -47,23 +49,44 @@ function ProfilesPage(props) {
       return openNotificationWithIcon('success');
    };
 
-   const handleSelected = (data) => {
-      const checkDuplicate = selected.filter(function (val) {
-         return data.indexOf(val) > -1;
+   const handleSingleRow = (status, data) => {
+      if (status === true) {
+         return setSelected((pre) => {
+            return [...pre, data];
+         });
+      }
+      return setSelected((pre) => {
+         return pre.filter((item) => item.id !== data.id);
       });
-      return setSelected(checkDuplicate);
+   };
+
+   const handleMultiRow = (status, data) => {
+      if (status === true) {
+         return setSelected((pre) => {
+            return [...pre, ...data];
+         });
+      }
+      return setSelected((pre) => {
+         const idSelected = selected.map((item) => {
+            return item.id;
+         });
+         return pre.filter((item) => idSelected.indexOf(item.id) === -1);
+      });
    };
 
    return (
       <div className='profiles-container'>
          <Title>Campaign name</Title>
-         <SearchProfiles />
+         <SearchProfiles selected={selected} />
          <TableProfile
             profiles={profiles}
             step={step}
             status={status}
             editProfile={editProfile}
-            handleSelected={handleSelected}
+            handleSingleRow={handleSingleRow}
+            handleMultiRow={handleMultiRow}
+            selected={selected}
+            tableLoading={tableLoading}
          />
       </div>
    );

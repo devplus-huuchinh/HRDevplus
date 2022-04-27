@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmailController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,15 +25,29 @@ Route::prefix('/v1/auth')->group(
             function () {
                 Route::post('/register', 'register');
                 Route::post('/login', 'login');
+                Route::post('/logout', 'logout');
+                Route::get('/forgot-password', 'forgotPassword');
+                Route::post('/reset-password', 'resetPassword');
             }
         );
         Route::middleware(['auth:sanctum'])->group(
             function () {
                 Route::controller(UserController::class)->group(
                     function () {
-                        Route::get('/', 'index');
+                        Route::patch('/change-password', 'changePassword');
+                        Route::get('/', 'getCurrentUser');
                     }
                 );
+            }
+        );
+    }
+);
+
+Route::prefix('/v1/mail')->group(
+    function () {
+        Route::controller(EmailController::class)->group(
+            function () {
+                // Route::get('/reset-password', 'resetPassword');
             }
         );
     }
