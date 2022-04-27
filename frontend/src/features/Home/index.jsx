@@ -7,10 +7,6 @@ function Home(props) {
    const match = useRouteMatch();
    return (
       <Switch>
-         {/* <Route
-            path={`${match.url}/:campaignId`}
-            component={CampaignDetailPage}
-         /> */}
          <Route exact path={`${match.url}`} component={HomePage} />
       </Switch>
    );

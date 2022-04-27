@@ -36,6 +36,13 @@ class CampaignFilter extends ModelFilter
         }
     }
 
+    public function positionCampaign($position_id)
+    {
+        if ($position_id != 0) {
+            return $this->related('position_campaign', 'position_id', '=', $position_id);
+        }
+    }
+
     public function isActive()
     {
         return $this->where('is_active', '=', 1);

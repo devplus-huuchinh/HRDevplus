@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Typography, Button, Space, Row, Col, Image } from 'antd';
+import { CalendarOutlined, HomeOutlined } from '@ant-design/icons';
+import { Button, Col, Image, Row, Space, Typography } from 'antd';
+import React from 'react';
 import styled from 'styled-components';
-import { HomeOutlined, CalendarOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
