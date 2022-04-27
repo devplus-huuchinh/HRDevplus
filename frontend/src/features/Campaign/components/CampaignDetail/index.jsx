@@ -42,6 +42,7 @@ function CampaignDetail(props) {
       ev.target.src =
          'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
    };
+
    return (
       <CampaignDetailWrapper>
          <Space

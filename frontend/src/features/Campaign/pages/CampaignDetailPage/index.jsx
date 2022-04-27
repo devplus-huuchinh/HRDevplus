@@ -96,7 +96,7 @@ function CampaignDetailPage(props) {
                                        );
                                     }
                                  )}
-                                 onClick={openApplyForm}
+                                 onClick={() => openApplyForm()}
                               />
                            </Col>
                            <Col xs={0} sm={0} lg={6}>
