@@ -47,6 +47,7 @@ function CandidateSearchToolbar(props) {
                         direction='vertical'
                         size={15}
                         className='filter__radio--group'
+                        wrap
                      >
                         <Radio value={0}>All</Radio>
                         {techniques?.map((technique) => (
@@ -65,6 +66,7 @@ function CandidateSearchToolbar(props) {
                         direction='vertical'
                         size={15}
                         className='filter__radio--group'
+                        wrap
                      >
                         <Radio value={0}>All</Radio>
                         {positions?.map((position) => (
