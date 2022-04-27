@@ -35,11 +35,15 @@ Campaign.prototype = {
 
 function Campaign(props) {
    const { campaignId, campaignImg, campaignName, campaignAdd } = props;
-
+   const addDefaultSrc = (ev) => {
+      ev.target.src =
+         'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
+   };
    return (
       <Link to={`/campaign/${campaignId}`}>
          <CampaignWrapper>
             <Image
+               onError={(ev) => addDefaultSrc(ev)}
                src={campaignImg}
                preview={false}
                width='100%'

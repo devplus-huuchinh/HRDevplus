@@ -94,11 +94,7 @@ function HomePage(props) {
                                  <Campaign
                                     key={campaign.id}
                                     campaignId={campaign.id}
-                                    campaignImg={
-                                       campaign.image_url === 'null' || ''
-                                          ? 'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png'
-                                          : campaign.image_url
-                                    }
+                                    campaignImg={campaign.image_url}
                                     campaignName={campaign.name}
                                     campaignAdd={campaign.address}
                                  />

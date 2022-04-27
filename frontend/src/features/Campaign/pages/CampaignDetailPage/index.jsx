@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
-import { Row, Col, Space, Spin, Breadcrumb, Typography } from 'antd';
+import { Row, Col, Breadcrumb, Space, Spin, Button, Typography } from 'antd';
 import Header from '../../../Home/components/Header';
 import Footer from '../../../Home/components/Footer';
 import { Section } from '../../../Home/components/Section/Section.styles';
@@ -83,14 +83,19 @@ function CampaignDetailPage(props) {
                                  campaignAdd={campaignDetail.address}
                                  campaignStartDate={campaignDetail.start_date}
                                  campaignEndDate={campaignDetail.end_date}
-                                 campaignImage={
-                                    campaignDetail.image_url === 'null' || ''
-                                       ? 'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png'
-                                       : campaignDetail.image_url
-                                 }
+                                 campaignImage={campaignDetail.image_url}
                                  campaignDescription={
                                     campaignDetail.description
                                  }
+                                 campaignTechnique={campaignDetail.technique.map(
+                                    (tech) => {
+                                       return (
+                                          <Button key={tech.name}>
+                                             {tech.name}
+                                          </Button>
+                                       );
+                                    }
+                                 )}
                                  onClick={() => openApplyForm()}
                               />
                            </Col>
