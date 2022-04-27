@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
-use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Api\EmailController;
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,19 @@ Route::prefix('/v1/campaigns')->group(
         );
     }
 );
+
+Route::prefix('/v1/search')->group(
+    function () {
+        Route::controller(SearchController::class)->group(
+            function () {
+                Route::get('/candidate-search', 'index');
+                Route::get('/campaign-search', 'searchCampaign');
+                Route::get('/campaign-technique-search', 'searchCampaignTechnique');
+            }
+        );
+    }
+);
+
 Route::prefix('/v1/mail')->group(
     function () {
         Route::controller(EmailController::class)->group(

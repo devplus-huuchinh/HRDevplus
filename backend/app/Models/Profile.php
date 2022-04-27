@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Profile extends Model
 {
     use HasFactory;
+    use Filterable;
+
     protected $fillable = [
         'name',
         'campaign_id',

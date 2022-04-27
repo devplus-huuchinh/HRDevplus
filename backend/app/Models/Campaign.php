@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Campaign extends Model
 {
     use HasFactory;
+    use Filterable;
+
     protected $fillable = [
         'name',
         'address',
@@ -22,14 +25,17 @@ class Campaign extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
     public function profile()
     {
         return $this->hasMany(Profile::class);
     }
+
     public function position_campaign()
     {
         return $this->hasMany(Position_campaign::class);
     }
+
     public function campaign_technique()
     {
         return $this->hasMany(campaign_technique::class);
