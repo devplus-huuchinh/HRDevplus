@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,16 @@ Route::prefix('/v1/campaigns')->group(
         );
     }
 );
+Route::prefix('/v1/profile')->group(
+    function () {
+        Route::controller(ProfileController::class)->group(
+            function () {
+                Route::post('', 'applyToCampaign');
+            }
+        );
+    }
+);
+
 Route::prefix('/v1/mail')->group(
     function () {
         Route::controller(EmailController::class)->group(

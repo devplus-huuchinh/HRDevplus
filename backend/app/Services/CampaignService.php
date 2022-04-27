@@ -4,11 +4,6 @@ namespace App\Services;
 
 use App\Repositories\CampaignRepo;
 
-/**
- * Class UserService
- *
- * @package App\Services
- */
 class CampaignService
 {
     /**

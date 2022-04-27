@@ -37,7 +37,7 @@ function Campaign(props) {
    const { campaignId, campaignImg, campaignName, campaignAdd } = props;
 
    return (
-      <Link to={`/home/${campaignId}`}>
+      <Link to={`/campaign/${campaignId}`}>
          <CampaignWrapper>
             <Image
                src={campaignImg}
