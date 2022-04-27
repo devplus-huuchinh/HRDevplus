@@ -32,9 +32,12 @@ class CampaignFilter extends ModelFilter
     public function campaignTechnique($technique_id)
     {
         if ($technique_id != 0) {
-            return $this->related('campaign_technique', 'technique_id', '=', $technique_id)->where('is_active', '=', 1);
+            return $this->related('campaign_technique', 'technique_id', '=', $technique_id);
         }
+    }
 
+    public function isActive()
+    {
         return $this->where('is_active', '=', 1);
     }
 }
