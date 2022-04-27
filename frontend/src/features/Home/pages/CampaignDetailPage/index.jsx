@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Row, Col, Breadcrumb, Space, Spin } from 'antd';
+import { Row, Col, Breadcrumb, Space, Spin, Button } from 'antd';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Section } from '../../components/Section/Section.styles';
@@ -25,6 +25,7 @@ function CampaignDetailPage(props) {
    const { campaignId } = useParams();
 
    const [campaignDetail, setCampaignDetail] = useState({});
+
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
@@ -81,6 +82,15 @@ function CampaignDetailPage(props) {
                                  campaignDescription={
                                     campaignDetail.description
                                  }
+                                 campaignTechie={campaignDetail.technique.map(
+                                    (tech) => {
+                                       return (
+                                          <Button key={tech.name}>
+                                             {tech.name}
+                                          </Button>
+                                       );
+                                    }
+                                 )}
                               />
                            </Col>
                            <Col xs={0} sm={0} lg={6}>

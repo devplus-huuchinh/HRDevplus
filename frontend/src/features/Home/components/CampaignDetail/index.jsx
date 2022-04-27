@@ -34,6 +34,7 @@ function CampaignDetail(props) {
       campaignEndDate,
       campaignImage,
       campaignDescription,
+      campaignTechnique,
    } = props;
 
    const openApplyForm = () => {};
@@ -60,7 +61,6 @@ function CampaignDetail(props) {
                   width: '100%',
                   maxWidth: '700px',
                }}
-               onclick={() => openApplyForm()}
             >
                Apply Now
             </Button>
@@ -100,10 +100,7 @@ function CampaignDetail(props) {
                      </Text>
                      <div>
                         <Space size={'small'} wrap>
-                           <Button>ReactJs</Button>
-                           <Button>VueJS</Button>
-                           <Button>Laravel</Button>
-                           <Button>NodeJs</Button>
+                           {campaignTechnique}
                         </Space>
                      </div>
                   </Space>
