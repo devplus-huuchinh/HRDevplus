@@ -14,16 +14,27 @@ class CampaignService
         $this->campaignRepo = $campaignRepo;
     }
 
-    public function findAll($params)
+    public function findAllHr($params)
     {
         $limit = $params['limit'] ?? 10;
         $offset = $params['offset'] ?? 0;
-        return $this->campaignRepo->findAll((int)$offset, (int)$limit);
+        return $this->campaignRepo->findAllHr((int)$offset, (int)$limit);
     }
 
-    public function create($array)
+    public function create($attributes)
     {
-        return $this->campaignRepo->create($array);
+        try{
+            return $this->campaignRepo->create($attributes);
+        }
+        catch (\Throwable $error) {
+            return response()->json(
+                [
+                'message' => 'Getting_data_fail',
+                'error' => $error,
+                ]
+            );
+        }
+        // return $this->campaignRepo->create($attributes);
     }
 
     public function findOne($id)

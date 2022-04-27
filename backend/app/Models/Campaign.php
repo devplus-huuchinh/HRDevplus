@@ -16,12 +16,12 @@ class Campaign extends Model
     protected $fillable = [
         'name',
         'address',
-        'startDate',
-        'endDate',
-        'isActive',
-        'createdBy',
+        'start_date',
+        'end_date',
+        'is_active',
+        'user_id',
         'description',
-        'imageUrl',
+        'image_url',
     ];
 
     public function user()

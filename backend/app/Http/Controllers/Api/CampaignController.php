@@ -22,7 +22,7 @@ class CampaignController extends Controller
          
          $user = $request->user();
          try{
-             return $this->campaignService->findAll($request->all());
+             return $this->campaignService->findAllHr($request->all());
          }
          catch (\Throwable $error) {
              return response()->json(
@@ -35,22 +35,24 @@ class CampaignController extends Controller
     }
 
     public function store(Request $request)
-    {     
+    {   
+         $test = $this->campaignService->create($request);
+         return  response()->json($test);
         // dd($this->campaignService->findAll($request->all()));
-        $user = $request->user();
-        try{
-            $data = $this->campaignService->create($request);
-            $data->save();
-            return $data;
-        }
-        catch (\Throwable $error) {
-             return response()->json(
-                 [
-                 'message' => 'adding_data_fail',
-                 'error' => $error,
-                 ]
-             );
-         }
+        // $user = $request->user();
+        // try{
+        //     $data = $this->campaignService->create($request);
+        //     $data->save();
+        //     return $data;
+        // }
+        // catch (\Throwable $error) {
+        //      return response()->json(
+        //          [
+        //          'message' => 'adding_data_fail',
+        //          'error' => $error,
+        //          ]
+        //      );
+        //  }
     }
 
     public function findCampaignActive(Request $request)

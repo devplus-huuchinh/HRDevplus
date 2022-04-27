@@ -13,6 +13,14 @@ const campaignApi = {
       const url = '/campaign';
       return axiosClient.get(url);
    },
+   getPositionForHr: () => {
+      const url = '/position';
+      return axiosClient.get(url);
+   },
+   postCampaignForHr: (data) => {
+      const url = '/campaign';
+      return axiosClient.post(url, data);
+   },
 };
 
 export default campaignApi;

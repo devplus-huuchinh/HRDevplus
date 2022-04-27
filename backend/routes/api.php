@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,13 @@ Route::prefix('v1/campaign')->group(function () {
         Route::controller(CampaignController::class)->group(function () {
             Route::get('/', 'index');
             Route::post('/', 'store');
+        });
+    });
+});
+Route::prefix('v1/position')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::controller(PositionController::class)->group(function () {
+            Route::get('/', 'index');
         });
     });
 });
