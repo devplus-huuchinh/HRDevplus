@@ -83,11 +83,7 @@ function CampaignDetailPage(props) {
                                  campaignAdd={campaignDetail.address}
                                  campaignStartDate={campaignDetail.start_date}
                                  campaignEndDate={campaignDetail.end_date}
-                                 campaignImage={
-                                    campaignDetail.image_url === 'null' || ''
-                                       ? 'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png'
-                                       : campaignDetail.image_url
-                                 }
+                                 campaignImage={campaignDetail.image_url}
                                  campaignDescription={
                                     campaignDetail.description
                                  }

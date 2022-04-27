@@ -38,6 +38,10 @@ function CampaignDetail(props) {
       onClick,
    } = props;
 
+   const addDefaultSrc = (ev) => {
+      ev.target.src =
+         'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
+   };
    return (
       <CampaignDetailWrapper>
          <Space
@@ -112,6 +116,7 @@ function CampaignDetail(props) {
                   className='campaign__detail--image--wrapper'
                >
                   <Image
+                     onError={(ev) => addDefaultSrc(ev)}
                      src={campaignImage}
                      alt='Campain Image'
                      preview={false}
