@@ -17,7 +17,7 @@ class CampaignFilter extends ModelFilter
     public function name($name)
     {
         if ($name) {
-            return $this->where('name', 'LIKE', '%' . $name . '%')->where('is_active', '=', 1);
+            return $this->where('name', 'LIKE', '%' . $name . '%');
         }
     }
 
@@ -31,6 +31,10 @@ class CampaignFilter extends ModelFilter
 
     public function campaignTechnique($technique_id)
     {
-        return $this->related('campaign_technique', 'technique_id', '=', $technique_id);
+        if ($technique_id != 0) {
+            return $this->related('campaign_technique', 'technique_id', '=', $technique_id)->where('is_active', '=', 1);
+        }
+
+        return $this->where('is_active', '=', 1);
     }
 }
