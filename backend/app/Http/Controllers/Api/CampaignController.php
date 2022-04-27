@@ -57,16 +57,31 @@ class CampaignController extends Controller
 
     public function findCampaignActive(Request $request)
     {
-        return $this->campaignService->findCampaignActive($request->id);
-    }
-
-    public function sortCampaignByName(Request $request)
-    {
-        return $this->campaignService->findCampaignActive($request->id);
+        try {
+            $campaignActive = $this->campaignService->findCampaignActive($request->id);
+            return response()->json($campaignActive);
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                'message' => 'show_campaign_active_fail',
+                'error' => $th,
+                ], 500
+            );
+        }
     }
 
     public function showCampaignDetail(Request $request)
     {
-        return $this->campaignService->showCampaignDetail($request->id);
+        try {
+            $compaignDetail = $this->campaignService->showCampaignDetail($request->id);
+            return response()->json($compaignDetail);
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                'message' => 'show_campaign_detail_fail',
+                'error' => $th,
+                ], 500
+            );
+        }
     }
 }

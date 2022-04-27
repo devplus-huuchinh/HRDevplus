@@ -53,6 +53,6 @@ class CampaignRepo extends EloquentRepo
     
     public function showCampaign($campaignId)
     {
-        return $this->model->where('id', $campaignId)->first();
+        return $this->model->with(['technique:name'])->where('id', $campaignId)->first();
     }
 }
