@@ -7,7 +7,6 @@ const { Title, Paragraph } = Typography;
 
 export const CampaignWrapper = styled.div`
    width: 100%;
-   max-width: 300px;
    height: 100%;
    cursor: pointer;
    margin: 0 auto;

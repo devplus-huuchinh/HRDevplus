@@ -1,0 +1,16 @@
+.filter__wrapper {
+   // @media screen and (max-width: 1024px) {
+   //    display: flex;
+   //    gap: 20px;
+   // }
+   .filter__radio--group {
+      @media screen and (max-width: 1024px) {
+         display: flex;
+         flex-direction: row;
+      }
+   }
+   .ant-collapse-header {
+      font-weight: bold;
+      font-size: 16px;
+   }
+}

@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\EmailController;
+use App\Http\Controllers\Api\PositionController;
+use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\TechniqueController;
 use App\Http\Controllers\Api\ProfileController;
-use App\Http\Controllers\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,11 +56,12 @@ Route::prefix('/v1/campaigns')->group(
         );
     }
 );
-Route::prefix('/v1/profile')->group(
+
+Route::prefix('/v1/search')->group(
     function () {
-        Route::controller(ProfileController::class)->group(
+        Route::controller(SearchController::class)->group(
             function () {
-                Route::post('', 'applyToCampaign');
+                Route::get('/campaign-search', 'searchCampaign');
             }
         );
     }
@@ -68,6 +72,27 @@ Route::prefix('/v1/mail')->group(
         Route::controller(EmailController::class)->group(
             function () {
                 // Route::get('/reset-password', 'resetPassword');
+            }
+        );
+    }
+);
+
+
+Route::prefix('/v1/technique')->group(
+    function () {
+        Route::controller(TechniqueController::class)->group(
+            function () {
+                Route::get('', 'index');
+            }
+        );
+    }
+);
+
+Route::prefix('/v1/position')->group(
+    function () {
+        Route::controller(PositionController::class)->group(
+            function () {
+                Route::get('', 'index');
             }
         );
     }
