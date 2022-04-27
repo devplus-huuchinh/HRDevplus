@@ -1,5 +1,5 @@
-import { CaretRightOutlined, FilterOutlined } from '@ant-design/icons';
-import { Col, Row, Select, Space, Spin, Typography } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Col, Row, Space, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
@@ -8,8 +8,7 @@ import Campaign from '../../components/Campaign';
 import CandidateSearchBar from '../../components/CandidateSearchBar';
 import { CampaignListWrapper } from './Homepage.styles';
 
-const { Title, Text } = Typography;
-const { Option } = Select;
+const { Title } = Typography;
 
 function HomePage(props) {
    let history = useHistory();
@@ -46,9 +45,15 @@ function HomePage(props) {
                   size={'large'}
                   style={{ width: '100%', display: 'flex' }}
                >
-                  <CandidateSearchBar
-                     handleSubmitCandidateSearch={handleSubmitCandidateSearch}
-                  />
+                  <Row>
+                     <Col span={24}>
+                        <CandidateSearchBar
+                           handleSubmitCandidateSearch={
+                              handleSubmitCandidateSearch
+                           }
+                        />
+                     </Col>
+                  </Row>
                   <Row
                      style={{
                         display: 'flex',
@@ -67,29 +72,6 @@ function HomePage(props) {
                            <CaretRightOutlined />
                            Our Campaigns
                         </Title>
-                     </Col>
-                     <Col>
-                        <Space>
-                           <Text strong>
-                              <Space
-                                 size='small'
-                                 style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                 }}
-                              >
-                                 <FilterOutlined />
-                                 Sort by:
-                              </Space>
-                           </Text>
-                           <Select
-                              defaultValue='dateCreate'
-                              style={{ width: 150 }}
-                           >
-                              <Option value='dateCreate'>Date Created</Option>
-                              <Option value='name'>Name</Option>
-                           </Select>
-                        </Space>
                      </Col>
                   </Row>
                   <CampaignListWrapper>

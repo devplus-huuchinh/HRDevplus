@@ -7,6 +7,7 @@ import CandidateSearchBar from '../../../Home/components/CandidateSearchBar';
 import CandidateSearchResult from '../../components/CandidateSearchResult';
 import CandidateSearchToolbar from '../../components/CandidateSearchToolbar';
 import './CandidateSearchPage.scss';
+import { FilterOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -68,7 +69,7 @@ const CandidateSearchPage = (props) => {
          <div className='candidate-search-page'>
             <div className='search--filter'>
                <Title level={4} className='filter--title'>
-                  Filter tool
+                  <FilterOutlined /> Filter tool
                </Title>
                <CandidateSearchToolbar
                   handleChangeCampaignFilter={handleChangeCampaignFilter}
@@ -76,7 +77,7 @@ const CandidateSearchPage = (props) => {
                />
             </div>
             <div className='search--result'>
-               <Title level={5} className='search--item'>
+               <Title level={4} className='search--item'>
                   Result for {keyword ? keyword : 'all'}
                </Title>
                <Spin spinning={isSpin}>
