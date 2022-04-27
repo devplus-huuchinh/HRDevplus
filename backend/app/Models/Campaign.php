@@ -10,6 +10,7 @@ class Campaign extends Model
 {
     use HasFactory;
     use Filterable;
+    protected $with = ['position', 'technique'];
 
     protected $fillable = [
         'name',
@@ -21,6 +22,7 @@ class Campaign extends Model
         'description',
         'imageUrl',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -39,5 +41,15 @@ class Campaign extends Model
     public function campaign_technique()
     {
         return $this->hasMany(campaign_technique::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsToMany(position::class, 'position_campaigns');
+    }
+
+    public function technique()
+    {
+        return $this->belongsToMany(technique::class, 'campaign_techniques');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TechniqueController;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
