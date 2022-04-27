@@ -20,7 +20,6 @@ class CampaignController extends Controller
         return $this->campaignService->findAll($request->all());
     }
 
-
     public function findCampaignActive(Request $request)
     {
         try {
