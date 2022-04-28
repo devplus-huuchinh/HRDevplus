@@ -34,6 +34,7 @@ class Profile extends Model
     {
         return $this->belongsTo(Position::class, 'position_id', 'id');
     }
+
     public function profile_technique()
     {
         return $this->hasMany(Profile_technique::class);

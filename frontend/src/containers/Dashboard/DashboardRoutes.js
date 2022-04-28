@@ -345,8 +345,16 @@ const routes = [
    //    component: lazy(() => import('@iso/features/Home')),
    // },
    {
+      path: 'profile',
+      component: lazy(() => import('@iso/features/Profile')),
+   },
+   {
       path: 'user-profile',
       component: lazy(() => import('@iso/features/UserProfile')),
+   },
+   {
+      path: 'campaign_page',
+      component: lazy(() => import('@iso/features/HR')),
    },
 ];
 

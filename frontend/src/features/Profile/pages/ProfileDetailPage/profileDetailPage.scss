@@ -1,0 +1,43 @@
+.profile-detail-container {
+   padding: 25px;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: space-between;
+
+   .profile-detail__wrapper {
+      width: 100%;
+      height: 100%;
+      border: solid 1px rgba(205, 223, 234, 0.773);
+      border-radius: 7px;
+      padding: 25px;
+      background-color: #ffffff;
+      display: flex;
+
+      .profile-detail__left-wrapper {
+         width: 20%;
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+
+         .profile-detail__left-image {
+            width: 100%;
+            border-radius: 7px;
+         }
+
+         .profile-detail__step-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .profile-detail__step-title {
+               font-size: 17px;
+               font-weight: 500;
+               color: rgba(128, 128, 128, 0.884);
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,55 @@
+.profileDetail-container {
+   padding-left: 25px;
+
+   .profileDetail__name {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 27px;
+   }
+
+   .profileDetail__title {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+      color: rgba(0, 0, 0, 0.637);
+   }
+
+   .profileDetail__content-wrapper {
+      display: flex;
+      align-items: flex-end;
+      margin-top: 3px;
+
+      .profileDetail__label {
+         font-weight: bold;
+         font-size: 17px;
+         color: rgba(128, 128, 128, 0.799);
+      }
+
+      .profileDetail__info {
+         margin-left: 5px;
+         font-size: 16px;
+      }
+   }
+
+   .profileDetail__Url-wrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 3px;
+      .profileDetail__label {
+         font-weight: bold;
+         font-size: 17px;
+         color: rgba(128, 128, 128, 0.799);
+      }
+
+      .profileDetail__btn {
+         width: 40px;
+         height: 20px;
+         border-radius: 30px;
+         margin-left: 5px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+   }
+}
