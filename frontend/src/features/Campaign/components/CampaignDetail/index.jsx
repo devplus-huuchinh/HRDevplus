@@ -21,11 +21,6 @@ const CampaignDetailWrapper = styled.div`
          justify-content: center;
       }
    }
-   .campaign__detail--image--wrapper {
-      .ant-image {
-         width: 100%;
-      }
-   }
 `;
 
 function CampaignDetail(props) {

@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Col, Row, Space, Spin, Tag, Typography } from 'antd';
+import { Col, Row, Space, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
@@ -7,6 +7,7 @@ import MainLayout from '../../../../containers/MainLayout';
 import Campaign from '../../components/Campaign';
 import CandidateSearchBar from '../../components/CandidateSearchBar';
 import { CampaignListWrapper } from './Homepage.styles';
+import Tag from '../../components/Tag';
 
 const { Title } = Typography;
 
@@ -84,7 +85,12 @@ function HomePage(props) {
                               campaignImg={campaign.image_url}
                               campaignName={campaign.name}
                               campaignTech={campaign.technique?.map((tech) => {
-                                 return <Tag key={tech.name}>{tech.name}</Tag>;
+                                 return (
+                                    <Tag
+                                       key={tech.name}
+                                       tagContent={tech.name}
+                                    />
+                                 );
                               })}
                               campaignAdd={campaign.address}
                            />

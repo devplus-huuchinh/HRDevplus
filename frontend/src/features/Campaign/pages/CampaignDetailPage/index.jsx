@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
-import { Row, Col, Breadcrumb, Space, Spin, Typography, Tag } from 'antd';
+import { Row, Col, Breadcrumb, Space, Spin, Typography } from 'antd';
 import Header from '../../../Home/components/Header';
 import Footer from '../../../Home/components/Footer';
 import { Section } from '../../../Home/components/Section/Section.styles';
@@ -10,6 +10,7 @@ import campaignApi from '../../../../api/campaignApi';
 import Company from '../../components/Company';
 import CampaignDetail from '../../components/CampaignDetail';
 import { Link } from 'react-router-dom';
+import Tag from '../../../Home/components/Tag';
 
 const { Text } = Typography;
 const CampaignDetailPageWrapper = styled.div`
@@ -106,14 +107,20 @@ function CampaignDetailPage(props) {
                                  campaignTechnique={campaignDetail.technique.map(
                                     (tech) => {
                                        return (
-                                          <Tag key={tech.name}>{tech.name}</Tag>
+                                          <Tag
+                                             key={tech.name}
+                                             tagContent={tech.name}
+                                          />
                                        );
                                     }
                                  )}
                                  campaignPosition={campaignDetail.position.map(
                                     (pos) => {
                                        return (
-                                          <Tag key={pos.name}>{pos.name}</Tag>
+                                          <Tag
+                                             key={pos.name}
+                                             tagContent={pos.name}
+                                          />
                                        );
                                     }
                                  )}

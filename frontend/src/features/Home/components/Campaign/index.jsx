@@ -21,7 +21,7 @@ export const CampaignWrapper = styled.div`
       aspect-ratio: 4/3;
    }
    &:hover {
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      box-shadow: rgba(100, 100, 111, 0.7) 0px 7px 29px 0px;
       transform: translateY(-5px);
    }
    @media screen and (max-width: 680px) {
@@ -36,42 +36,64 @@ Campaign.prototype = {
 function Campaign(props) {
    const { campaignId, campaignImg, campaignName, campaignAdd, campaignTech } =
       props;
+
    const addDefaultSrc = (ev) => {
       ev.target.src =
          'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
    };
+
    return (
       <Link to={`/campaign/${campaignId}`}>
          <CampaignWrapper>
             <Space
                direction='vertical'
                size={'small'}
-               style={{ display: 'flex', alignItems: 'center' }}
+               style={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+               }}
             >
-               <Image
-                  onError={(ev) => addDefaultSrc(ev)}
-                  src={campaignImg}
-                  preview={false}
-                  width='100%'
-                  className='campaign-image'
-                  style={{ marginBottom: '10px', borderRadius: '8px' }}
-               />
-               <Title level={4}>{campaignName}</Title>
+               <Space direction='vertical'>
+                  <Image
+                     onError={(ev) => addDefaultSrc(ev)}
+                     src={campaignImg}
+                     preview={false}
+                     className='campaign-image'
+                     style={{
+                        width: '100%',
+                        objectFit: 'cover',
+                        marginBottom: '10px',
+                        borderRadius: '8px',
+                     }}
+                  />
+                  <Title level={4}>{campaignName}</Title>
+               </Space>
                <Space
-                  wrap
+                  direction='vertical'
                   style={{
                      display: 'flex',
                      alignItems: 'center',
-                     justifyContent: 'center',
-                     marginBottom: '10px',
+                     justifyContent: 'space-between',
                   }}
                >
-                  {campaignTech}
+                  <Space
+                     wrap
+                     style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '10px',
+                     }}
+                  >
+                     {campaignTech}
+                  </Space>
+                  <Paragraph>
+                     <Text strong>Add: </Text> {campaignAdd}
+                  </Paragraph>
+                  <Title level={5}>ST United - Da Nang</Title>
                </Space>
-               <Paragraph>
-                  <Text strong>Add: </Text> {campaignAdd}
-               </Paragraph>
-               <Title level={5}>ST United - Da Nang</Title>
             </Space>
          </CampaignWrapper>
       </Link>

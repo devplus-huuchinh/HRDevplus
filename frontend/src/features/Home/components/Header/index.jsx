@@ -5,6 +5,7 @@ import { Container } from '../Container/Container.styles';
 import { useHistory } from 'react-router-dom';
 
 const { Title } = Typography;
+
 const HeaderWrapper = styled.div`
    width: 100%;
    height: 400px;
@@ -25,7 +26,7 @@ const HeaderWrapper = styled.div`
    }
    .header-container {
       position: absolute;
-      top: 30px;
+      top: 50px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 99;
@@ -69,7 +70,7 @@ function Header(props) {
                   src='https://devplus.asia/assets/images/devplus/Artboard_2.png'
                   style={{
                      width: '100%',
-                     maxWidth: '300px',
+                     maxWidth: '350px',
                      cursor: 'pointer',
                   }}
                   onClick={onClickLogo}
