@@ -93,7 +93,10 @@
       "styled-theme": "^0.3.3",
       "swiper": "5.4.5",
       "use-react-router-breadcrumbs": "^2.0.2",
-      "uuid": "^8.3.2"
+      "uuid": "^8.3.2",
+		"react-csv": "^2.2.2",
+		"@ckeditor/ckeditor5-build-classic": "^34.0.0",
+		"@ckeditor/ckeditor5-react": "^5.0.0"
    },
    "devDependencies": {
       "babel-plugin-import": "^1.13.0",

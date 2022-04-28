@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CampaignController;
-use App\Http\Controllers\Api\EmailController;
+use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TechniqueController;
-use App\Http\Controllers\Api\ProfileController;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +52,8 @@ Route::prefix('/v1/campaigns')->group(
     function () {
         Route::controller(CampaignController::class)->group(
             function () {
-                Route::get('', 'findCampaignActive');
                 Route::get("/{id}", 'showCampaignDetail');
+                Route::get('', 'findCampaignActive');
                 Route::post('/apply-campaign', 'applyCampaign');
             }
         );
@@ -78,6 +80,22 @@ Route::prefix('/v1/mail')->group(
     }
 );
 
+Route::name('api.posts.')->group(function () {
+    Route::get('v1/posts', [UserController::class, 'index'])->name('index');
+});
+
+Route::prefix('/v1/profiles')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/dropdownlist', 'dropdownlistData');
+        Route::get('/', 'all');
+    });
+});
+
+Route::prefix('/v1/profile')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::patch('/', 'editProfile');
+    });
+});
 
 Route::prefix('/v1/technique')->group(
     function () {
@@ -114,3 +132,21 @@ Route::name('api.posts.')->group(
         Route::get('v1/posts', [UserController::class, 'index'])->name('index');
     }
 );
+
+Route::prefix('v1/campaign')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::controller(CampaignController::class)->group(function () {
+            Route::get('/droplist', 'getDropList');
+            Route::get('/', 'index');
+            Route::post('/', 'newCampaign');
+        });
+    });
+});
+
+Route::prefix('v1/position')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::controller(PositionController::class)->group(function () {
+            Route::get('/', 'index');
+        });
+    });
+});

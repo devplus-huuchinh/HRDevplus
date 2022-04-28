@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Campaign;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class CampaignRepo extends EloquentRepo
 {
@@ -15,20 +16,24 @@ class CampaignRepo extends EloquentRepo
         return Campaign::class;
     }
 
-    /**
-     * @param  $offset
-     * @param  $limit
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function findAll($offset, $limit)
+    public function findAllHr($offset, $limit)
     {
-        return $this->model->offset($offset)->limit($limit)->get();
+        $firstConnect = $this->model
+            ->with(['position:name', 'technique:name'])
+            ->offset($offset)->limit($limit)->get();
+        return $firstConnect;
     }
 
-    /**
-     * @param  $id
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    public function create($data)
+    {
+        try {
+            $newCampaign = $this->model->create($data);
+            return $newCampaign;
+        } catch (\Throwable $th) {
+            return response()->json(["error" => $th]);
+        }
+    }
+
     public function findCampaign($campaignId)
     {
         return $this->model->where('is_active', 1)->get();
