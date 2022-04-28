@@ -1,19 +1,44 @@
-import { Space } from 'antd';
+import { message, Space, Spin } from 'antd';
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
+import campaignApi from '../../../../api/campaignApi';
 import MainLayout from '../../../../containers/MainLayout';
 import uploadFile from '../../../../firebase/uploadFile';
 import ApplyForm from '../../components/ApplyForm';
 
 function ApplyCampaign(props) {
+   let location = useLocation();
+   let history = useHistory();
    const { campaignId } = useParams();
+   const { campaignDetail } = location.state;
+   const [formLoading, setFormLoading] = useState(false);
+
    const [avatar, setAvatar] = useState({
       loading: false,
       url: '',
    });
 
    const handleApplyCampaign = async (formData) => {
-      console.log('formData', formData);
+      try {
+         setFormLoading(true);
+         const prepareDataInDb = {
+            ...formData,
+            campaignId,
+            cvUrl: formData.uploadCV[0].xhr,
+            imageUrl: formData.uploadAvatar[0].xhr,
+         };
+         const response = await campaignApi.applyCampaign(prepareDataInDb);
+
+         setFormLoading(false);
+         if (response.createCampaign.id && response.createCampaignTechnique) {
+            message.success('Apply to campaign success!');
+            return history.push('/');
+         }
+
+         message.error('Something went wrong, please try again');
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    const uploadCVToFirebase = async (options) => {
@@ -55,12 +80,16 @@ function ApplyCampaign(props) {
                size={'middle'}
                style={{ display: 'flex' }}
             >
-               <ApplyForm
-                  handleApplyCampaign={handleApplyCampaign}
-                  uploadCVToFirebase={uploadCVToFirebase}
-                  uploadAvatarToFirebase={uploadAvatarToFirebase}
-                  avatar={avatar}
-               />
+               <Spin spinning={formLoading}>
+                  <ApplyForm
+                     handleApplyCampaign={handleApplyCampaign}
+                     uploadCVToFirebase={uploadCVToFirebase}
+                     uploadAvatarToFirebase={uploadAvatarToFirebase}
+                     avatar={avatar}
+                     campaignPosition={campaignDetail.position}
+                     campaignTechnique={campaignDetail.technique}
+                  />
+               </Spin>
             </Space>
          </MainLayout>
       </>

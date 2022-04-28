@@ -10,6 +10,11 @@ const campaignApi = {
       const url = '/campaigns';
       return axiosClient.get(url, data);
    },
+
+   applyCampaign: (data) => {
+      const url = '/campaigns/apply-campaign';
+      return axiosClient.post(url, data);
+   },
 };
 
 export default campaignApi;

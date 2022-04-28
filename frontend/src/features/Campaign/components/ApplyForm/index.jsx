@@ -3,7 +3,17 @@ import {
    UploadOutlined,
    LoadingOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row, Space, Typography, Upload } from 'antd';
+import {
+   Button,
+   Col,
+   Form,
+   Input,
+   Row,
+   Space,
+   Typography,
+   Upload,
+   Select,
+} from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -22,6 +32,7 @@ ApplyForm.defaultProps = {
 };
 
 const { Title } = Typography;
+const { Option } = Select;
 
 function ApplyForm(props) {
    const {
@@ -29,6 +40,8 @@ function ApplyForm(props) {
       uploadCVToFirebase,
       uploadAvatarToFirebase,
       avatar,
+      campaignPosition,
+      campaignTechnique,
    } = props;
 
    let history = useHistory();
@@ -161,6 +174,53 @@ function ApplyForm(props) {
                                  type={'text'}
                                  placeholder='type your phone number...'
                               />
+                           </Form.Item>
+                           <Form.Item
+                              label='Position'
+                              name='position'
+                              rules={[
+                                 {
+                                    required: true,
+                                    message:
+                                       'Please input your phone position!',
+                                 },
+                              ]}
+                           >
+                              <Select placeholder='Please select a position'>
+                                 {campaignPosition?.map((item) => (
+                                    <Option
+                                       value={item.pivot.position_id}
+                                       key={item.pivot.position_id}
+                                    >
+                                       {item.name}
+                                    </Option>
+                                 ))}
+                              </Select>
+                           </Form.Item>
+                           <Form.Item
+                              name='technique'
+                              label='Technique'
+                              rules={[
+                                 {
+                                    required: true,
+                                    message: 'Please select your technique!',
+                                    type: 'array',
+                                 },
+                              ]}
+                           >
+                              <Select
+                                 mode='multiple'
+                                 placeholder='Please select favourite technique'
+                              >
+                                 {campaignTechnique?.map((item) => (
+                                    <Option
+                                       value={item.pivot.technique_id}
+                                       key={item.pivot.technique_id}
+                                    >
+                                       {item.name}
+                                    </Option>
+                                 ))}
+                              </Select>
                            </Form.Item>
                            <Form.Item
                               label='Upload CV:'
