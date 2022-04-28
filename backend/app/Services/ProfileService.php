@@ -31,4 +31,9 @@ class ProfileService
    {
       return $this->campaignRepo->applyToCampaign($id);
    }
+
+   public function create($profileFormData)
+   {
+      return $this->profileRepo->create($profileFormData);
+   }
 }

@@ -64,19 +64,9 @@ class ProfileController extends Controller
         }
     }
 
-    public function applyToCampaign(Request $request)
+    public function create(Request $request)
     {
-        try {
-            $profile = $this->profileService->applyToCampaign($request->id);
-            return response()->json($profile);
-        } catch (\Throwable $th) {
-            return response()->json(
-                [
-                    'message' => 'aplly_to_campaign_fail',
-                    'error' => $th,
-                ],
-                500
-            );
-        }
+        $createCampaign = $this->profileService->create($request->all());
+        return response()->json($createCampaign);
     }
 }

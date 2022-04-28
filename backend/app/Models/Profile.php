@@ -14,14 +14,14 @@ class Profile extends Model
     protected $fillable = [
         'name',
         'campaign_id',
-        'firstName',
-        'lastName',
+        'first_name',
+        'last_name',
         'email',
-        'phoneNum',
+        'phone_numb',
         'status',
         'step',
-        'imageUrl',
-        'cv_Url',
+        'image_url',
+        'cv_url',
         'position_id'
     ];
 

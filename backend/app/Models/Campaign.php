@@ -9,6 +9,7 @@ use EloquentFilter\Filterable;
 class Campaign extends Model
 {
     use HasFactory;
+    use Filterable;
 
     protected $with = ['position', 'technique'];
 

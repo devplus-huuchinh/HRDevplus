@@ -8,6 +8,8 @@ use App\Repositories\PositionRepo;
 use App\Repositories\TechniqueRepo;
 use Illuminate\Http\Request;
 use App\Services\CampaignService;
+use App\Services\ProfileService;
+use App\Services\ProfileTechniqueService;
 
 
 class CampaignController extends Controller
@@ -16,11 +18,13 @@ class CampaignController extends Controller
     private $positionRepo;
     private $techniqueRepo;
     // constructor
-    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo)
+    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo, ProfileService $profileService, ProfileTechniqueService $profileTechniqueService)
     {
         $this->campaignService = $campaignService;
         $this->positionRepo = $positionRepo;
         $this->techniqueRepo = $techniqueRepo;
+        $this->profileService = $profileService;
+        $this->profileTechniqueService = $profileTechniqueService;
     }
 
     // show all campaign
@@ -105,5 +109,22 @@ class CampaignController extends Controller
                 500
             );
         }
+    }
+
+    public function applyCampaign(Request $request)
+    {
+        $createCampaign = $this->profileService->create($request->all());
+
+        $data = [];
+        foreach ($request->technique as $i) {
+            array_push($data, ["technique_id" => $i, "profile_id" => $createCampaign->id]);
+        }
+
+        $createCampaignTechnique = $this->profileTechniqueService->createProfileTechnique($data);
+
+        return response()->json([
+            'createCampaign' => $createCampaign,
+            'createCampaignTechnique' => $createCampaignTechnique,
+        ]);
     }
 }

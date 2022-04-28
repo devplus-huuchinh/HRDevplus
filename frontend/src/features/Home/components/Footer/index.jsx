@@ -62,7 +62,7 @@ function Footer(props) {
                   <Title level={4} style={{ color: '#fff' }}>
                      <Space size={'small'}>
                         <AliwangwangOutlined />
-                        Social
+                        Socials
                      </Space>
                   </Title>
                   <Space direction='vertical'>
@@ -119,7 +119,7 @@ function Footer(props) {
          </Container>
          <FooterCoppyRight>
             <Container>
-               <Text>DevPlus @ 2022, Created by QuocNV</Text>
+               <Text>DevPlus @ 2022, Created by Internship PHP Team</Text>
             </Container>
          </FooterCoppyRight>
       </FooterWrapper>

@@ -54,6 +54,7 @@ Route::prefix('/v1/campaigns')->group(
             function () {
                 Route::get("/{id}", 'showCampaignDetail');
                 Route::get('', 'findCampaignActive');
+                Route::post('/apply-campaign', 'applyCampaign');
             }
         );
     }
@@ -111,6 +112,16 @@ Route::prefix('/v1/position')->group(
         Route::controller(PositionController::class)->group(
             function () {
                 Route::get('', 'index');
+            }
+        );
+    }
+);
+
+Route::prefix('/v1/profile')->group(
+    function () {
+        Route::controller(ProfileController::class)->group(
+            function () {
+                Route::post('/create', 'create');
             }
         );
     }

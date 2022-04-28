@@ -25,6 +25,9 @@ function CandidateSearchBar(props) {
    return (
       <div className='home-search'>
          <Search
+            allowClear
+            enterButton='Search'
+            size='large'
             onSearch={onSubmitSearchKeyword}
             placeholder='Search by campaign...'
             defaultValue={defaultValue}

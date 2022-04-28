@@ -85,11 +85,11 @@ function ViewCampaign(props) {
             </Button>
          ),
       },
-      {
-         title: '',
-         render: () => <a>Edit</a>,
-         width: '5%',
-      },
+      // {
+      //    title: '',
+      //    render: () => <a>Edit</a>,
+      //    width: '5%',
+      // },
    ];
    const [data, setData] = useState([]);
    useEffect(() => {

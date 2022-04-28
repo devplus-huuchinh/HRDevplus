@@ -3,10 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Technique;
-use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 
 class TechniqueRepo extends EloquentRepo
 {
