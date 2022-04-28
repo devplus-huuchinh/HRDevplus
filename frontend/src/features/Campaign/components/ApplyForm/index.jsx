@@ -1,39 +1,110 @@
+import {
+   PlusOutlined,
+   UploadOutlined,
+   LoadingOutlined,
+} from '@ant-design/icons';
+import { Button, Col, Form, Input, Row, Space, Typography, Upload } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Form, Input, Button, Typography, Row, Col, Upload, Space } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 import './ApplyForm.scss';
-import { useHistory, useParams } from 'react-router';
+
+ApplyForm.propTypes = {
+   handleApplyCampaign: PropTypes.func,
+   uploadAvatarToFirebase: PropTypes.func,
+   uploadCVToFirebase: PropTypes.func,
+};
+
+ApplyForm.defaultProps = {
+   handleApplyCampaign: null,
+   uploadAvatarToFirebase: null,
+   uploadCVToFirebase: null,
+};
 
 const { Title } = Typography;
 
 function ApplyForm(props) {
-   const { campaignId } = useParams();
+   const {
+      handleApplyCampaign,
+      uploadCVToFirebase,
+      uploadAvatarToFirebase,
+      avatar,
+   } = props;
 
-   const history = useHistory();
+   let history = useHistory();
+
    const backToCampaign = () => {
-      history.push(`/campaign/${campaignId}`);
+      history.goBack();
    };
+
+   const normFile = (e) => {
+      console.log('Upload event:', e);
+      if (Array.isArray(e)) {
+         return e;
+      }
+      return e && e.fileList;
+   };
+
+   const initialValues = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      uploadCV: [],
+      uploadAvatar: '',
+   };
+
+   const uploadButton = (
+      <div>
+         {avatar.loading ? <LoadingOutlined /> : <PlusOutlined />}
+         <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+   );
+
    return (
       <div className='apply__form--wrapper'>
          <div className='apply__form--container'>
             <Title level={3} className='form__heading'>
                Apply for this campaign
             </Title>
-            <Form className='apply__form'>
+            <Form
+               className='apply__form'
+               onFinish={handleApplyCampaign}
+               initialValues={initialValues}
+            >
                <Space direction='vertical' size={'middle'}>
                   <Row>
                      <Col xs={24} sm={24} md={6} lg={6}>
-                        <Upload
-                           name='avatar'
-                           listType='picture-card'
-                           className='avatar-uploader'
-                           showUploadList={false}
+                        <Form.Item
+                           name='uploadAvatar'
+                           valuePropName='fileList'
+                           getValueFromEvent={normFile}
+                           rules={[
+                              {
+                                 required: true,
+                                 message: 'Please upload your Avatar!',
+                              },
+                           ]}
                         >
-                           <div>
-                              <PlusOutlined />
-                              <div style={{ marginTop: 8 }}>Upload Image</div>
-                           </div>
-                        </Upload>
+                           <Upload
+                              customRequest={uploadAvatarToFirebase}
+                              maxCount={1}
+                              showUploadList={false}
+                              listType='picture-card'
+                              className='avatar-uploader'
+                              accept='.jpg, .jpeg, .png'
+                           >
+                              {avatar.url ? (
+                                 <img
+                                    src={avatar.url}
+                                    alt='avatar'
+                                    style={{ width: '100%' }}
+                                 />
+                              ) : (
+                                 uploadButton
+                              )}
+                           </Upload>
+                        </Form.Item>
                      </Col>
                      <Col xs={24} sm={24} md={18} lg={18}>
                         <Space direction='vertical' size={'small'}>
@@ -93,7 +164,9 @@ function ApplyForm(props) {
                            </Form.Item>
                            <Form.Item
                               label='Upload CV:'
-                              name='upLoadCV'
+                              name='uploadCV'
+                              valuePropName='fileList'
+                              getValueFromEvent={normFile}
                               rules={[
                                  {
                                     required: true,
@@ -101,9 +174,14 @@ function ApplyForm(props) {
                                  },
                               ]}
                            >
-                              <Upload {...props} className='form__upload'>
+                              <Upload
+                                 listType='text'
+                                 customRequest={uploadCVToFirebase}
+                                 maxCount={1}
+                                 accept='.pdf'
+                              >
                                  <Button icon={<UploadOutlined />}>
-                                    Click to Upload
+                                    Click to upload
                                  </Button>
                               </Upload>
                            </Form.Item>
