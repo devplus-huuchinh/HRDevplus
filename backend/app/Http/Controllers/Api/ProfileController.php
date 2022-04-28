@@ -11,19 +11,14 @@ class ProfileController extends Controller
 {
     private $profileService;
 
-    public function applyToCampaign(Request $request)
+    public function __construct(ProfileService $profileService)
     {
-        try {
-            $profile = $this->profileService->applyToCampaign($request->id);
-            return response()->json($profile);
-        } catch (\Throwable $th) {
-            return response()->json(
-                [
-                'message' => 'aplly_to_campaign_fail',
-                'error' => $th,
-                ], 500
-            );
-        }
+        $this->profileService = $profileService;
+    }
 
+    public function create(Request $request)
+    {
+        $createCampaign = $this->profileService->create($request->all());
+        return response()->json($createCampaign);
     }
 }

@@ -32,8 +32,8 @@ class CampaignRepo extends EloquentRepo
     public function findCampaign($campaignId)
     {
         return $this->model->where('is_active', 1)->get();
-
     }
+
     public function showCampaign($campaignId)
     {
         return $this->model->with(['technique:name', 'position:name'])->where('id', $campaignId)->first();
