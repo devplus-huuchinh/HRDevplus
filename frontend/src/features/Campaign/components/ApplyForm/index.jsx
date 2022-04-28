@@ -22,7 +22,17 @@ function ApplyForm(props) {
             <Form className='apply__form'>
                <Space direction='vertical' size={'middle'}>
                   <Row>
-                     <Col xs={24} sm={24} md={6} lg={6}>
+                     <Col
+                        xs={24}
+                        sm={24}
+                        md={6}
+                        lg={6}
+                        style={{
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                        }}
+                     >
                         <Upload
                            name='avatar'
                            listType='picture-card'

@@ -7,9 +7,29 @@ import { useHistory } from 'react-router-dom';
 const { Title } = Typography;
 const HeaderWrapper = styled.div`
    width: 100%;
-   // background: rgb(70, 112, 162);
+   height: 400px;
    background: #000c20;
-   padding: 20px 0;
+   background-image: url(https://stunited.vn/wp-content/uploads/2019/09/join.jpg);
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: cover;
+   position: relative;
+   &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+   }
+   .header-container {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99;
+   }
    .devplus {
       font-size: 28px;
       font-weight: bold;
@@ -34,7 +54,7 @@ function Header(props) {
 
    return (
       <HeaderWrapper>
-         <Container onClick={onClickLogo} style={{ cursor: 'pointer' }}>
+         <Container className='header-container'>
             <Space
                direction='vertical'
                size='middle'
@@ -47,7 +67,12 @@ function Header(props) {
                <Image
                   preview={false}
                   src='https://devplus.asia/assets/images/devplus/Artboard_2.png'
-                  style={{ width: '100%', maxWidth: '300px' }}
+                  style={{
+                     width: '100%',
+                     maxWidth: '300px',
+                     cursor: 'pointer',
+                  }}
+                  onClick={onClickLogo}
                />
 
                <Title level={5} style={{ color: '#fff', textAlign: 'center' }}>
