@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->timestamps();
-        });
+        // Schema::table('profiles', function (Blueprint $table) {
+        //     $table->timestamps();
+        // });
     }
     /**
      * Reverse the migrations.
