@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Campaign from '../../../Home/components/Campaign';
-import { Typography } from 'antd';
+import { Tag, Typography } from 'antd';
 import styled from 'styled-components';
 
 const CampaignSearchList = styled.div`
@@ -52,6 +52,9 @@ function CandidateSearchResult(props) {
                         campaignImg={result.image_url}
                         campaignName={result.name}
                         campaignAdd={result.address}
+                        campaignTech={result.technique?.map((tech) => {
+                           return <Tag key={tech.name}>{tech.name}</Tag>;
+                        })}
                      />
                   </div>
                ))
