@@ -28,9 +28,10 @@ class CampaignController extends Controller
         } catch (\Throwable $th) {
             return response()->json(
                 [
-                'message' => 'show_campaign_active_fail',
-                'error' => $error,
-                ], 500
+                    'message' => 'show_campaign_active_fail',
+                    'error' => $th,
+                ],
+                500
             );
         }
     }
@@ -43,9 +44,10 @@ class CampaignController extends Controller
         } catch (\Throwable $th) {
             return response()->json(
                 [
-                'message' => 'show_campaign_detail_fail',
-                'error' => $error,
-                ], 500
+                    'message' => 'show_campaign_detail_fail',
+                    'error' => $th,
+                ],
+                500
             );
         }
     }
