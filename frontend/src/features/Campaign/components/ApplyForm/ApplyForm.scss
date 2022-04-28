@@ -10,14 +10,17 @@
       background-color: #fffefc;
       border-radius: 10px;
       padding: 30px 20px;
+
       .form__heading {
          text-align: center;
          margin-bottom: 30px;
       }
+
       .apply__form {
          .ant-space {
             width: 100%;
          }
+
          .ant-form-item {
             label {
                width: 116px;
@@ -30,14 +33,17 @@
             }
          }
       }
+
       .form__button--wrap {
          display: flex;
          align-items: center;
          justify-content: space-between;
+
          > * {
             width: calc(50% - 10px);
             cursor: pointer;
          }
+
          @media screen and (max-width: 500px) {
             flex-direction: column-reverse;
             gap: 15px;

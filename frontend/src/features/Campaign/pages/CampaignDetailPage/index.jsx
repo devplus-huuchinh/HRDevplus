@@ -37,6 +37,7 @@ function CampaignDetailPage(props) {
             const responseCampaignDetail = await campaignApi.getCampainDetail(
                campaignId
             );
+            console.log('🚀 ~ responseCampaignDetail', responseCampaignDetail);
             setCampaignDetail(responseCampaignDetail);
             setLoading(true);
          } catch (error) {
@@ -49,7 +50,12 @@ function CampaignDetailPage(props) {
    const history = useHistory();
 
    const openApplyForm = () => {
-      history.push(`${campaignId}/apply`);
+      history.push({
+         pathname: `${campaignId}/apply`,
+         state: {
+            campaignDetail,
+         },
+      });
    };
 
    const [isSticky, setSticky] = useState(false);

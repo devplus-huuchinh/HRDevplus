@@ -36,10 +36,10 @@ class UserRepo extends EloquentRepo
     {
         return $this->model->create(
             [
-            'name' => $userData['name'],
-            'email' => $userData['email'],
-            'password' => Hash::make($userData['password']),
-            'role_id' => $userData['role_id'],
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => Hash::make($userData['password']),
+                'role_id' => $userData['role_id'],
             ]
         );
     }
@@ -67,7 +67,6 @@ class UserRepo extends EloquentRepo
         return $foundUser;
     }
 
-
     public function passwordReset($request)
     {
         $status = Password::reset(
@@ -75,7 +74,7 @@ class UserRepo extends EloquentRepo
             function ($user) use ($request) {
                 $user->forceFill(
                     [
-                    'password' => Hash::make($request->password),
+                        'password' => Hash::make($request->password),
                     ]
                 )->save();
 

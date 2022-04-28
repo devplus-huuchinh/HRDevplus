@@ -30,8 +30,6 @@ export default function Sidebar() {
             dispatch(toggleCollapsed());
             // dispatch(toggleOpenDrawer());
          }, 100);
-
-         // clearTimeout(timer);
       }
    }
    function onOpenChange(newOpenKeys) {
@@ -103,6 +101,7 @@ export default function Sidebar() {
                   openKeys={isCollapsed ? [] : openKeys}
                   selectedKeys={current}
                   onOpenChange={onOpenChange}
+                  defaultOpenKeys={['ecommerce']}
                >
                   {options.map((singleOption) => (
                      <SidebarMenu

@@ -4,12 +4,18 @@ namespace App\Services;
 
 use App\Repositories\ProfileRepo;
 
-class CampaignService
+class ProfileService
 {
     private $profileRepo;
 
-    public function applyToCampaign($id)
+
+    public function __construct(ProfileRepo $profileRepo)
     {
-        return $this->campaignRepo->applyToCampaign($id);
+        $this->profileRepo = $profileRepo;
+    }
+
+    public function create($profileFormData)
+    {
+        return $this->profileRepo->create($profileFormData);
     }
 }
