@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
-import { Row, Col, Breadcrumb, Space, Spin, Button, Typography } from 'antd';
+import { Row, Col, Breadcrumb, Space, Spin, Typography, Tag } from 'antd';
 import Header from '../../../Home/components/Header';
 import Footer from '../../../Home/components/Footer';
 import { Section } from '../../../Home/components/Section/Section.styles';
@@ -39,10 +39,7 @@ function CampaignDetailPage(props) {
             setCampaignDetail(responseCampaignDetail);
             setLoading(true);
          } catch (error) {
-            console.log(
-               '🚀 ~ file: index.jsx ~ line 36 ~ getCampaignById ~ error',
-               error
-            );
+            console.log('🚀 ~ ', error);
          }
       };
       getCampaignById();
@@ -53,6 +50,22 @@ function CampaignDetailPage(props) {
    const openApplyForm = () => {
       history.push(`${campaignId}/apply`);
    };
+
+   const [isSticky, setSticky] = useState(false);
+
+   const ref = useRef(null);
+
+   const handleScroll = () => {
+      if (ref.current) {
+         setSticky(ref.current.getBoundingClientRect().top <= 0);
+      }
+   };
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', () => handleScroll);
+      };
+   }, []);
 
    return (
       <React.Fragment>
@@ -75,7 +88,10 @@ function CampaignDetailPage(props) {
                            </Breadcrumb.Item>
                         </Breadcrumb>
 
-                        <Row gutter={[8, 8]} style={{ padding: '20px 0' }}>
+                        <Row
+                           gutter={[8, 8]}
+                           style={{ padding: '20px 0', position: 'relative' }}
+                        >
                            <Col xs={24} sm={24} lg={18}>
                               <CampaignDetail
                                  campaignId={campaignDetail.id}
@@ -90,9 +106,14 @@ function CampaignDetailPage(props) {
                                  campaignTechnique={campaignDetail.technique.map(
                                     (tech) => {
                                        return (
-                                          <Button key={tech.name}>
-                                             {tech.name}
-                                          </Button>
+                                          <Tag key={tech.name}>{tech.name}</Tag>
+                                       );
+                                    }
+                                 )}
+                                 campaignPosition={campaignDetail.position.map(
+                                    (pos) => {
+                                       return (
+                                          <Tag key={pos.name}>{pos.name}</Tag>
                                        );
                                     }
                                  )}
@@ -100,7 +121,14 @@ function CampaignDetailPage(props) {
                               />
                            </Col>
                            <Col xs={0} sm={0} lg={6}>
-                              <Company />
+                              <div
+                                 className={`sticky-wrapper${
+                                    isSticky ? ' sticky' : ''
+                                 }`}
+                                 ref={ref}
+                              >
+                                 <Company />
+                              </div>
                            </Col>
                         </Row>
                      </Space>
