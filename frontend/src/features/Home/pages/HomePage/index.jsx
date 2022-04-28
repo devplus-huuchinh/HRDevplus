@@ -1,5 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Col, Row, Space, Spin, Typography } from 'antd';
+import { Col, Row, Space, Spin, Tag, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
@@ -14,6 +14,7 @@ function HomePage(props) {
    let history = useHistory();
 
    const [campaigns, setCampaigns] = useState([]);
+
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
@@ -82,6 +83,9 @@ function HomePage(props) {
                               campaignId={campaign.id}
                               campaignImg={campaign.image_url}
                               campaignName={campaign.name}
+                              campaignTech={campaign.technique?.map((tech) => {
+                                 return <Tag key={tech.name}>{tech.name}</Tag>;
+                              })}
                               campaignAdd={campaign.address}
                            />
                         );

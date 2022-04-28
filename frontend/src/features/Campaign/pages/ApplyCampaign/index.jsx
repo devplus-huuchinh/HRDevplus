@@ -23,10 +23,7 @@ function ApplyCampaign(props) {
             setCampaignDetail(responseCampaignDetail);
             setLoading(true);
          } catch (error) {
-            console.log(
-               '🚀 ~ file: index.jsx ~ line 36 ~ getCampaignById ~ error',
-               error
-            );
+            console.log('🚀 ~ ', error);
          }
       };
       getCampaignById();

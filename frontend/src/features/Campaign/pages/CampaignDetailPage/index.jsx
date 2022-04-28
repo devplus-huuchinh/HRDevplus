@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
-import { Row, Col, Breadcrumb, Space, Spin, Button, Typography } from 'antd';
+import { Row, Col, Breadcrumb, Space, Spin, Typography, Tag } from 'antd';
 import Header from '../../../Home/components/Header';
 import Footer from '../../../Home/components/Footer';
 import { Section } from '../../../Home/components/Section/Section.styles';
@@ -39,10 +39,7 @@ function CampaignDetailPage(props) {
             setCampaignDetail(responseCampaignDetail);
             setLoading(true);
          } catch (error) {
-            console.log(
-               '🚀 ~ file: index.jsx ~ line 36 ~ getCampaignById ~ error',
-               error
-            );
+            console.log('🚀 ~ ', error);
          }
       };
       getCampaignById();
@@ -109,18 +106,14 @@ function CampaignDetailPage(props) {
                                  campaignTechnique={campaignDetail.technique.map(
                                     (tech) => {
                                        return (
-                                          <Button key={tech.name}>
-                                             {tech.name}
-                                          </Button>
+                                          <Tag key={tech.name}>{tech.name}</Tag>
                                        );
                                     }
                                  )}
                                  campaignPosition={campaignDetail.position.map(
                                     (pos) => {
                                        return (
-                                          <Button key={pos.name}>
-                                             {pos.name}
-                                          </Button>
+                                          <Tag key={pos.name}>{pos.name}</Tag>
                                        );
                                     }
                                  )}
