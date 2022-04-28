@@ -1,0 +1,15 @@
+.ant-layout-header {
+   background: #ffffff;
+   display: flex;
+   justify-content: flex-end;
+   .ant-input-group {
+      margin: 15px;
+   }
+   .search-create-header {
+      display: inline-block;
+      //   padding-top: 15px;
+      .ant-btn-primary {
+         margin: 15px;
+      }
+   }
+}

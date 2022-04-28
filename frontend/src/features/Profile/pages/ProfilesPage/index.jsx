@@ -31,7 +31,7 @@ function ProfilesPage(props) {
          setStatus(dropProfile.status);
       };
       getAllProfileInDb();
-   }, []);
+   }, [id]);
 
    //NOTIFICATION
    const openNotificationWithIcon = (type) => {

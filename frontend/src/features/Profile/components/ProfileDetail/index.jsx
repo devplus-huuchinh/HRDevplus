@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './profileDetail.scss';
-import { Button } from 'antd';
 import { LinkOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import React from 'react';
+import './profileDetail.scss';
 
 ProfileDetail.propTypes = {};
 function ProfileDetail(props) {

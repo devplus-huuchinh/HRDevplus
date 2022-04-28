@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CSVLink } from 'react-csv';
-import { Button, Radio, notification } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import { Button, notification } from 'antd';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { CSVLink } from 'react-csv';
+
 ExportExcel.propTypes = {
    data: PropTypes.array,
    fileName: PropTypes.string,
@@ -26,7 +27,7 @@ function ExportExcel(props) {
                data={data ? data : []}
                filename={fileName}
                onClick={(event) => {
-                  if (data.length == 0) {
+                  if (data.length === 0) {
                      openNotificationWithIcon('error');
                      return false;
                   }

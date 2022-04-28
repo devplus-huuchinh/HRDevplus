@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Space, Image } from 'antd';
 import styled from 'styled-components';
 import { Container } from '../Container/Container.styles';
+import { useHistory } from 'react-router-dom';
 
 const { Title } = Typography;
 const HeaderWrapper = styled.div`
@@ -25,9 +26,15 @@ const HeaderWrapper = styled.div`
 `;
 
 function Header(props) {
+   let history = useHistory();
+
+   const onClickLogo = () => {
+      history.push('/');
+   };
+
    return (
       <HeaderWrapper>
-         <Container>
+         <Container onClick={onClickLogo} style={{ cursor: 'pointer' }}>
             <Space
                direction='vertical'
                size='middle'

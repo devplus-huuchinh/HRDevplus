@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Image, Select } from 'antd';
-import './profileDetailPage.scss';
 import { Option } from 'antd/lib/mentions';
+import React from 'react';
 import ProfileDetail from '../../components/ProfileDetail';
+import './profileDetailPage.scss';
 
-ProfileDetailPage.propTypes = {};
+// ProfileDetailPage.propTypes = {};
 
 function ProfileDetailPage(props) {
-   const [visible, setVisible] = useState(false);
    return (
       <div className='profile-detail-container'>
          <div className='profile-detail__wrapper'>
             <div className='profile-detail__left-wrapper'>
                <Image
-                  // preview={{ visible: false }}
                   preview={false}
                   maxHeight={330}
                   className='profile-detail__left-image'
                   src='https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp'
-                  onClick={() => setVisible(true)}
                />
                <div
                   className='profile-detail__step-wrapper'

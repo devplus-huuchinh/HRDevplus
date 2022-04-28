@@ -4,21 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use EloquentFilter\Filterable;
 
 class Campaign extends Model
 {
     use HasFactory;
+
     protected $with = ['position', 'technique'];
+
+    protected $hidden = ['pivot'];
 
     protected $fillable = [
         'name',
         'address',
-        'startDate',
-        'endDate',
-        'isActive',
-        'createdBy',
+        'start_date',
+        'end_date',
+        'is_active',
+        'user_id',
         'description',
-        'imageUrl',
+        'image_url',
+        'quantity'
     ];
 
     public function user()
@@ -41,11 +46,13 @@ class Campaign extends Model
         return $this->hasMany(campaign_technique::class);
     }
 
+    //relationship with position
     public function position()
     {
         return $this->belongsToMany(position::class, 'position_campaigns');
     }
 
+    // relationship with technique
     public function technique()
     {
         return $this->belongsToMany(technique::class, 'campaign_techniques');

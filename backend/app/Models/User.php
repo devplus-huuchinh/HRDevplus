@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use EloquentFilter\Filterable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
     use Notifiable;
     use HasApiTokens, HasFactory, Notifiable;
+    use Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'http://localhost:3000/auth/reset-password?token=' . $token;
+        $url = env('SANCTUM_STATEFUL_DOMAINS') . '/auth/reset-password?token=' . $token;
 
         $this->notify(new ResetPasswordNotification($url));
     }
@@ -68,6 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
+
     public function campaign()
     {
         return $this->hasMany(Campaign::class);

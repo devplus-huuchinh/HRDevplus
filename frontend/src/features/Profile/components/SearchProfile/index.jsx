@@ -1,8 +1,9 @@
-import React from 'react';
+import { Input, Tag } from 'antd';
 import PropTypes from 'prop-types';
-import { Input, Space, Tag } from 'antd';
+import React from 'react';
 import ExportExcel from '../ExportExcel/index';
 import './searchProfile.scss';
+
 SearchProfiles.propTypes = {
    selected: PropTypes.array,
 };
@@ -19,9 +20,9 @@ function SearchProfiles(props) {
             //   onSearch={onSearch}
          />
          <div className='search__rightside_wrap'>
-            {selected.length != 0 ? (
+            {selected.length !== 0 ? (
                <Tag className='search__selected_tag' color='geekblue'>
-                  {selected.length == 1
+                  {selected.length === 1
                      ? '1 user selected'
                      : `${selected.length} users selected`}
                </Tag>
