@@ -33,6 +33,7 @@ class CampaignRepo extends EloquentRepo
             return response()->json(["error" => $th]);
         }
     }
+
     public function findCampaign($campaignId)
     {
         return $this->model->where('is_active', 1)->get();

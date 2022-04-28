@@ -40,37 +40,6 @@ class CampaignController extends Controller
         }
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $this->campaignService->create($request);
-            return  response()->json();
-        } catch (\Throwable $error) {
-            return response()->json(
-                [
-                    'message' => 'store_campaign_fail',
-                    'error' => $error,
-                ]
-            );
-        }
-
-        // dd($this->campaignService->findAll($request->all()));
-        // $user = $request->user();
-        // try{
-        //     $data = $this->campaignService->create($request);
-        //     $data->save();
-        //     return $data;
-        // }
-        // catch (\Throwable $error) {
-        //      return response()->json(
-        //          [
-        //          'message' => 'adding_data_fail',
-        //          'error' => $error,
-        //          ]
-        //      );
-        //  }
-    }
-
     public function findCampaignActive(Request $request)
     {
         try {
@@ -122,19 +91,19 @@ class CampaignController extends Controller
 
     public function newCampaign(Request $request)
     {
-        // try {
-        $newCampaign = $this->campaignService->create($request);
-        $newCampaign_technique = $this->campaignService->newCampaign_technique($newCampaign['id'], $request['technique']);
-        $newCampaign_position = $this->campaignService->newCampaign_position($newCampaign['id'], $request['position']);
-        return response()->json($newCampaign_technique);
-        // } catch (\Throwable $th) {
-        //     return response()->json(
-        //         [
-        //             'message' => 'create_campaign_fail',
-        //             'error' => $th,
-        //         ],
-        //         500
-        //     );
-        // }
+        try {
+            $newCampaign = $this->campaignService->create($request);
+            $newCampaign_technique = $this->campaignService->newCampaign_technique($newCampaign['id'], $request['technique']);
+            $newCampaign_position = $this->campaignService->newCampaign_position($newCampaign['id'], $request['position']);
+            return response()->json($newCampaign_technique);
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    'message' => 'create_campaign_fail',
+                    'error' => $th,
+                ],
+                500
+            );
+        }
     }
 }

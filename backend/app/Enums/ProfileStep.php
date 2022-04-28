@@ -17,5 +17,4 @@ final class ProfileStep extends Enum
     const CONFIRM = "CONFIRM";
     const CONSIDER = "CONSIDER";
     const EMPLOYEE =   "EMPLOYEE";
-    const REJECT = "REJECT";
 }

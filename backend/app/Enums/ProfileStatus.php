@@ -11,7 +11,8 @@ use BenSampo\Enum\Enum;
  */
 final class ProfileStatus extends Enum
 {
-    const STATUS1 =   'STATUS1';
-    const STATUS2 =   'STATUS2';
-    const STATUS3 = 'STATUS3';
+    const STATUS1 =   'PENDING';
+    const STATUS2 =   'PROCESSING';
+    const STATUS3 = 'DONE';
+    const REJECT = 'REJECT';
 }

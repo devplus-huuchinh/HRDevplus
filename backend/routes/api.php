@@ -127,7 +127,6 @@ Route::prefix('v1/campaign')->group(function () {
         Route::controller(CampaignController::class)->group(function () {
             Route::get('/droplist', 'getDropList');
             Route::get('/', 'index');
-            // Route::post('/', 'store');
             Route::post('/', 'newCampaign');
         });
     });

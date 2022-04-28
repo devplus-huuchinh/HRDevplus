@@ -1,6 +1,7 @@
 import { PlusCircleFilled } from '@ant-design/icons';
 import { Button, Input, Layout, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
 import './index.scss';
 
@@ -10,6 +11,8 @@ const { Header, Content } = Layout;
 const { Search } = Input;
 
 function ViewCampaign(props) {
+   let history = useHistory();
+
    const columns = [
       {
          title: 'Name',
@@ -70,16 +73,23 @@ function ViewCampaign(props) {
             </>
          ),
       },
-      // {
-      //    title: '',
-      //    render: () => <a>Detail</a>,
-      //    width: '5%',
-      // },
-      // {
-      //    title: '',
-      //    render: () => <a>Edit</a>,
-      //    width: '5%',
-      // },
+      {
+         title: 'Detail',
+         dataIndex: 'id',
+         render: (record) => (
+            <Button
+               type='primary'
+               onClick={() => history.push(`/dashboard/profile/${record}`)}
+            >
+               Detail
+            </Button>
+         ),
+      },
+      {
+         title: '',
+         render: () => <a>Edit</a>,
+         width: '5%',
+      },
    ];
    const [data, setData] = useState([]);
    useEffect(() => {
