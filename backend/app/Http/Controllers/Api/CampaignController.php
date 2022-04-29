@@ -114,13 +114,7 @@ class CampaignController extends Controller
     public function applyCampaign(Request $request)
     {
         $createCampaign = $this->profileService->create($request->all());
-
-        $data = [];
-        foreach ($request->technique as $i) {
-            array_push($data, ["technique_id" => $i, "profile_id" => $createCampaign->id]);
-        }
-
-        $createCampaignTechnique = $this->profileTechniqueService->createProfileTechnique($data);
+        $createCampaignTechnique = $this->profileTechniqueService->createProfileTechnique($request->technique, $createCampaign->id);
 
         return response()->json([
             'createCampaign' => $createCampaign,

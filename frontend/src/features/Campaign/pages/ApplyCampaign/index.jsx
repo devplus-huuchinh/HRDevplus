@@ -63,7 +63,7 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'avatars',
+         directory: 'cv',
       });
       setAvatar({
          loading: false,

@@ -1,15 +1,15 @@
+import { Breadcrumb, Col, Row, Space, Spin, Typography } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import styled from 'styled-components';
-import { Row, Col, Breadcrumb, Space, Spin, Typography, Tag } from 'antd';
-import Header from '../../../Home/components/Header';
-import Footer from '../../../Home/components/Footer';
-import { Section } from '../../../Home/components/Section/Section.styles';
-import { Container } from '../../../Home/components/Container/Container.styles';
-import campaignApi from '../../../../api/campaignApi';
-import Company from '../../components/Company';
-import CampaignDetail from '../../components/CampaignDetail';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import campaignApi from '../../../../api/campaignApi';
+import { Container } from '../../../Home/components/Container/Container.styles';
+import Footer from '../../../Home/components/Footer';
+import Header from '../../../Home/components/Header';
+import { Section } from '../../../Home/components/Section/Section.styles';
+import CampaignDetail from '../../components/CampaignDetail';
+import Company from '../../components/Company';
 
 const { Text } = Typography;
 const CampaignDetailPageWrapper = styled.div`
@@ -100,30 +100,18 @@ function CampaignDetailPage(props) {
                         >
                            <Col xs={24} sm={24} lg={18}>
                               <CampaignDetail
+                                 onClick={openApplyForm}
                                  campaignId={campaignDetail.id}
                                  campaignName={campaignDetail.name}
                                  campaignAdd={campaignDetail.address}
                                  campaignStartDate={campaignDetail.start_date}
                                  campaignEndDate={campaignDetail.end_date}
                                  campaignImage={campaignDetail.image_url}
+                                 campaignTechnique={campaignDetail.technique}
+                                 campaignPosition={campaignDetail.position}
                                  campaignDescription={
                                     campaignDetail.description
                                  }
-                                 campaignTechnique={campaignDetail.technique.map(
-                                    (tech) => {
-                                       return (
-                                          <Tag key={tech.name}>{tech.name}</Tag>
-                                       );
-                                    }
-                                 )}
-                                 campaignPosition={campaignDetail.position.map(
-                                    (pos) => {
-                                       return (
-                                          <Tag key={pos.name}>{pos.name}</Tag>
-                                       );
-                                    }
-                                 )}
-                                 onClick={() => openApplyForm()}
                               />
                            </Col>
                            <Col xs={0} sm={0} lg={6}>

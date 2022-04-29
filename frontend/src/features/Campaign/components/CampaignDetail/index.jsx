@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Typography, Button, Space, Row, Col, Image } from 'antd';
 import { CalendarOutlined, HomeOutlined } from '@ant-design/icons';
+import { Button, Col, Image, Row, Space, Tag, Typography } from 'antd';
+import parse from 'html-react-parser';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import './CampaignDetail.scss';
 
@@ -41,25 +42,27 @@ function CampaignDetail(props) {
       onClick,
    } = props;
 
+   const [isSticky, setSticky] = useState(false);
+   const ref = useRef(null);
+
    const addDefaultSrc = (ev) => {
       ev.target.src =
          'https://stunited.vn/wp-content/uploads/2019/09/stunited-e15650013362301.png';
    };
-   const [isSticky, setSticky] = useState(false);
-
-   const ref = useRef(null);
 
    const handleScroll = () => {
       if (ref.current) {
          setSticky(ref.current.getBoundingClientRect().top <= 0);
       }
    };
+
    useEffect(() => {
       window.addEventListener('scroll', handleScroll);
       return () => {
          window.removeEventListener('scroll', () => handleScroll);
       };
    }, []);
+
    return (
       <CampaignDetailWrapper>
          <div
@@ -142,7 +145,11 @@ function CampaignDetail(props) {
                            Position:
                         </Text>
                         <Space size={'small'} wrap>
-                           {campaignPosition}
+                           {campaignPosition?.map((position) => (
+                              <Tag key={position.pivot.position_id}>
+                                 {position.name}
+                              </Tag>
+                           ))}
                         </Space>
                      </Space>
                      <Space
@@ -156,7 +163,11 @@ function CampaignDetail(props) {
                            Technique:
                         </Text>
                         <Space size={'small'} wrap>
-                           {campaignTechnique}
+                           {campaignTechnique?.map((technique) => (
+                              <Tag key={technique.pivot.technique_id}>
+                                 {technique.name}
+                              </Tag>
+                           ))}
                         </Space>
                      </Space>
                   </Space>
@@ -182,14 +193,13 @@ function CampaignDetail(props) {
                </div>
             </Col>
          </Row>
-         <Space
-            direction='vertical'
+         <div
             size={'middle'}
-            style={{ display: 'flex' }}
+            style={{ display: 'flex', flexDirection: 'column' }}
          >
             <Title level={4}>Description</Title>
-            <Text>{campaignDescription} </Text>
-         </Space>
+            <div style={{ lineHeight: '2' }}>{parse(campaignDescription)}</div>
+         </div>
       </CampaignDetailWrapper>
    );
 }

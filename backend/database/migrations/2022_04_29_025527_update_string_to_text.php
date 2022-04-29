@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('profiles', function (Blueprint $table) {
-        //     $table->timestamps();
-        // });
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->text('image_url')->change();
+            $table->text('cv_url')->change();
+        });
+
+        Schema::table('campaigns', function (Blueprint $table) {
+            $table->longText('description')->change();
+            $table->text('image_url')->change();
+        });
     }
+
     /**
      * Reverse the migrations.
      *
