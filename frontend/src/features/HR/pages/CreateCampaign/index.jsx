@@ -1,5 +1,3 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
    Button,
    DatePicker,
@@ -11,7 +9,9 @@ import {
    Tag,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
+import Editor from '../../../../UI/Editor/Editor';
 import './index.scss';
 
 CreateCampaign.propTypes = {};
@@ -19,8 +19,12 @@ CreateCampaign.propTypes = {};
 const { Header, Content } = Layout;
 
 function CreateCampaign(props) {
+   let history = useHistory();
+
    const [description, setDescription] = useState();
+
    const [dropList, setDropList] = useState();
+
    useEffect(() => {
       const getDropdownList = async () => {
          const droplistRes = await campaignApi.getDroplist();
@@ -32,10 +36,8 @@ function CreateCampaign(props) {
    //Select
    const { Option } = Select;
 
-   const handleEditor = (event, editor) => {
-      const data = editor.getData();
-      // console.log({ event, editor, data });
-      setDescription(data);
+   const handleEditor = (value) => {
+      setDescription(value);
    };
 
    const onFinish = async (values) => {
@@ -48,7 +50,7 @@ function CreateCampaign(props) {
          quantity: values.quantity,
          description: description,
          image_url:
-            'https://www.google.com/search?q=cat&rlz=1C1UEAD_enVN993VN993&sxsrf=APq-WBuq8nm1iuhJ7WZTmodWotS-_MQrvg:1651115668984&source=lnms&tbm=isch&sa=X&ved=2ahUKEwic-LqX5bX3AhWWEaYKHWjdC7MQ_AUoAXoECAIQAw&biw=1536&bih=760&dpr=1.25#imgrc=6Igr2TbrhulyUM',
+            'https://i.natgeofe.com/n/46b07b5e-1264-42e1-ae4b-8a021226e2d0/domestic-cat_thumb_square.jpg',
       };
       console.log('NEW', newData);
 
@@ -64,7 +66,9 @@ function CreateCampaign(props) {
    return (
       <Layout>
          <Header style={{ backgroundColor: 'white', textDecoration: 'bold' }}>
-            Crate Campaign
+            <div onClick={() => history.goBack()} style={{ cursor: 'pointer' }}>
+               Back to manage page
+            </div>
          </Header>
          <Content>
             <Form
@@ -177,7 +181,7 @@ function CreateCampaign(props) {
                      { required: true, message: 'Please input description!' },
                   ]}
                >
-                  <CKEditor editor={ClassicEditor} onChange={handleEditor} />
+                  <Editor onChange={handleEditor} />
                </Form.Item>
                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                   <Button type='primary' htmlType='submit'>
