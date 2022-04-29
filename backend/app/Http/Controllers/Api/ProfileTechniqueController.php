@@ -15,8 +15,8 @@ class ProfileTechniqueController extends Controller
       $this->profileTechniqueService = $profileTechniqueService;
    }
 
-   public function create(Request $request)
-   {
-      return $this->profileTechniqueService->createProfileTechnique($request->technique);
-   }
+   // public function create(Request $request)
+   // {
+   //    return $this->profileTechniqueService->createProfileTechnique($request->technique);
+   // }
 }

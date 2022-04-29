@@ -1,11 +1,22 @@
 import { CalendarOutlined, HomeOutlined } from '@ant-design/icons';
-import { Button, Col, Image, Row, Space, Tag, Typography } from 'antd';
+import {
+   Button,
+   Col,
+   Image,
+   Row,
+   Space,
+   Tag,
+   Typography,
+   Statistic,
+} from 'antd';
 import parse from 'html-react-parser';
+import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import './CampaignDetail.scss';
 
 const { Title, Text } = Typography;
+const { Countdown } = Statistic;
 
 const CampaignDetailWrapper = styled.div`
    width: 100%;
@@ -28,7 +39,6 @@ function CampaignDetail(props) {
    const {
       campaignName,
       campaignAdd,
-      campaignStartDate,
       campaignEndDate,
       campaignImage,
       campaignDescription,
@@ -39,6 +49,13 @@ function CampaignDetail(props) {
 
    const [isSticky, setSticky] = useState(false);
    const ref = useRef(null);
+
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', () => handleScroll);
+      };
+   }, []);
 
    const addDefaultSrc = (ev) => {
       ev.target.src =
@@ -51,12 +68,12 @@ function CampaignDetail(props) {
       }
    };
 
-   useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-         window.removeEventListener('scroll', () => handleScroll);
-      };
-   }, []);
+   const daysRemaining = () => {
+      const endDate = moment(campaignEndDate);
+      const now = moment();
+
+      return endDate.diff(now, 'days');
+   };
 
    return (
       <CampaignDetailWrapper>
@@ -112,19 +129,20 @@ function CampaignDetail(props) {
                            <CalendarOutlined />
                            <Text>
                               <Space size={'small'}>
-                                 Start Date:
-                                 {campaignStartDate}
-                              </Space>
-                           </Text>
-                        </Space>
-                     </Text>
-                     <Text>
-                        <Space size={'small'}>
-                           <CalendarOutlined />
-                           <Text>
-                              <Space size={'small'}>
                                  End Date:
-                                 {campaignEndDate}
+                                 {daysRemaining() <= 5 ? (
+                                    <Countdown
+                                       format='D day HH:mm:ss'
+                                       value={moment(campaignEndDate)}
+                                       valueStyle={{
+                                          fontSize: '18px',
+                                          color: 'red',
+                                          fontWeight: 'bold',
+                                       }}
+                                    />
+                                 ) : (
+                                    campaignEndDate
+                                 )}
                               </Space>
                            </Text>
                         </Space>
