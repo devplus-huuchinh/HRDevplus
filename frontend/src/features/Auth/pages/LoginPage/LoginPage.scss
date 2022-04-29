@@ -4,7 +4,7 @@
    overflow: hidden;
 
    .login-page--background {
-      flex: 1.5;
+      flex: 2;
       height: 100%;
 
       .login-page--image {
@@ -16,7 +16,10 @@
 
    .login-page--title {
       padding: 0px 120px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1;
 
       h1 {
          font-size: 34px;
@@ -24,8 +27,12 @@
       }
 
       span {
-         font-size: 15px;
+         text-transform: uppercase;
+         color: rgb(120, 129, 149);
+         font-weight: 300;
+         font-size: 25px;
       }
+
       @media screen and (max-width: 767px) {
          padding: 0px 30px;
       }
@@ -35,7 +42,8 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
+      margin-top: 50px;
    }
 
    @media screen and (max-width: 767px) {
