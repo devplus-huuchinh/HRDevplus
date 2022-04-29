@@ -143,10 +143,10 @@ Route::prefix('v1/campaign')->group(function () {
     });
 });
 
-Route::prefix('v1/position')->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::controller(PositionController::class)->group(function () {
-            Route::get('/', 'index');
-        });
-    });
-});
+// Route::prefix('v1/position')->group(function () {
+//     Route::middleware(['auth:sanctum'])->group(function () {
+//         Route::controller(PositionController::class)->group(function () {
+//             Route::get('/', 'index');
+//         });
+//     });
+// });

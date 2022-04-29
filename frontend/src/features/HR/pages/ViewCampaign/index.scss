@@ -1,15 +1,21 @@
 .ant-layout-header {
    background: #ffffff;
+   width: 97.5%;
+   margin-left: 16px;
+   height: 30%;
    display: flex;
-   justify-content: flex-end;
-   .ant-input-group {
+   padding: 25px;
+   .ant-input {
       margin: 15px;
    }
-   .search-create-header {
-      display: inline-block;
-      //   padding-top: 15px;
-      .ant-btn-primary {
-         margin: 15px;
+   .btn-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 15px;
+      width: 50%;
+      .ant-btn {
+         margin-right: 10px;
       }
    }
 }
