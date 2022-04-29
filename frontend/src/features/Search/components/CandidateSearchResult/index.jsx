@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Campaign from '../../../Home/components/Campaign';
-import { Tag, Typography } from 'antd';
+import { Typography } from 'antd';
 import styled from 'styled-components';
+import Tag from '../../../Home/components/Tag';
 
 const CampaignSearchList = styled.div`
    --f-columns: 3;
@@ -53,7 +54,9 @@ function CandidateSearchResult(props) {
                         campaignName={result.name}
                         campaignAdd={result.address}
                         campaignTech={result.technique?.map((tech) => {
-                           return <Tag key={tech.name}>{tech.name}</Tag>;
+                           return (
+                              <Tag key={tech.name} tagContent={tech.name} />
+                           );
                         })}
                      />
                   </div>

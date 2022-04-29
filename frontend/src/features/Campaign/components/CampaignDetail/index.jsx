@@ -22,11 +22,6 @@ const CampaignDetailWrapper = styled.div`
          justify-content: center;
       }
    }
-   .campaign__detail--image--wrapper {
-      .ant-image {
-         width: 100%;
-      }
-   }
 `;
 
 function CampaignDetail(props) {
@@ -193,10 +188,7 @@ function CampaignDetail(props) {
                </div>
             </Col>
          </Row>
-         <div
-            size={'middle'}
-            style={{ display: 'flex', flexDirection: 'column' }}
-         >
+         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <Title level={4}>Description</Title>
             <div style={{ lineHeight: '2' }}>{parse(campaignDescription)}</div>
          </div>
