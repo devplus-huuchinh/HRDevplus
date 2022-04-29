@@ -1,22 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-
+use App\Http\Controllers\Controller;
+use App\Mail\ReceiveConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ChangePassword;
 
 class EmailController extends Controller
 {
-    public function resetPassword(Request $request)
+    public function ReceiveConfirmationMail(Request $request)
     {
-        $mailData = [
-            'title' => 'Change password',
-            'body' => 'Testing.'
-        ];
-
-        $changePassword = new ChangePassword($mailData);
-        Mail::to('facebook662311@gmail.com')->send($changePassword);
+        $receiveConfirmation = new ReceiveConfirmation($request->all());
+        Mail::to($request->to)->send($receiveConfirmation);
     }
 }

@@ -1,7 +1,13 @@
 import { message, Space, Spin } from 'antd';
 import React, { useState } from 'react';
-import { useLocation, useParams, useHistory } from 'react-router-dom';
+import {
+   useLocation,
+   useParams,
+   useHistory,
+   useRouteMatch,
+} from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
+import emailApi from '../../../../api/emailApi';
 import MainLayout from '../../../../containers/MainLayout';
 import uploadFile from '../../../../firebase/uploadFile';
 import ApplyForm from '../../components/ApplyForm';
@@ -9,6 +15,8 @@ import ApplyForm from '../../components/ApplyForm';
 function ApplyCampaign(props) {
    let location = useLocation();
    let history = useHistory();
+   let match = useRouteMatch();
+
    const { campaignId } = useParams();
    const { campaignDetail } = location.state;
    const [formLoading, setFormLoading] = useState(false);
@@ -21,6 +29,7 @@ function ApplyCampaign(props) {
    const handleApplyCampaign = async (formData) => {
       try {
          setFormLoading(true);
+
          const prepareDataInDb = {
             ...formData,
             campaignId,
@@ -29,12 +38,29 @@ function ApplyCampaign(props) {
          };
          const response = await campaignApi.applyCampaign(prepareDataInDb);
 
-         setFormLoading(false);
          if (response.createCampaign.id && response.createCampaignTechnique) {
+            await emailApi.receiveConfirmation({
+               candidateName: response.createCampaign.last_name,
+               to: response.createCampaign.email,
+               position: campaignDetail.position.find(
+                  (i) =>
+                     i.pivot.position_id === response.createCampaign.position_id
+               ).name,
+            });
+
             message.success('Apply to campaign success!');
-            return history.push('/');
+            setFormLoading(false);
+
+            return history.push({
+               pathname: `${match.url}/thank-you`,
+               state: {
+                  candidateInfo: response.createCampaign,
+                  campaignDetail,
+               },
+            });
          }
 
+         setFormLoading(false);
          message.error('Something went wrong, please try again');
       } catch (error) {
          console.log(error);

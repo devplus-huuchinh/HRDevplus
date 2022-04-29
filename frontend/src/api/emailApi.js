@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient';
 
 const emailApi = {
-   resetPasswordEmail: (params) => {
-      const url = '/email/reset-password';
+   receiveConfirmation: (params) => {
+      const url = '/mail/receive-confirmation';
       return axiosClient.get(url, { params });
    },
 };

@@ -3,12 +3,10 @@
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TechniqueController;
-use App\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -74,7 +72,7 @@ Route::prefix('/v1/mail')->group(
     function () {
         Route::controller(EmailController::class)->group(
             function () {
-                // Route::get('/reset-password', 'resetPassword');
+                Route::get('/receive-confirmation', 'ReceiveConfirmationMail');
             }
         );
     }
@@ -142,11 +140,3 @@ Route::prefix('v1/campaign')->group(function () {
         });
     });
 });
-
-// Route::prefix('v1/position')->group(function () {
-//     Route::middleware(['auth:sanctum'])->group(function () {
-//         Route::controller(PositionController::class)->group(function () {
-//             Route::get('/', 'index');
-//         });
-//     });
-// });

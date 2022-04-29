@@ -141,7 +141,14 @@ function CampaignDetail(props) {
                                        }}
                                     />
                                  ) : (
-                                    campaignEndDate
+                                    <div
+                                       style={{
+                                          fontSize: '15px',
+                                          fontWeight: 'bold',
+                                       }}
+                                    >
+                                       {campaignEndDate}
+                                    </div>
                                  )}
                               </Space>
                            </Text>

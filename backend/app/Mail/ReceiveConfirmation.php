@@ -3,11 +3,10 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ChangePassword extends Mailable
+class ReceiveConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +27,11 @@ class ChangePassword extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.demoMail')->with('mailData', $this->mailData);
+        return $this->view('emails.receiveConfirmation')
+            ->subject('[ST Software HR] CV Receive Confirmation')
+            ->with([
+                'candidate_name' => $this->mailData['candidateName'],
+                'position' => $this->mailData['position'],
+            ]);
     }
 }
