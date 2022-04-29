@@ -9,6 +9,7 @@ import {
    Layout,
    Select,
    Tag,
+   Spin,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import campaignApi from '../../../../api/campaignApi';
@@ -20,12 +21,17 @@ const { Header, Content } = Layout;
 
 function CreateCampaign(props) {
    const [description, setDescription] = useState();
+
    const [dropList, setDropList] = useState();
+
+   const [loading, setLoading] = useState(false);
+
    useEffect(() => {
       const getDropdownList = async () => {
          const droplistRes = await campaignApi.getDroplist();
          console.log(droplistRes);
          setDropList(droplistRes);
+         setLoading(true);
       };
       getDropdownList();
    }, []);
@@ -62,29 +68,36 @@ function CreateCampaign(props) {
    //Date picker
    const { RangePicker } = DatePicker;
    return (
-      <Layout>
-         <Header style={{ backgroundColor: 'white', textDecoration: 'bold' }}>
-            Crate Campaign
-         </Header>
-         <Content>
-            <Form
-               name='basic'
-               labelCol={{ span: 8 }}
-               wrapperCol={{ span: 16 }}
-               initialValues={{ quantity: 1 }}
-               onFinish={onFinish}
-               autoComplete='off'
-            >
-               <Form.Item
-                  label='Campaign name:'
-                  name='name'
-                  rules={[
-                     { required: true, message: 'Please input campaign name!' },
-                  ]}
+      <>
+         {loading ? (
+            <Layout>
+               <Header
+                  style={{ backgroundColor: 'white', textDecoration: 'bold' }}
                >
-                  <Input />
-               </Form.Item>
-               {/* <Form.Item
+                  Crate Campaign
+               </Header>
+               <Content>
+                  <Form
+                     name='basic'
+                     labelCol={{ span: 8 }}
+                     wrapperCol={{ span: 16 }}
+                     initialValues={{ quantity: 1 }}
+                     onFinish={onFinish}
+                     autoComplete='off'
+                  >
+                     <Form.Item
+                        label='Campaign name:'
+                        name='name'
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Please input campaign name!',
+                           },
+                        ]}
+                     >
+                        <Input />
+                     </Form.Item>
+                     {/* <Form.Item
                   label='Image:'
                   name='image'
                   rules={[{ required: true, message: 'Please provide image!' }]}
@@ -93,100 +106,142 @@ function CreateCampaign(props) {
                      <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   </Upload>
                </Form.Item> */}
-               <Form.Item
-                  label='Date'
-                  name='date'
-                  rules={[{ required: true, message: 'Please select date!' }]}
-               >
-                  <RangePicker />
-               </Form.Item>
-               <Form.Item
-                  label='Position'
-                  name='position'
-                  rules={[
-                     { required: true, message: 'Please pick positions!' },
-                  ]}
-               >
-                  <Select
-                     mode='multiple'
-                     style={{ width: '100%' }}
-                     placeholder='select position'
-                     optionLabelProp='label'
-                     allowClear
-                  >
-                     {dropList
-                        ? dropList.position?.map((item) => (
-                             <Option
-                                key={item.id}
-                                value={item.id}
-                                label={item.name}
-                             >
-                                <Tag>{item.name}</Tag>
-                             </Option>
-                          ))
-                        : ''}
-                  </Select>
-               </Form.Item>
-               <Form.Item
-                  label='Technologies'
-                  name='technique'
-                  rules={[
-                     { required: true, message: 'Please pick technologies!' },
-                  ]}
-               >
-                  <Select
-                     mode='multiple'
-                     style={{ width: '100%' }}
-                     placeholder='select technologies'
-                     optionLabelProp='label'
-                     allowClear
-                  >
-                     {dropList
-                        ? dropList.technique?.map((item) => (
-                             <Option
-                                key={item.id}
-                                value={item.id}
-                                label={item.name}
-                             >
-                                <Tag>{item.name}</Tag>
-                             </Option>
-                          ))
-                        : ''}
-                  </Select>
-               </Form.Item>
-               <Form.Item
-                  label='Quantity'
-                  name='quantity'
-                  rules={[
-                     { required: true, message: 'Please input quantity!' },
-                  ]}
-               >
-                  <InputNumber min='1' />
-               </Form.Item>
-               <Form.Item
-                  label='Address:'
-                  name='address'
-                  rules={[{ required: true, message: 'Please input address!' }]}
-               >
-                  <Input />
-               </Form.Item>
-               <Form.Item
-                  label='Description'
-                  name='description'
-                  rules={[
-                     { required: true, message: 'Please input description!' },
-                  ]}
-               >
-                  <CKEditor editor={ClassicEditor} onChange={handleEditor} />
-               </Form.Item>
-               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <Button type='primary' htmlType='submit'>
-                     Submit
-                  </Button>
-               </Form.Item>
-            </Form>
-         </Content>
-      </Layout>
+                     <Form.Item
+                        label='Date'
+                        name='date'
+                        rules={[
+                           { required: true, message: 'Please select date!' },
+                        ]}
+                     >
+                        <RangePicker />
+                     </Form.Item>
+                     <Form.Item
+                        label='Position'
+                        name='position'
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Please pick positions!',
+                           },
+                        ]}
+                     >
+                        <Select
+                           mode='multiple'
+                           style={{ width: '100%' }}
+                           placeholder='select position'
+                           optionLabelProp='label'
+                           allowClear
+                        >
+                           {dropList
+                              ? dropList.position?.map((item) => (
+                                   <Option
+                                      key={item.id}
+                                      value={item.id}
+                                      label={item.name}
+                                   >
+                                      <Tag>{item.name}</Tag>
+                                   </Option>
+                                ))
+                              : ''}
+                        </Select>
+                     </Form.Item>
+                     <Form.Item
+                        label='Technologies'
+                        name='technique'
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Please pick technologies!',
+                           },
+                        ]}
+                     >
+                        <Select
+                           mode='multiple'
+                           style={{ width: '100%' }}
+                           placeholder='select technologies'
+                           optionLabelProp='label'
+                           allowClear
+                        >
+                           {dropList
+                              ? dropList.technique?.map((item) => (
+                                   <Option
+                                      key={item.id}
+                                      value={item.id}
+                                      label={item.name}
+                                   >
+                                      <Tag>{item.name}</Tag>
+                                   </Option>
+                                ))
+                              : ''}
+                        </Select>
+                     </Form.Item>
+                     <Form.Item
+                        label='Quantity'
+                        name='quantity'
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Please input quantity!',
+                           },
+                        ]}
+                     >
+                        <InputNumber min='1' />
+                     </Form.Item>
+                     <Form.Item
+                        label='Address:'
+                        name='address'
+                        rules={[
+                           { required: true, message: 'Please input address!' },
+                        ]}
+                     >
+                        <Input />
+                     </Form.Item>
+                     <Form.Item
+                        label='Description'
+                        name='description'
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Please input description!',
+                           },
+                        ]}
+                     >
+                        <CKEditor
+                           editor={ClassicEditor}
+                           onChange={handleEditor}
+                        />
+                     </Form.Item>
+                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button type='primary' htmlType='submit'>
+                           Submit
+                        </Button>
+                        <Button type='primary' htmlType='submit'>
+                           Submit
+                        </Button>
+                     </Form.Item>
+                  </Form>
+               </Content>
+            </Layout>
+         ) : (
+            <Spin
+               tip='Loading...'
+               size='large'
+               style={{
+                  position: 'absolute',
+                  top: '0%',
+                  left: '-5%',
+                  width: '100vw',
+                  height: '100vh',
+                  maxHeight: 'unset',
+                  display: 'flex',
+                  gap: '20px',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+               }}
+            />
+         )}
+      </>
    );
 }
 
