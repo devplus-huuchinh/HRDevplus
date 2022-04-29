@@ -1,18 +1,26 @@
-import { message, Space, Spin } from 'antd';
+import { message, Spin, Typography } from 'antd';
 import React, { useState } from 'react';
-import { useLocation, useParams, useHistory } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
 import MainLayout from '../../../../containers/MainLayout';
 import uploadFile from '../../../../firebase/uploadFile';
 import ApplyForm from '../../components/ApplyForm';
+import './ApplyCampaign.scss';
+
+const { Title } = Typography;
 
 function ApplyCampaign(props) {
    let location = useLocation();
    let history = useHistory();
+
    const { campaignId } = useParams();
    const { campaignDetail } = location.state;
-   const [formLoading, setFormLoading] = useState(false);
+   console.log(
+      '🚀 ~ file: index.jsx ~ line 15 ~ ApplyCampaign ~ campaignDetail',
+      campaignDetail
+   );
 
+   const [formLoading, setFormLoading] = useState(false);
    const [avatar, setAvatar] = useState({
       loading: false,
       url: '',
@@ -75,22 +83,26 @@ function ApplyCampaign(props) {
    return (
       <>
          <MainLayout>
-            <Space
-               direction='vertical'
-               size={'middle'}
-               style={{ display: 'flex' }}
-            >
-               <Spin spinning={formLoading}>
-                  <ApplyForm
-                     handleApplyCampaign={handleApplyCampaign}
-                     uploadCVToFirebase={uploadCVToFirebase}
-                     uploadAvatarToFirebase={uploadAvatarToFirebase}
-                     avatar={avatar}
-                     campaignPosition={campaignDetail.position}
-                     campaignTechnique={campaignDetail.technique}
-                  />
-               </Spin>
-            </Space>
+            <div className='apply__campaign'>
+               <div className='apply__campaign--col'>
+                  <div className='apply__description'>
+                     <Title center level={3}></Title>
+                  </div>
+               </div>
+               <div className='apply__campaign--col'>
+                  <Spin spinning={formLoading}>
+                     <ApplyForm
+                        handleApplyCampaign={handleApplyCampaign}
+                        uploadCVToFirebase={uploadCVToFirebase}
+                        uploadAvatarToFirebase={uploadAvatarToFirebase}
+                        avatar={avatar}
+                        campaignPosition={campaignDetail.position}
+                        campaignTechnique={campaignDetail.technique}
+                        campaignDescription={campaignDetail.description}
+                     />
+                  </Spin>
+               </div>
+            </div>
          </MainLayout>
       </>
    );

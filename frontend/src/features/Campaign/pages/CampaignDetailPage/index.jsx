@@ -28,7 +28,6 @@ function CampaignDetailPage(props) {
    const { campaignId } = useParams();
 
    const [campaignDetail, setCampaignDetail] = useState({});
-
    const [loading, setLoading] = useState(false);
 
    useEffect(() => {
