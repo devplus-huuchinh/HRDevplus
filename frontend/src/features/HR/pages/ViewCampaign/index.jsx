@@ -114,7 +114,14 @@ function ViewCampaign(props) {
                size='middle'
             />
             <div className='search-create-header'>
-               <Button type='primary' shape='round' icon={<PlusCircleFilled />}>
+               <Button
+                  type='primary'
+                  shape='round'
+                  icon={<PlusCircleFilled />}
+                  onClick={() =>
+                     history.push('/dashboard/campaign_page/create')
+                  }
+               >
                   Create Compaign
                </Button>
             </div>

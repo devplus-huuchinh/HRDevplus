@@ -1,5 +1,6 @@
-import { message, Spin, Typography } from 'antd';
-import React, { useState } from 'react';
+import { message, Typography } from 'antd';
+import parse from 'html-react-parser';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
 import MainLayout from '../../../../containers/MainLayout';
@@ -7,7 +8,7 @@ import uploadFile from '../../../../firebase/uploadFile';
 import ApplyForm from '../../components/ApplyForm';
 import './ApplyCampaign.scss';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 function ApplyCampaign(props) {
    let location = useLocation();
@@ -15,12 +16,10 @@ function ApplyCampaign(props) {
 
    const { campaignId } = useParams();
    const { campaignDetail } = location.state;
-   console.log(
-      '🚀 ~ file: index.jsx ~ line 15 ~ ApplyCampaign ~ campaignDetail',
-      campaignDetail
-   );
 
-   const [formLoading, setFormLoading] = useState(false);
+   const [isSticky, setSticky] = useState(false);
+   const ref = useRef(null);
+
    const [avatar, setAvatar] = useState({
       loading: false,
       url: '',
@@ -28,7 +27,6 @@ function ApplyCampaign(props) {
 
    const handleApplyCampaign = async (formData) => {
       try {
-         setFormLoading(true);
          const prepareDataInDb = {
             ...formData,
             campaignId,
@@ -37,7 +35,6 @@ function ApplyCampaign(props) {
          };
          const response = await campaignApi.applyCampaign(prepareDataInDb);
 
-         setFormLoading(false);
          if (response.createCampaign.id && response.createCampaignTechnique) {
             message.success('Apply to campaign success!');
             return history.push('/');
@@ -58,7 +55,7 @@ function ApplyCampaign(props) {
          onError,
          directory: 'avatars',
       });
-      console.log('🚀 ~  fileUrl', fileUrl);
+      console.log('🚀 ~ fileUrl', fileUrl);
    };
 
    const uploadAvatarToFirebase = async (options) => {
@@ -71,14 +68,26 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'avatars',
+         directory: 'cv',
       });
       setAvatar({
          loading: false,
          url: avatarUrl,
       });
-      console.log('🚀 ~  avatarUrl', avatarUrl);
    };
+
+   const handleScroll = () => {
+      if (ref.current) {
+         setSticky(ref.current.getBoundingClientRect().top <= 0);
+      }
+   };
+
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', () => handleScroll);
+      };
+   }, []);
 
    return (
       <>
@@ -86,21 +95,35 @@ function ApplyCampaign(props) {
             <div className='apply__campaign'>
                <div className='apply__campaign--col'>
                   <div className='apply__description'>
-                     <Title center level={3}></Title>
+                     <Title
+                        level={3}
+                        style={{ textAlign: 'center', color: '#f6901e' }}
+                     >
+                        {campaignDetail.name}
+                     </Title>
+                     <hr />
+                     <Paragraph style={{ marginTop: '20px' }}>
+                        {parse(campaignDetail.description)}
+                     </Paragraph>
                   </div>
                </div>
-               <div className='apply__campaign--col'>
-                  <Spin spinning={formLoading}>
-                     <ApplyForm
-                        handleApplyCampaign={handleApplyCampaign}
-                        uploadCVToFirebase={uploadCVToFirebase}
-                        uploadAvatarToFirebase={uploadAvatarToFirebase}
-                        avatar={avatar}
-                        campaignPosition={campaignDetail.position}
-                        campaignTechnique={campaignDetail.technique}
-                        campaignDescription={campaignDetail.description}
-                     />
-                  </Spin>
+               <div
+                  className={`apply__campaign--col sticky-wrapper${
+                     isSticky
+                        ? 'apply__campaign--col sticky'
+                        : 'apply__campaign--col '
+                  }`}
+                  ref={ref}
+               >
+                  <ApplyForm
+                     handleApplyCampaign={handleApplyCampaign}
+                     uploadCVToFirebase={uploadCVToFirebase}
+                     uploadAvatarToFirebase={uploadAvatarToFirebase}
+                     avatar={avatar}
+                     campaignPosition={campaignDetail.position}
+                     campaignTechnique={campaignDetail.technique}
+                     campaignDescription={campaignDetail.description}
+                  />
                </div>
             </div>
          </MainLayout>
