@@ -215,9 +215,7 @@ function CreateCampaign(props) {
                         <Button type='primary' htmlType='submit'>
                            Submit
                         </Button>
-                        <Button type='primary' htmlType='submit'>
-                           Submit
-                        </Button>
+                        <Button>Cancel</Button>
                      </Form.Item>
                   </Form>
                </Content>
@@ -229,7 +227,7 @@ function CreateCampaign(props) {
                style={{
                   position: 'absolute',
                   top: '0%',
-                  left: '-5%',
+                  left: '-10%',
                   width: '100vw',
                   height: '100vh',
                   maxHeight: 'unset',
