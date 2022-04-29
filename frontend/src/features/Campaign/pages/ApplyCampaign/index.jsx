@@ -78,20 +78,24 @@ function ApplyCampaign(props) {
 
    const handleScroll = () => {
       if (ref.current) {
-         setSticky(ref.current.getBoundingClientRect().top <= 0);
+         setSticky(ref.current.getBoundingClientRect().top <= 60);
       }
    };
 
    useEffect(() => {
       window.addEventListener('scroll', handleScroll);
       return () => {
-         window.removeEventListener('scroll', () => handleScroll);
+         window.removeEventListener('scroll', handleScroll);
       };
    }, []);
 
    return (
       <>
          <MainLayout>
+            <div>
+               Breadcrumb
+               {/* Please make breadcrumb here. Thanks */}
+            </div>
             <div className='apply__campaign'>
                <div className='apply__campaign--col'>
                   <div className='apply__description'>
@@ -110,7 +114,7 @@ function ApplyCampaign(props) {
                <div
                   className={`apply__campaign--col sticky-wrapper${
                      isSticky
-                        ? 'apply__campaign--col sticky'
+                        ? 'apply__campaign--col sticky--form'
                         : 'apply__campaign--col '
                   }`}
                   ref={ref}

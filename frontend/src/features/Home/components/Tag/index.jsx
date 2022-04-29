@@ -3,7 +3,7 @@ import './Tag.scss';
 
 function Tag(props) {
    const { tagContent } = props;
-   const mdColors = ['#f94144', '#f3722c', '#277da1', '#ffd60a', '#ff758f'];
+   const mdColors = ['#007bff', '#6c757d', '#28a745', '#dc3545', '#ffc107'];
 
    const getColor = () => {
       const borderColor = mdColors[Math.floor(Math.random() * mdColors.length)];
@@ -11,7 +11,7 @@ function Tag(props) {
    };
 
    return (
-      <div className='custom-tag' style={{ color: getColor() }}>
+      <div className='custom-tag' style={{ backgroundColor: getColor() }}>
          {tagContent}
       </div>
    );
