@@ -73,6 +73,7 @@ Route::prefix('/v1/mail')->group(
         Route::controller(EmailController::class)->group(
             function () {
                 Route::get('/receive-confirmation', 'ReceiveConfirmationMail');
+                Route::get('/reject-cv', 'RejectCVMail');
             }
         );
     }

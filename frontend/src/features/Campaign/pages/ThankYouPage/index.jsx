@@ -9,11 +9,6 @@ function ThankYouPage(props) {
    const candidateInfo = location.state?.candidateInfo;
    const campaignDetail = location.state?.campaignDetail;
 
-   console.log({
-      candidateInfo,
-      campaignDetail,
-   });
-
    const onClickGoBackHome = () => {
       history.push('/');
    };
