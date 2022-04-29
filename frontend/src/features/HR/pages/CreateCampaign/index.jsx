@@ -1,3 +1,4 @@
+import { UploadOutlined } from '@ant-design/icons';
 import {
    Breadcrumb,
    Button,
@@ -14,19 +15,17 @@ import {
    Typography,
    Upload,
 } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
 import Editor from '../../../../UI/Editor/Editor';
-import './CreateCampaign.scss';
 import { Section } from '../../../Home/components/Section/Section.styles';
+import './CreateCampaign.scss';
 
 CreateCampaign.propTypes = {};
 const { Title } = Typography;
 
 function CreateCampaign(props) {
-   let history = useHistory();
+   // let history = useHistory();
 
    const [description, setDescription] = useState();
 
@@ -76,10 +75,10 @@ function CreateCampaign(props) {
             <Breadcrumb>
                <Breadcrumb.Item>Home</Breadcrumb.Item>
                <Breadcrumb.Item>
-                  <a href=''>Application Center</a>
+                  <a href='# '>Application Center</a>
                </Breadcrumb.Item>
                <Breadcrumb.Item>
-                  <a href=''>Application List</a>
+                  <a href='# '>Application List</a>
                </Breadcrumb.Item>
                <Breadcrumb.Item>An Application</Breadcrumb.Item>
             </Breadcrumb>
