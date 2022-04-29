@@ -1,4 +1,8 @@
 {
+   "sidebar.person": "Person",
+   "sidebar.dashboard": "Dashboard",
+   "sidebar.employee": "Employee",
+   "sidebar.campaign": "Campaigns",
    "sidebar.email": "Email",
    "sidebar.chat": "Chat",
    "sidebar.ecommerce": "Ecommerce",

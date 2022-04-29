@@ -69,7 +69,7 @@ function ApplyForm(props) {
    const uploadButton = (
       <div>
          {avatar.loading ? <LoadingOutlined /> : <PlusOutlined />}
-         <div style={{ marginTop: 8 }}>Upload</div>
+         <div style={{ marginTop: 8 }}>Upload Avatar</div>
       </div>
    );
 

@@ -2,6 +2,13 @@
    position: sticky;
    top: 0;
    z-index: 100;
+   transition: all 0.25s linear;
+}
+.sticky--form {
+   position: sticky;
+   top: 20px;
+   z-index: 99;
+   transition: all 0.25s linear;
 }
 .sticky .sticky-inner {
    position: fixed;
