@@ -1,42 +1,43 @@
 const options = [
-   // {
-   // 	key: 'mailbox',
-   // 	label: 'sidebar.email',
-   // 	leftIcon: 'ion-android-mail',
-   // },
-   // {
-   // 	key: 'chat',
-   // 	label: 'sidebar.chat',
-   // 	leftIcon: 'ion-chatbubbles',
-   // },
-   // {
-   //   key: 'quiz',
-   //   label: 'sidebar.quiz',
-   //   leftIcon: 'ion-chatbubbles',
-   // },
    {
-      key: 'ecommerce',
-      label: 'sidebar.ecommerce',
-      leftIcon: 'ion-bag',
-      children: [
-         {
-            key: 'shop',
-            label: 'sidebar.shop',
-         },
-         {
-            key: 'cart',
-            label: 'sidebar.cart',
-         },
-         {
-            key: 'checkout',
-            label: 'sidebar.checkout',
-         },
-         {
-            key: 'card',
-            label: 'sidebar.cards',
-         },
-      ],
+      key: 'dashboard',
+      label: 'sidebar.dashboard',
+      leftIcon: 'ion-android-mail',
    },
+   {
+      key: 'campaign',
+      label: 'sidebar.campaign',
+      leftIcon: 'ion-calendar',
+   },
+   {
+      key: 'employee',
+      label: 'sidebar.employee',
+      leftIcon: 'ion-person',
+   },
+
+   // {
+   //    key: 'ecommerce',
+   //    label: 'sidebar.ecommerce',
+   //    leftIcon: 'ion-bag',
+   //    children: [
+   //       {
+   //          key: 'shop',
+   //          label: 'sidebar.shop',
+   //       },
+   //       {
+   //          key: 'cart',
+   //          label: 'sidebar.cart',
+   //       },
+   //       {
+   //          key: 'checkout',
+   //          label: 'sidebar.checkout',
+   //       },
+   //       {
+   //          key: 'card',
+   //          label: 'sidebar.cards',
+   //       },
+   //    ],
+   // },
    // {
    // 	key: 'maps',
    // 	label: 'sidebar.maps',
@@ -86,7 +87,6 @@ const options = [
    // 	key: 'firestorecrud',
    // 	label: 'sidebar.firestorecrud',
    // 	leftIcon: 'ion-fireball',
-
    // 	children: [
    // 		{
    // 			key: 'articles',
@@ -346,7 +346,6 @@ const options = [
    // 			label: 'sidebar.resetPw',
    // 			withoutDashboard: true,
    // 		},
-
    // 		// {
    // 		//   key: 'comingSoon',
    // 		//   label: 'sidebar.comingSoon',

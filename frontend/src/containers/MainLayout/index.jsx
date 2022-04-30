@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
    return (
       <HomepageContainer style={{}}>
          <Header />
-         <Section style={{ paddingTop: '40px', paddingBottom: '70px' }}>
+         <Section style={{ paddingTop: '20px', paddingBottom: '70px' }}>
             <Container>{children}</Container>
          </Section>
          <Footer />

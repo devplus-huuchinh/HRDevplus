@@ -1,0 +1,37 @@
+.apply__campaign {
+   display: flex;
+   align-items: stretch;
+   gap: 20px;
+   .apply__campaign--col {
+      width: calc(100% / 2 - 10px);
+      height: 100%;
+   }
+   .apply__description {
+      height: 100%;
+      width: 100%;
+      padding: 30px 20px;
+      background-color: #fffefc;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      text-align: justify;
+   }
+   @media screen and (max-width: 1024px) {
+      flex-direction: column-reverse;
+      .apply__campaign--col {
+         width: 100%;
+      }
+      .apply__campaign--col.sticky--form {
+         position: relative;
+         top: 0;
+      }
+   }
+}
+@media screen and (max-width: 1024px) {
+   .breadcrumb-sticky.sticky {
+      position: relative;
+      top: 0;
+   }
+}
+.breadcrumb-sticky {
+   // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

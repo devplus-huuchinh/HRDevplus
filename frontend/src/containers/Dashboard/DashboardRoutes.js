@@ -353,7 +353,7 @@ const routes = [
       component: lazy(() => import('@iso/features/UserProfile')),
    },
    {
-      path: 'campaign_page',
+      path: 'campaign',
       component: lazy(() => import('@iso/features/HR')),
    },
 ];

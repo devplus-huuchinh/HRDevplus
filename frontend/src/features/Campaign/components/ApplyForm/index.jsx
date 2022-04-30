@@ -51,7 +51,6 @@ function ApplyForm(props) {
    };
 
    const normFile = (e) => {
-      console.log('Upload event:', e);
       if (Array.isArray(e)) {
          return e;
       }
@@ -70,7 +69,7 @@ function ApplyForm(props) {
    const uploadButton = (
       <div>
          {avatar.loading ? <LoadingOutlined /> : <PlusOutlined />}
-         <div style={{ marginTop: 8 }}>Upload</div>
+         <div style={{ marginTop: 8 }}>Upload Avatar</div>
       </div>
    );
 
@@ -78,7 +77,7 @@ function ApplyForm(props) {
       <div className='apply__form--wrapper'>
          <div className='apply__form--container'>
             <Title level={3} className='form__heading'>
-               Apply for this campaign
+               Please type your information
             </Title>
             <Form
                className='apply__form'

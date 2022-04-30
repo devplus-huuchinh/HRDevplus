@@ -1,9 +1,10 @@
-import { message, Space, Spin } from 'antd';
-import React, { useState } from 'react';
+import { message, Spin, Typography } from 'antd';
+import parse from 'html-react-parser';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+   useHistory,
    useLocation,
    useParams,
-   useHistory,
    useRouteMatch,
 } from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
@@ -11,6 +12,9 @@ import emailApi from '../../../../api/emailApi';
 import MainLayout from '../../../../containers/MainLayout';
 import uploadFile from '../../../../firebase/uploadFile';
 import ApplyForm from '../../components/ApplyForm';
+import './ApplyCampaign.scss';
+
+const { Title, Paragraph } = Typography;
 
 function ApplyCampaign(props) {
    let location = useLocation();
@@ -19,7 +23,10 @@ function ApplyCampaign(props) {
 
    const { campaignId } = useParams();
    const { campaignDetail } = location.state;
+
    const [formLoading, setFormLoading] = useState(false);
+   const [isSticky, setSticky] = useState(false);
+   const ref = useRef(null);
 
    const [avatar, setAvatar] = useState({
       loading: false,
@@ -76,7 +83,7 @@ function ApplyCampaign(props) {
          onError,
          directory: 'avatars',
       });
-      console.log('🚀 ~  fileUrl', fileUrl);
+      console.log('🚀 ~ fileUrl', fileUrl);
    };
 
    const uploadAvatarToFirebase = async (options) => {
@@ -95,28 +102,64 @@ function ApplyCampaign(props) {
          loading: false,
          url: avatarUrl,
       });
-      console.log('🚀 ~  avatarUrl', avatarUrl);
    };
+
+   const handleScroll = () => {
+      if (ref.current) {
+         setSticky(ref.current.getBoundingClientRect().top <= 60);
+      }
+   };
+
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+         window.removeEventListener('scroll', handleScroll);
+      };
+   }, []);
 
    return (
       <>
          <MainLayout>
-            <Space
-               direction='vertical'
-               size={'middle'}
-               style={{ display: 'flex' }}
-            >
-               <Spin spinning={formLoading}>
-                  <ApplyForm
-                     handleApplyCampaign={handleApplyCampaign}
-                     uploadCVToFirebase={uploadCVToFirebase}
-                     uploadAvatarToFirebase={uploadAvatarToFirebase}
-                     avatar={avatar}
-                     campaignPosition={campaignDetail.position}
-                     campaignTechnique={campaignDetail.technique}
-                  />
-               </Spin>
-            </Space>
+            <div>
+               Breadcrumb
+               {/* Please make breadcrumb here. Thanks */}
+            </div>
+            <div className='apply__campaign'>
+               <div className='apply__campaign--col'>
+                  <div className='apply__description'>
+                     <Title
+                        level={3}
+                        style={{ textAlign: 'center', color: '#f6901e' }}
+                     >
+                        {campaignDetail.name}
+                     </Title>
+                     <hr />
+                     <Paragraph style={{ marginTop: '20px' }}>
+                        {parse(campaignDetail.description)}
+                     </Paragraph>
+                  </div>
+               </div>
+               <div
+                  className={`apply__campaign--col sticky-wrapper${
+                     isSticky
+                        ? 'apply__campaign--col sticky--form'
+                        : 'apply__campaign--col '
+                  }`}
+                  ref={ref}
+               >
+                  <Spin spinning={formLoading}>
+                     <ApplyForm
+                        handleApplyCampaign={handleApplyCampaign}
+                        uploadCVToFirebase={uploadCVToFirebase}
+                        uploadAvatarToFirebase={uploadAvatarToFirebase}
+                        avatar={avatar}
+                        campaignPosition={campaignDetail.position}
+                        campaignTechnique={campaignDetail.technique}
+                        campaignDescription={campaignDetail.description}
+                     />
+                  </Spin>
+               </div>
+            </div>
          </MainLayout>
       </>
    );
