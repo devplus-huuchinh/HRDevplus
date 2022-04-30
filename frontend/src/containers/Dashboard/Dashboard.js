@@ -1,18 +1,17 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Layout } from 'antd';
+import siteConfig from '@iso/config/site.config';
 import useWindowSize from '@iso/lib/hooks/useWindowSize';
 import appActions from '@iso/redux/app/actions';
-import ThemeSwitcher from '@iso/containers/ThemeSwitcher/ThemeSwitcher';
-import siteConfig from '@iso/config/site.config';
+import { Layout } from 'antd';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../Sidebar/Sidebar';
 import Topbar from '../Topbar/Topbar';
-import DashboardRoutes from './DashboardRoutes';
-
 import { DashboardContainer, DashboardGlobalStyles } from './Dashboard.styles';
+import DashboardRoutes from './DashboardRoutes';
 
 const { Content, Footer } = Layout;
 const { toggleAll } = appActions;
+
 const styles = {
    layout: { flexDirection: 'row', overflowX: 'hidden' },
    content: {
@@ -36,6 +35,7 @@ export default function Dashboard() {
    React.useEffect(() => {
       dispatch(toggleAll(width, height));
    }, [width, height, dispatch]);
+
    return (
       <DashboardContainer>
          <DashboardGlobalStyles />
@@ -55,7 +55,7 @@ export default function Dashboard() {
                   <Footer style={styles.footer}>{siteConfig.footerText}</Footer>
                </Layout>
             </Layout>
-            <ThemeSwitcher />
+            {/* <ThemeSwitcher /> */}
          </Layout>
       </DashboardContainer>
    );
