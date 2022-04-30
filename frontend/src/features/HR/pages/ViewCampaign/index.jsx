@@ -3,7 +3,8 @@ import { Button, Input, Layout, Spin, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
-import './index.scss';
+import CampaignSearchBar from '../../components/CampaignSearchBar';
+import './ViewCampaign.scss';
 
 ViewCampaign.propTypes = {};
 
@@ -109,36 +110,28 @@ function ViewCampaign(props) {
    }, []);
 
    return (
-      <Layout>
-         <Header>
-            <Search
-               placeholder='input search text'
-               allowClear
-               enterButton='Search'
-               size='middle'
-            />
-            <div className='search-create-header'>
-               <Button
-                  type='primary'
-                  shape='round'
-                  icon={<PlusCircleFilled />}
-                  onClick={() => history.push('/dashboard/campaign/create')}
-               >
-                  Create Campaign
-               </Button>
-            </div>
-         </Header>
-         <Layout style={{ padding: '15px' }}>
-            <Content>
-               <Spin spinning={loading}>
-                  <Table
-                     columns={columns}
-                     dataSource={data}
-                     rowKey={(record) => record.id}
-                  />
-               </Spin>
-            </Content>
-         </Layout>
+      <Layout className='view-campaign'>
+         <div className='view-campaign--header'>
+            <CampaignSearchBar />
+            <Button
+               type='primary'
+               shape='round'
+               icon={<PlusCircleFilled />}
+               onClick={() => history.push('/dashboard/campaign/create')}
+            >
+               Create Campaign
+            </Button>
+         </div>
+
+         <div className='view-campaign--content'>
+            <Spin spinning={loading}>
+               <Table
+                  columns={columns}
+                  dataSource={data}
+                  rowKey={(record) => record.id}
+               />
+            </Spin>
+         </div>
       </Layout>
    );
 }

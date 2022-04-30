@@ -1,6 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
-   Breadcrumb,
    Button,
    Col,
    DatePicker,
@@ -23,6 +22,7 @@ import campaignApi from '../../../../api/campaignApi';
 import uploadFile from '../../../../firebase/uploadFile';
 import Editor from '../../../../UI/Editor/Editor';
 import { Section } from '../../../Home/components/Section/Section.styles';
+import Breadcrumbs from '../../../Home/components/BreadCrumb';
 import './CreateCampaign.scss';
 
 CreateCampaign.propTypes = {};
@@ -96,16 +96,7 @@ function CreateCampaign(props) {
    return (
       <>
          <div className='create__breadcrumb'>
-            <Breadcrumb>
-               <Breadcrumb.Item>Home</Breadcrumb.Item>
-               <Breadcrumb.Item>
-                  <a href='# '>Application Center</a>
-               </Breadcrumb.Item>
-               <Breadcrumb.Item>
-                  <a href='# '>Application List</a>
-               </Breadcrumb.Item>
-               <Breadcrumb.Item>An Application</Breadcrumb.Item>
-            </Breadcrumb>
+            <Breadcrumbs />
          </div>
          <Section style={{ padding: '30px 20px' }}>
             <Spin spinning={loading}>
@@ -183,7 +174,7 @@ function CreateCampaign(props) {
                               <Select
                                  mode='multiple'
                                  style={{ width: '100%' }}
-                                 placeholder='select position'
+                                 placeholder='Select position'
                                  optionLabelProp='label'
                                  allowClear
                               >
@@ -213,7 +204,7 @@ function CreateCampaign(props) {
                               <Select
                                  mode='multiple'
                                  style={{ width: '100%' }}
-                                 placeholder='select technologies'
+                                 placeholder='Select technologies'
                                  optionLabelProp='label'
                                  allowClear
                               >
@@ -240,7 +231,7 @@ function CreateCampaign(props) {
                                  },
                               ]}
                            >
-                              <Input />
+                              <Input placeholder='Enter your address' />
                            </Form.Item>
                            <Form.Item
                               label='Image:'
