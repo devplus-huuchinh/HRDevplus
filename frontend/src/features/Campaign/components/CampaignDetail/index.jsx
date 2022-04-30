@@ -132,7 +132,7 @@ function CampaignDetail(props) {
                                  End Date:
                                  {daysRemaining() <= 5 ? (
                                     <Countdown
-                                       format='D day HH:mm:ss'
+                                       format='D day'
                                        value={moment(campaignEndDate)}
                                        valueStyle={{
                                           fontSize: '18px',

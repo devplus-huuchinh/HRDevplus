@@ -40,7 +40,7 @@ function CandidateSearchToolbar(props) {
    return (
       <Spin spinning={isSpin}>
          <div className='filter__wrapper'>
-            <Collapse ghost>
+            <Collapse ghost defaultActiveKey={['1']}>
                <Panel header='Technology' key='1'>
                   <Radio.Group onChange={onChangeRadioGroup} defaultValue={0}>
                      <Space
@@ -59,7 +59,7 @@ function CandidateSearchToolbar(props) {
                   </Radio.Group>
                </Panel>
             </Collapse>
-            <Collapse ghost>
+            <Collapse ghost defaultActiveKey={['2']}>
                <Panel header='Position' key='2'>
                   <Radio.Group onChange={onChangeRadioGroup} defaultValue={0}>
                      <Space
