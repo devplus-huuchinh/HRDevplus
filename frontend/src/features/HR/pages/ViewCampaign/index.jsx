@@ -1,15 +1,13 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Input, Layout, Spin, Table, Tag } from 'antd';
+import { Button, Space, Spin, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
+import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import CampaignSearchBar from '../../components/CampaignSearchBar';
 import './ViewCampaign.scss';
 
 ViewCampaign.propTypes = {};
-
-const { Header, Content } = Layout;
-const { Search } = Input;
 
 function ViewCampaign(props) {
    let history = useHistory();
@@ -110,29 +108,36 @@ function ViewCampaign(props) {
    }, []);
 
    return (
-      <Layout className='view-campaign'>
-         <div className='view-campaign--header'>
-            <CampaignSearchBar />
-            <Button
-               type='primary'
-               shape='round'
-               icon={<PlusCircleFilled />}
-               onClick={() => history.push('/dashboard/campaign/create')}
-            >
-               Create Campaign
-            </Button>
+      <div className='view-campaign'>
+         <div>
+            <BreadCrumbs />
          </div>
+         <Space className='view-campaign--header' direction='horizontal'>
+            <CampaignSearchBar />
+         </Space>
 
          <div className='view-campaign--content'>
-            <Spin spinning={loading}>
-               <Table
-                  columns={columns}
-                  dataSource={data}
-                  rowKey={(record) => record.id}
-               />
-            </Spin>
+            <div className='view-campaign--create'>
+               <Button
+                  type='primary'
+                  shape='round'
+                  icon={<PlusCircleFilled />}
+                  onClick={() => history.push('/dashboard/campaign/create')}
+               >
+                  Create Campaign
+               </Button>
+            </div>
+            <div className='view-campaign--table'>
+               <Spin spinning={loading}>
+                  <Table
+                     columns={columns}
+                     dataSource={data}
+                     rowKey={(record) => record.id}
+                  />
+               </Spin>
+            </div>
          </div>
-      </Layout>
+      </div>
    );
 }
 
