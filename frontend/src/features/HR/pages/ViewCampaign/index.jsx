@@ -1,5 +1,5 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Input, Layout, Table, Tag } from 'antd';
+import { Button, Input, Layout, Spin, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
@@ -12,6 +12,9 @@ const { Search } = Input;
 
 function ViewCampaign(props) {
    let history = useHistory();
+
+   const [data, setData] = useState([]);
+   const [loading, setLoading] = useState(true);
 
    const columns = [
       {
@@ -91,11 +94,12 @@ function ViewCampaign(props) {
       //    width: '5%',
       // },
    ];
-   const [data, setData] = useState([]);
+
    useEffect(() => {
       const handleData = async () => {
          try {
             const db = await campaignApi.getCampainsForHr();
+            setLoading(false);
             setData(db);
          } catch (error) {
             console.log(error);
@@ -103,7 +107,7 @@ function ViewCampaign(props) {
       };
       handleData();
    }, []);
-   console.log(data);
+
    return (
       <Layout>
          <Header>
@@ -118,21 +122,21 @@ function ViewCampaign(props) {
                   type='primary'
                   shape='round'
                   icon={<PlusCircleFilled />}
-                  onClick={() =>
-                     history.push('/dashboard/campaign_page/create')
-                  }
+                  onClick={() => history.push('/dashboard/campaign/create')}
                >
-                  Create Compaign
+                  Create Campaign
                </Button>
             </div>
          </Header>
          <Layout style={{ padding: '15px' }}>
             <Content>
-               <Table
-                  columns={columns}
-                  dataSource={data}
-                  rowKey={(record) => record.id}
-               />
+               <Spin spinning={loading}>
+                  <Table
+                     columns={columns}
+                     dataSource={data}
+                     rowKey={(record) => record.id}
+                  />
+               </Spin>
             </Content>
          </Layout>
       </Layout>
