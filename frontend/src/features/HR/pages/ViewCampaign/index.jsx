@@ -1,8 +1,10 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Space, Spin, Table, Tag } from 'antd';
+import { Button, Spin, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
+import positionApi from '../../../../api/positionApi';
+import searchApi from '../../../../api/searchApi';
 import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import CampaignSearchBar from '../../components/CampaignSearchBar';
 import './ViewCampaign.scss';
@@ -14,6 +16,57 @@ function ViewCampaign(props) {
 
    const [data, setData] = useState([]);
    const [loading, setLoading] = useState(true);
+   const [positions, setPositions] = useState([]);
+   const [status] = useState([
+      {
+         id: 1,
+         name: 'TRUE',
+      },
+      {
+         id: 0,
+         name: 'FALSE',
+      },
+   ]);
+
+   useEffect(() => {
+      const handleData = async () => {
+         try {
+            const db = await campaignApi.getCampainsForHr();
+            const responsePosition = await positionApi.getAll();
+
+            setPositions(responsePosition);
+            setLoading(false);
+            setData(db);
+         } catch (error) {
+            console.log(error);
+         }
+      };
+      handleData();
+   }, []);
+
+   const handleOnFinishSearch = async (formData) => {
+      setLoading(true);
+      const prepareData = {
+         ...formData,
+         start_date:
+            (Array.isArray(formData.dateRange) &&
+               formData.dateRange[0]?.format('YYYY-MM-DD')) ||
+            '1970-01-01',
+         end_date:
+            (Array.isArray(formData.dateRange) &&
+               formData.dateRange[1]?.format('YYYY-MM-DD')) ||
+            '2100-01-01',
+         campaign_technique: [],
+      };
+
+      delete prepareData.dateRange;
+
+      const searchResponse = await searchApi.searchForCandidate({
+         ...prepareData,
+      });
+      setLoading(false);
+      setData(searchResponse);
+   };
 
    const columns = [
       {
@@ -76,6 +129,16 @@ function ViewCampaign(props) {
          ),
       },
       {
+         title: 'Active',
+         dataIndex: 'is_active',
+         width: '20%',
+         render: (tags) => (
+            <>
+               <Tag>{tags === 0 ? 'false' : 'true'}</Tag>
+            </>
+         ),
+      },
+      {
          title: 'Detail',
          dataIndex: 'id',
          render: (record) => (
@@ -87,34 +150,20 @@ function ViewCampaign(props) {
             </Button>
          ),
       },
-      // {
-      //    title: '',
-      //    render: () => <a>Edit</a>,
-      //    width: '5%',
-      // },
    ];
-
-   useEffect(() => {
-      const handleData = async () => {
-         try {
-            const db = await campaignApi.getCampainsForHr();
-            setLoading(false);
-            setData(db);
-         } catch (error) {
-            console.log(error);
-         }
-      };
-      handleData();
-   }, []);
 
    return (
       <div className='view-campaign'>
          <div>
             <BreadCrumbs />
          </div>
-         <Space className='view-campaign--header' direction='horizontal'>
-            <CampaignSearchBar />
-         </Space>
+         <div className='view-campaign--header'>
+            <CampaignSearchBar
+               positions={positions}
+               status={status}
+               handleOnFinishSearch={handleOnFinishSearch}
+            />
+         </div>
 
          <div className='view-campaign--content'>
             <div className='view-campaign--create'>

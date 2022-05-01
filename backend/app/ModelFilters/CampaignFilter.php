@@ -3,6 +3,7 @@
 namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class CampaignFilter extends ModelFilter
 {
@@ -21,30 +22,32 @@ class CampaignFilter extends ModelFilter
         }
     }
 
-
-    public function address($address)
+    public function campaignTechnique($techniqueArray)
     {
-        if ($address) {
-            return $this->where('address', 'LIKE', '%' . $address . '%');
-        }
+        return $this->whereHas('campaign_technique.technique', function ($query) use ($techniqueArray) {
+            return $query->whereIn('id', $techniqueArray);
+        });
     }
 
-    public function campaignTechnique($technique_id)
+    public function positionCampaign($positionArray)
     {
-        if ($technique_id != 0) {
-            return $this->related('campaign_technique', 'technique_id', '=', $technique_id);
-        }
+        return $this->whereHas('position_campaign.position', function ($query) use ($positionArray) {
+            return $query->whereIn('id', $positionArray);
+        });
     }
 
-    public function positionCampaign($position_id)
+    public function isActive($statusArray)
     {
-        if ($position_id != 0) {
-            return $this->related('position_campaign', 'position_id', '=', $position_id);
-        }
+        return $this->whereIn('is_active', $statusArray);
     }
 
-    public function isActive()
+    public function startDate($startDate)
     {
-        return $this->where('is_active', '=', 1);
+        return $this->where('start_date', '>=', $startDate);
+    }
+
+    public function endDate($endDate)
+    {
+        return $this->where('end_date', '<=', $endDate);
     }
 }

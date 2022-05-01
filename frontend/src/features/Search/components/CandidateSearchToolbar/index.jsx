@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { Checkbox, Collapse, Spin } from 'antd';
 import PropTypes from 'prop-types';
-import { Radio, Space, Spin, Collapse } from 'antd';
-import techniqueApi from '../../../../api/techniqueApi';
+import React, { useEffect, useState } from 'react';
 import positionApi from '../../../../api/positionApi';
+import techniqueApi from '../../../../api/techniqueApi';
 import './CandidateSearchTechniqueRadio.scss';
 
 CandidateSearchToolbar.propTypes = {
-   handleChangeCampaignFilter: PropTypes.func,
+   handleChangeSearchFilter: PropTypes.func,
 };
 
 CandidateSearchToolbar.defaultProps = {
-   handleChangeCampaignFilter: null,
+   handleChangeSearchFilter: null,
 };
 
 const { Panel } = Collapse;
 
 function CandidateSearchToolbar(props) {
-   const { handleChangeCampaignFilter } = props;
+   const { handleChangeSearchFilter } = props;
 
    const [techniques, setTechniques] = useState([]);
    const [positions, setPositions] = useState([]);
@@ -26,6 +26,8 @@ function CandidateSearchToolbar(props) {
       const getFilterInDb = async () => {
          const responseTechnique = await techniqueApi.getAll();
          const responsePosition = await positionApi.getAll();
+         console.log('🚀 ~ responsePosition', responsePosition);
+
          setIsSpin(false);
          setTechniques(responseTechnique);
          setPositions(responsePosition);
@@ -33,49 +35,49 @@ function CandidateSearchToolbar(props) {
       getFilterInDb();
    }, []);
 
-   const onChangeRadioGroup = (e) => {
-      handleChangeCampaignFilter('technique', e.target.value);
+   const onChangePositions = (value) => {
+      handleChangeSearchFilter('position_campaign', value);
    };
+
+   const onChangeTechnology = (value) => {
+      handleChangeSearchFilter('campaign_technique', value);
+   };
+
+   const positionsOptions = positions?.map((i) => {
+      return {
+         value: i.id,
+         label: i.name,
+      };
+   });
+
+   const techniquesOptions = techniques?.map((i) => {
+      return {
+         value: i.id,
+         label: i.name,
+      };
+   });
 
    return (
       <Spin spinning={isSpin}>
          <div className='filter__wrapper'>
             <Collapse ghost defaultActiveKey={['1']}>
                <Panel header='Technology' key='1'>
-                  <Radio.Group onChange={onChangeRadioGroup} defaultValue={0}>
-                     <Space
-                        direction='vertical'
-                        size={15}
-                        className='filter__radio--group'
-                        wrap
-                     >
-                        <Radio value={0}>All</Radio>
-                        {techniques?.map((technique) => (
-                           <Radio value={technique.id} key={technique.id}>
-                              {technique.name}
-                           </Radio>
-                        ))}
-                     </Space>
-                  </Radio.Group>
+                  {techniquesOptions?.length > 0 && (
+                     <Checkbox.Group
+                        options={techniquesOptions}
+                        onChange={onChangeTechnology}
+                     />
+                  )}
                </Panel>
             </Collapse>
             <Collapse ghost defaultActiveKey={['2']}>
                <Panel header='Position' key='2'>
-                  <Radio.Group onChange={onChangeRadioGroup} defaultValue={0}>
-                     <Space
-                        direction='vertical'
-                        size={15}
-                        className='filter__radio--group'
-                        wrap
-                     >
-                        <Radio value={0}>All</Radio>
-                        {positions?.map((position) => (
-                           <Radio value={position.id} key={position.id}>
-                              {position.name}
-                           </Radio>
-                        ))}
-                     </Space>
-                  </Radio.Group>
+                  {positionsOptions?.length > 0 && (
+                     <Checkbox.Group
+                        options={positionsOptions}
+                        onChange={onChangePositions}
+                     />
+                  )}
                </Panel>
             </Collapse>
          </div>
