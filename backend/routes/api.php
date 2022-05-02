@@ -92,6 +92,8 @@ Route::prefix('/v1/profiles')->group(function () {
 
 Route::prefix('/v1/profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
+        Route::post('/create', 'create');
+        Route::get('/statistics', 'statistics');
         Route::patch('/', 'editProfile');
     });
 });
@@ -116,15 +118,15 @@ Route::prefix('/v1/position')->group(
     }
 );
 
-Route::prefix('/v1/profile')->group(
-    function () {
-        Route::controller(ProfileController::class)->group(
-            function () {
-                Route::post('/create', 'create');
-            }
-        );
-    }
-);
+// Route::prefix('/v1/profile')->group(
+//     function () {
+//         Route::controller(ProfileController::class)->group(
+//             function () {
+
+//             }
+//         );
+//     }
+// );
 
 Route::name('api.posts.')->group(
     function () {
@@ -137,6 +139,7 @@ Route::prefix('v1/campaign')->group(function () {
         Route::controller(CampaignController::class)->group(function () {
             Route::get('/droplist', 'getDropList');
             Route::get('/statistics', 'statistics');
+            Route::get('/count', 'count');
             Route::get('/', 'index');
             Route::post('/', 'newCampaign');
         });

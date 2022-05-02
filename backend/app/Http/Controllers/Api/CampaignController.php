@@ -10,21 +10,26 @@ use Illuminate\Http\Request;
 use App\Services\CampaignService;
 use App\Services\ProfileService;
 use App\Services\ProfileTechniqueService;
-
+use App\Services\UserService;
 
 class CampaignController extends Controller
 {
     private $campaignService;
     private $positionRepo;
     private $techniqueRepo;
+    private $profileService;
+    private $profileTechniqueService;
+    private $userService;
+
     // constructor
-    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo, ProfileService $profileService, ProfileTechniqueService $profileTechniqueService)
+    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo, ProfileService $profileService, ProfileTechniqueService $profileTechniqueService, UserService $userService)
     {
         $this->campaignService = $campaignService;
         $this->positionRepo = $positionRepo;
         $this->techniqueRepo = $techniqueRepo;
         $this->profileService = $profileService;
         $this->profileTechniqueService = $profileTechniqueService;
+        $this->userService = $userService;
     }
 
     // show all campaign
@@ -126,5 +131,15 @@ class CampaignController extends Controller
     {
         $allCampaigns = $this->campaignService->campaignStatistics($request->all());
         return response()->json($allCampaigns);
+    }
+
+    public function count()
+    {
+        $count = [
+            'profiles' => $this->profileService->profileCount(),
+            'campaigns' => $this->campaignService->campaignCount(),
+            'users' => $this->userService->userCount(),
+        ];
+        return $count;
     }
 }

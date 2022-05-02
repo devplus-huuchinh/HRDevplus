@@ -46,6 +46,11 @@ class CampaignRepo extends EloquentRepo
 
     public function getAllByYear($year)
     {
-        return $this->model->whereYear('created_at', $year)->orderBy('created_at', 'asc')->get()->all();;
+        return $this->model->whereYear('created_at', $year)->orderBy('created_at', 'asc')->get()->all();
+    }
+
+    public function countCampaigns()
+    {
+        return $this->model->count();
     }
 }

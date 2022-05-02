@@ -102,4 +102,9 @@ class CampaignService
 
         return $reduceData;
     }
+
+    public function campaignCount()
+    {
+        return $this->campaignRepo->countCampaigns();
+    }
 }

@@ -4,10 +4,11 @@ import Breadcrumb from '../../../Home/components/BreadCrumb';
 import StatisticCard from '../../components/StatisticCard';
 import styled from 'styled-components';
 import { ProfileOutlined, UserOutlined, BellOutlined } from '@ant-design/icons';
-import CampaignChart from '../../components/CampaignChart';
+import DashboardChart from '../../components/DashboardChart';
 import campaignApi from '../../../../api/campaignApi';
 import moment from 'moment';
-import { Spin } from 'antd';
+import { Spin, Typography } from 'antd';
+import profileApi from '../../../../api/profileApi';
 
 DashboardPage.propTypes = {};
 
@@ -32,13 +33,26 @@ const StatisticCardWrapper = styled.div`
    }
 `;
 
+const { Title } = Typography;
+
 function DashboardPage(props) {
    const [campaignStatistic, setCampaignStatistic] = useState([]);
    const [campaignYear, setCampaignYear] = useState(moment());
    const [campaignSpin, setCampaignSpin] = useState(false);
 
+   const [profileStatistic, setProfileStatistic] = useState([]);
+   const [profileYear, setProfileYear] = useState(moment());
+   const [profileSpin, setProfileSpin] = useState(false);
+
+   const [count, setCount] = useState({
+      profiles: 0,
+      campaigns: 0,
+      users: 0,
+   });
+   const [countSpin, setCountSpin] = useState(true);
+
    useEffect(() => {
-      const getStatisticIbDb = async () => {
+      const getCampaignStatisticInDb = async () => {
          setCampaignSpin(true);
          const response = await campaignApi.campaignStatistic({
             year: campaignYear.format('YYYY'),
@@ -46,46 +60,111 @@ function DashboardPage(props) {
          setCampaignSpin(false);
          setCampaignStatistic(response);
       };
-      getStatisticIbDb();
+      getCampaignStatisticInDb();
    }, [campaignYear]);
+
+   useEffect(() => {
+      const getProfileStatisticInDb = async () => {
+         try {
+            setProfileSpin(true);
+            const response = await profileApi.profileStatistics({
+               year: profileYear.format('YYYY'),
+            });
+            setProfileSpin(false);
+            setProfileStatistic(response);
+         } catch (error) {
+            console.log(error);
+         }
+      };
+      getProfileStatisticInDb();
+   }, [profileYear]);
+
+   useEffect(() => {
+      const countInDb = async () => {
+         try {
+            const response = await campaignApi.dashboardCount();
+            setCountSpin(false);
+            setCount(response);
+         } catch (error) {
+            console.log(error);
+         }
+      };
+      countInDb();
+   }, []);
 
    const handleChangeCampaignYear = (value) => {
       setCampaignYear(value);
    };
 
+   const handleChangeProfileYear = (value) => {
+      setProfileYear(value);
+   };
+
    return (
       <div className='dashboard-page'>
          <Breadcrumb />
-         <StatisticCardWrapper>
-            <StatisticCard
-               icon={<ProfileOutlined />}
-               iconBackground='#665CA7'
-               contentBackground='#7266BA'
-               number={10}
-               title='Profile'
-            />
-            <StatisticCard
-               icon={<UserOutlined />}
-               iconBackground='#3B94DD'
-               contentBackground='#42A5F6'
-               number={5}
-               title='Employee'
-            />
-            <StatisticCard
-               icon={<BellOutlined />}
-               iconBackground='#71BD1D'
-               contentBackground='#7ED320'
-               number={7}
-               title='Campaign'
-            />
-         </StatisticCardWrapper>
-         <Spin spinning={campaignSpin}>
-            <CampaignChart
-               campaignYear={campaignYear}
-               campaignStatistic={campaignStatistic}
-               handleChangeCampaignYear={handleChangeCampaignYear}
-            />
+         <Spin spinning={countSpin}>
+            <StatisticCardWrapper>
+               <StatisticCard
+                  icon={<ProfileOutlined />}
+                  iconBackground='#665CA7'
+                  contentBackground='#7266BA'
+                  number={count.profiles}
+                  title='Profile'
+               />
+               <StatisticCard
+                  icon={<UserOutlined />}
+                  iconBackground='#3B94DD'
+                  contentBackground='#42A5F6'
+                  number={count.users}
+                  title='Employee'
+               />
+               <StatisticCard
+                  icon={<BellOutlined />}
+                  iconBackground='#71BD1D'
+                  contentBackground='#7ED320'
+                  number={count.campaigns}
+                  title='Campaign'
+               />
+            </StatisticCardWrapper>
          </Spin>
+
+         <StatisticCardWrapper
+            style={{ justifyContent: 'space-between', marginTop: 30, gap: 5 }}
+         >
+            <div className='dashboard--chart'>
+               <Title className='chart--title' level={4}>
+                  Profile chart by month
+               </Title>
+               <Spin spinning={campaignSpin} style={{ marginTop: 20 }}>
+                  <DashboardChart
+                     year={campaignYear}
+                     data={campaignStatistic}
+                     handleChangeYear={handleChangeCampaignYear}
+                     borderColor='#36A2EC'
+                     backgroundColor='#9AD0F5'
+                     label='Campaign'
+                     height={200}
+                  />
+               </Spin>
+            </div>
+            <div className='dashboard--chart'>
+               <Title className='chart--title' level={4}>
+                  Campaign chart by month
+               </Title>
+               <Spin spinning={profileSpin}>
+                  <DashboardChart
+                     year={profileYear}
+                     data={profileStatistic}
+                     handleChangeYear={handleChangeProfileYear}
+                     borderColor='#FF6384'
+                     backgroundColor='#FFB1C1'
+                     label='Profile'
+                     height={200}
+                  />
+               </Spin>
+            </div>
+         </StatisticCardWrapper>
       </div>
    );
 }
