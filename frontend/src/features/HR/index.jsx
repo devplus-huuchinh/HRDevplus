@@ -5,7 +5,7 @@ import CreateCampaign from '@iso/features/HR/pages/CreateCampaign';
 
 function Campaign(props) {
    const match = useRouteMatch();
-   // console.log(match);
+
    return (
       <Switch>
          <Route exact path={`${match.url}`} component={ViewCampaign} />

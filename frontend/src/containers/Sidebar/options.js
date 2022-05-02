@@ -1,6 +1,6 @@
 const options = [
    {
-      key: 'dashboard',
+      key: '',
       label: 'sidebar.dashboard',
       leftIcon: 'ion-android-mail',
    },

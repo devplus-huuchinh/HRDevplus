@@ -40,6 +40,16 @@ const campaignApi = {
       const url = '/campaigns/apply-campaign';
       return axiosClient.post(url, data);
    },
+
+   campaignStatistic: (params) => {
+      const url = '/campaign/statistics';
+      return axiosClient.get(url, { params });
+   },
+
+   dashboardCount: () => {
+      const url = '/campaign/count';
+      return axiosClient.get(url);
+   },
 };
 
 export default campaignApi;
