@@ -2,7 +2,6 @@ import { PlusCircleFilled } from '@ant-design/icons';
 import { Button, Spin, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import campaignApi from '../../../../api/campaignApi';
 import positionApi from '../../../../api/positionApi';
 import searchApi from '../../../../api/searchApi';
 import BreadCrumbs from '../../../Home/components/BreadCrumb';
@@ -14,6 +13,15 @@ ViewCampaign.propTypes = {};
 function ViewCampaign(props) {
    let history = useHistory();
 
+   const [formSearchData, setFormSearchData] = useState({
+      name: '',
+      position_campaign: [],
+      is_active: [],
+      start_date: '1970-01-01',
+      end_date: '2100-01-01',
+      campaign_technique: [],
+   });
+   const [page, setPage] = useState(1);
    const [data, setData] = useState([]);
    const [loading, setLoading] = useState(true);
    const [positions, setPositions] = useState([]);
@@ -31,17 +39,31 @@ function ViewCampaign(props) {
    useEffect(() => {
       const handleData = async () => {
          try {
-            const db = await campaignApi.getCampainsForHr();
-            const responsePosition = await positionApi.getAll();
+            setLoading(true);
+            const responseCampaign = await searchApi.searchForCandidate({
+               ...formSearchData,
+               page,
+            });
 
-            setPositions(responsePosition);
+            setData(responseCampaign);
             setLoading(false);
-            setData(db);
          } catch (error) {
             console.log(error);
          }
       };
       handleData();
+   }, [formSearchData, page]);
+
+   useEffect(() => {
+      const getPositionsInDb = async () => {
+         try {
+            const responsePosition = await positionApi.getAll();
+            setPositions(responsePosition);
+         } catch (error) {
+            console.log(error);
+         }
+      };
+      getPositionsInDb();
    }, []);
 
    const handleOnFinishSearch = async (formData) => {
@@ -61,11 +83,12 @@ function ViewCampaign(props) {
 
       delete prepareData.dateRange;
 
-      const searchResponse = await searchApi.searchForCandidate({
-         ...prepareData,
-      });
+      setFormSearchData(prepareData);
       setLoading(false);
-      setData(searchResponse);
+   };
+
+   const handleChangePage = (value) => {
+      setPage(value);
    };
 
    const columns = [
@@ -180,8 +203,14 @@ function ViewCampaign(props) {
                <Spin spinning={loading}>
                   <Table
                      columns={columns}
-                     dataSource={data}
+                     dataSource={data.data}
                      rowKey={(record) => record.id}
+                     pagination={{
+                        current: page,
+                        total: data.total,
+                        pageSize: data.per_page,
+                        onChange: handleChangePage,
+                     }}
                   />
                </Spin>
             </div>

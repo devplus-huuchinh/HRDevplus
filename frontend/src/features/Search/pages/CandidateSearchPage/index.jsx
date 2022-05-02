@@ -1,5 +1,5 @@
 import { FilterOutlined } from '@ant-design/icons';
-import { Spin, Typography } from 'antd';
+import { Pagination, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import searchApi from '../../../../api/searchApi';
@@ -12,7 +12,9 @@ const { Title } = Typography;
 
 const CandidateSearchPage = (props) => {
    let location = useLocation();
+
    const [campaignSearchResult, setCampaignSearchResult] = useState([]);
+   const [page, setPage] = useState(1);
    const [loading, setLoading] = useState(false);
 
    const [searchFilter, setSearchFilter] = useState({
@@ -35,7 +37,9 @@ const CandidateSearchPage = (props) => {
                start_date: searchFilter.start_date,
                end_date: searchFilter.end_date,
                campaign_technique: searchFilter.campaign_technique,
+               page,
             });
+            console.log('🚀 ~ pagination', response);
             setCampaignSearchResult(response);
             setLoading(false);
          } catch (error) {
@@ -43,7 +47,7 @@ const CandidateSearchPage = (props) => {
          }
       };
       searchCampaignsInDb();
-   }, [searchFilter]);
+   }, [searchFilter, page]);
 
    const handleChangeSearchFilter = (key, value) => {
       setSearchFilter({ ...searchFilter, [key]: value });
@@ -56,6 +60,10 @@ const CandidateSearchPage = (props) => {
             name: value,
          };
       });
+   };
+
+   const handleChangePage = (pageNumber) => {
+      setPage(pageNumber);
    };
 
    return (
@@ -82,8 +90,18 @@ const CandidateSearchPage = (props) => {
                <div className='search--item'>
                   <Spin spinning={loading}>
                      <CandidateSearchResult
-                        campaignSearchResult={campaignSearchResult}
+                        campaignSearchResult={campaignSearchResult.data}
                      />
+                     {Object.keys(campaignSearchResult).length > 0 && (
+                        <div className='search--pagination'>
+                           <Pagination
+                              current={page}
+                              total={campaignSearchResult?.total}
+                              pageSize={campaignSearchResult?.per_page}
+                              onChange={handleChangePage}
+                           />
+                        </div>
+                     )}
                   </Spin>
                </div>
             </div>

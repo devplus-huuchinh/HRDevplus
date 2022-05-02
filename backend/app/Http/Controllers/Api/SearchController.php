@@ -10,7 +10,6 @@ class SearchController extends Controller
 {
     public function searchCampaign(Request $request)
     {
-        return Campaign::filter($request->all())->get();
-        // return $request->all();
+        return Campaign::filter($request->all())->paginateFilter(2);
     }
 }
