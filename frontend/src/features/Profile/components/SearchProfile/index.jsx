@@ -16,6 +16,7 @@ function SearchProfiles(props) {
          <Search
             className='search__input_wrap'
             placeholder='input search text'
+            enterButton='Search'
             allowClear
             //   onSearch={onSearch}
          />

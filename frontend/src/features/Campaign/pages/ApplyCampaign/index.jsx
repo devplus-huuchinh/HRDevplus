@@ -107,7 +107,7 @@ function ApplyCampaign(props) {
 
    const handleScroll = () => {
       if (ref.current) {
-         setSticky(ref.current.getBoundingClientRect().top <= 60);
+         setSticky(ref.current.getBoundingClientRect().top <= 20);
       }
    };
 
@@ -140,10 +140,10 @@ function ApplyCampaign(props) {
                   </div>
                </div>
                <div
-                  className={`apply__campaign--col sticky-wrapper${
+                  className={`apply__campaign--col-apply sticky-wrapper${
                      isSticky
-                        ? 'apply__campaign--col sticky--form'
-                        : 'apply__campaign--col '
+                        ? ' apply__campaign--col-apply sticky'
+                        : ' apply__campaign--col-apply '
                   }`}
                   ref={ref}
                >

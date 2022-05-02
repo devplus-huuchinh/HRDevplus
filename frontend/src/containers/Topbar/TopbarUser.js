@@ -36,7 +36,7 @@ export default function TopbarUser() {
          <Link className='isoDropdownLink' to={'/dashboard/my-profile'}>
             <IntlMessages id='topbar.myprofile' />
          </Link>
-         <a className='isoDropdownLink' href='# '>
+         {/* <a className='isoDropdownLink' href='# '>
             <IntlMessages id='themeSwitcher.settings' />
          </a>
          <a className='isoDropdownLink' href='# '>
@@ -44,7 +44,7 @@ export default function TopbarUser() {
          </a>
          <a className='isoDropdownLink' href='# '>
             <IntlMessages id='topbar.help' />
-         </a>
+         </a> */}
          <Link
             className='isoDropdownLink'
             to='/dashboard/user-profile/change-password'
@@ -66,9 +66,12 @@ export default function TopbarUser() {
          arrowPointAtCenter={true}
          placement='bottomLeft'
       >
-         <div className='isoImgWrapper'>
-            <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
-            <span className='userActivity online' />
+         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className='isoImgWrapper'>
+               <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
+               <span className='userActivity online' />
+            </div>
+            <div style={{ color: '#fff' }}>Ta Thi Cong Vien</div>
          </div>
       </Popover>
    );

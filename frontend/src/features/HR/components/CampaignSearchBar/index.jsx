@@ -1,6 +1,7 @@
-import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd';
+import { Button, Col, DatePicker, Form, Input, Row, Select, Space } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import './CampaignSearchBar.scss';
 
 CampaignSearchBar.propTypes = {
@@ -36,6 +37,11 @@ function CampaignSearchBar(props) {
       formRef.current.resetFields();
       handleOnFinishSearch(initialValues);
    };
+   const [collapse, setCollapse] = useState(false);
+
+   const handleChangeCollapse = () => {
+      setCollapse(!collapse);
+   };
 
    return (
       <div className='hr-search'>
@@ -46,60 +52,86 @@ function CampaignSearchBar(props) {
             initialValues={initialValues}
             ref={formRef}
          >
-            <Row style={{ width: '100%' }}>
-               <Col span={12}>
-                  <Form.Item name='name' label='Name'>
-                     <Input placeholder='Enter campaign name' />
-                  </Form.Item>
-               </Col>
-               <Col span={12}>
-                  <Form.Item name='position_campaign' label='Position'>
-                     <Select
-                        mode='multiple'
-                        allowClear
-                        placeholder='Please select'
-                        style={{ width: 200 }}
-                        showArrow
-                     >
-                        {positions?.map((tool) => (
-                           <Option key={tool.id}>{tool.name}</Option>
-                        ))}
-                     </Select>
-                  </Form.Item>
-               </Col>
-            </Row>
-            <Row style={{ width: '100%' }}>
-               <Col span={8}>
-                  <Form.Item name='is_active' label='Status'>
-                     <Select
-                        mode='multiple'
-                        allowClear
-                        placeholder='Please select'
-                        style={{ width: 200 }}
-                        showArrow
-                     >
-                        {status?.map((tool) => (
-                           <Option key={tool.id}>{tool.name}</Option>
-                        ))}
-                     </Select>
-                  </Form.Item>
-               </Col>
-               <Col span={8}>
-                  <Form.Item name='dateRange' label='Date'>
-                     <RangePicker />
-                  </Form.Item>
-               </Col>
-               <Col span={8}>
-                  <Form.Item>
-                     <Button type='primary' htmlType='submit'>
-                        Submit
-                     </Button>
-                  </Form.Item>
-                  <Form.Item>
-                     <Button onClick={onReset}>Reset</Button>
-                  </Form.Item>
-               </Col>
-            </Row>
+            <Space
+               direction='vertical'
+               size={'small'}
+               style={{ display: 'flex' }}
+            >
+               <Row
+                  className={collapse ? '' : 'collapse-hide'}
+                  gutter={[16, 16]}
+                  wrap
+               >
+                  <Col xs={24} sm={24} md={12} lg={8}>
+                     <Form.Item name='is_active' label='Status'>
+                        <Select
+                           mode='multiple'
+                           allowClear
+                           placeholder='Please select'
+                           showArrow
+                        >
+                           {status?.map((stt) => (
+                              <Option key={stt.id}>{stt.name}</Option>
+                           ))}
+                        </Select>
+                     </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={12} lg={8}>
+                     <Form.Item name='dateRange' label='Date'>
+                        <RangePicker />
+                     </Form.Item>
+                  </Col>
+               </Row>
+               <Row gutter={[16, 16]} wrap>
+                  <Col xs={24} sm={24} md={12} lg={8}>
+                     <Form.Item name='name' label='Name'>
+                        <Input placeholder='Enter campaign name' />
+                     </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={24} md={12} lg={8}>
+                     <Form.Item name='position_campaign' label='Position'>
+                        <Select
+                           mode='multiple'
+                           allowClear
+                           placeholder='Please select'
+                           showArrow
+                        >
+                           {positions?.map((position) => (
+                              <Option key={position.id}>{position.name}</Option>
+                           ))}
+                        </Select>
+                     </Form.Item>
+                  </Col>
+                  <Col
+                     xs={24}
+                     sm={24}
+                     md={24}
+                     lg={8}
+                     style={{ textAlign: 'right' }}
+                  >
+                     <Space size={'small'} wrap>
+                        <Form.Item>
+                           <Button type='primary' htmlType='submit'>
+                              Submit
+                           </Button>
+                        </Form.Item>
+                        <Form.Item>
+                           <Button onClick={onReset}>Reset</Button>
+                        </Form.Item>
+                        <Form.Item>
+                           <Button
+                              onClick={handleChangeCollapse}
+                              type='primary'
+                              ghost
+                           >
+                              {collapse ? <UpOutlined /> : <DownOutlined />}
+                              Collapse
+                           </Button>
+                        </Form.Item>
+                     </Space>
+                  </Col>
+               </Row>
+            </Space>
          </Form>
       </div>
    );
