@@ -121,4 +121,10 @@ class CampaignController extends Controller
             'createCampaignTechnique' => $createCampaignTechnique,
         ]);
     }
+
+    public function statistics(Request $request)
+    {
+        $allCampaigns = $this->campaignService->campaignStatistics($request->all());
+        return response()->json($allCampaigns);
+    }
 }

@@ -136,6 +136,7 @@ Route::prefix('v1/campaign')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::controller(CampaignController::class)->group(function () {
             Route::get('/droplist', 'getDropList');
+            Route::get('/statistics', 'statistics');
             Route::get('/', 'index');
             Route::post('/', 'newCampaign');
         });

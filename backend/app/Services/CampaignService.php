@@ -27,23 +27,6 @@ class CampaignService
         return $this->campaignRepo->findAllHr((int)$offset, (int)$limit);
     }
 
-    // public function create($attributes)
-    // {
-    //     // try{
-    //     //     return $this->campaignRepo->create($attributes);
-    //     // }
-    //     // catch (\Throwable $error) {
-    //     //     return response()->json(
-    //     //         [
-    //     //         'message' => 'Getting_data_fail',
-    //     //         'error' => $error,
-    //     //         ]
-    //     //     );
-    //     // }
-    //     // // return $this->campaignRepo->create($attributes);
-    //     return $this->campaignRepo->create($attributes);
-    // }
-
 
     public function create($request)
     {
@@ -93,5 +76,30 @@ class CampaignService
             array_push($arrData, ["campaign_id" => $id, "position_id" => $item]);
         }
         return $this->positionCampaignRepo->createMulti($arrData);
+    }
+
+    public function campaignStatistics($request)
+    {
+        $year = $request['year'] ?? date('Y');
+        $allCampaigns = $this->campaignRepo->getAllByYear($year);
+
+        $reduceData = array_reduce($allCampaigns, function ($acc, $item) {
+            $month = $item['created_at']->format('F');
+            $searchInArray = array_search($month, array_column($acc, 'month'));
+
+            if (($searchInArray) !== false) {
+                $acc[$searchInArray]['count']++;
+                return $acc;
+            };
+
+            array_push($acc, [
+                'count' => 1,
+                'month' =>  $month,
+            ]);
+
+            return $acc;
+        }, array());
+
+        return $reduceData;
     }
 }

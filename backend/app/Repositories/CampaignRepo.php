@@ -43,4 +43,9 @@ class CampaignRepo extends EloquentRepo
     {
         return $this->model->with(['technique:name', 'position:name'])->where('id', $campaignId)->first();
     }
+
+    public function getAllByYear($year)
+    {
+        return $this->model->whereYear('created_at', $year)->orderBy('created_at', 'asc')->get()->all();;
+    }
 }
