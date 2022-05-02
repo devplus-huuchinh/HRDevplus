@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ChangePassword extends Mailable
+class RejectCV extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,10 @@ class ChangePassword extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.demoMail')->with('mailData', $this->mailData);
+        return $this->view('emails.rejectCV')
+            ->subject('[ST Software] Thank you letter')
+            ->with([
+                'candidate_name' => $this->mailData['candidateName'],
+            ]);
     }
 }

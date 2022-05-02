@@ -14,6 +14,13 @@
    .search--item {
       margin-bottom: 20px;
    }
+
+   .search--pagination {
+      margin-top: 20px;
+      width: 100%;
+      text-align: end;
+   }
+
    @media screen and (max-width: 1024px) {
       flex-direction: column;
       gap: 20px;

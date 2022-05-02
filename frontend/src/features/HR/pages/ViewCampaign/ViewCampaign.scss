@@ -1,0 +1,26 @@
+.view-campaign {
+   padding: 10px 30px;
+
+   .view-campaign--header {
+      padding: 25px;
+      background-color: #fff;
+      width: 100%;
+   }
+
+   .view-campaign--content {
+      display: flex;
+      background-color: #fff;
+      padding: 30px;
+      margin-top: 25px;
+      gap: 20px;
+      flex-direction: column;
+      width: 100%;
+
+      .view-campaign--table {
+      }
+
+      .view-campaign--create {
+         text-align: end;
+      }
+   }
+}
