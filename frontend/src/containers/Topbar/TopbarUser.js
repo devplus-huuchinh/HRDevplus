@@ -57,9 +57,12 @@ export default function TopbarUser() {
          arrowPointAtCenter={true}
          placement='bottomLeft'
       >
-         <div className='isoImgWrapper'>
-            <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
-            <span className='userActivity online' />
+         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className='isoImgWrapper'>
+               <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
+               <span className='userActivity online' />
+            </div>
+            <div style={{ color: '#fff' }}>Ta Thi Cong Vien</div>
          </div>
       </Popover>
    );

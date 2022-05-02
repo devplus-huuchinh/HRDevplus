@@ -36,7 +36,7 @@ function ChangePasswordPage(props) {
 
    return (
       <div className='change-password-page'>
-         <Title level={3}>Change Password Page</Title>
+         <Title level={3}>Change Password</Title>
          <div className='change-form'>
             {alertShow.isShow && (
                <Alert

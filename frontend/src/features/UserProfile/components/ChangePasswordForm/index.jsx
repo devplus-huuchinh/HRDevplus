@@ -1,7 +1,8 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import React from 'react';
 import PropTypes from 'prop-types';
 import './ChangePasswordForm.scss';
+import { Link } from 'react-router-dom';
 
 ChangePasswordForm.propTypes = {
    handleSubmitChangePassword: PropTypes.func,
@@ -18,6 +19,7 @@ function ChangePasswordForm(props) {
       old_password: '',
       new_password: '',
    };
+
    return (
       <div>
          <Form
@@ -59,12 +61,21 @@ function ChangePasswordForm(props) {
                   placeholder='Enter your new password'
                />
             </Form.Item>
-
-            <Form.Item>
-               <Button type='primary' htmlType='submit'>
-                  Submit
-               </Button>
-            </Form.Item>
+            <Space
+               size={'small'}
+               style={{ display: 'flex', justifyContent: 'flex-end' }}
+            >
+               <Form.Item>
+                  <Button>
+                     <Link to='/dashboard'>Cancel</Link>
+                  </Button>
+               </Form.Item>
+               <Form.Item>
+                  <Button type='primary' htmlType='submit'>
+                     Submit
+                  </Button>
+               </Form.Item>
+            </Space>
          </Form>
       </div>
    );
