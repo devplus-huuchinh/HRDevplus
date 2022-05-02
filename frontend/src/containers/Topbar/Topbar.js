@@ -51,7 +51,7 @@ export default function Topbar() {
             </div>
 
             <ul className='isoRight'>
-               <li className='isoSearch'>
+               {/* <li className='isoSearch'>
                   <TopbarSearch />
                </li>
 
@@ -73,7 +73,7 @@ export default function Topbar() {
                   className='isoCart'
                >
                   <TopbarAddtoCart />
-               </li>
+               </li> */}
 
                <li onClick={() => setSelectedItem('user')} className='isoUser'>
                   <TopbarUser />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
-import { Typography, notification } from 'antd';
+import { Typography, notification, Breadcrumb, Space } from 'antd';
 import './profilesPage.scss';
 import profileApi from '../../../../api/profileApi';
 
@@ -76,18 +76,36 @@ function ProfilesPage(props) {
 
    return (
       <div className='profiles-container'>
-         <Title>Campaign name</Title>
-         <SearchProfiles selected={selected} />
-         <TableProfile
-            profiles={profiles}
-            step={step}
-            status={status}
-            editProfile={editProfile}
-            handleSingleRow={handleSingleRow}
-            handleMultiRow={handleMultiRow}
-            selected={selected}
-            tableLoading={tableLoading}
-         />
+         <Space
+            direction='vertical'
+            size={'middle'}
+            style={{ display: 'flex' }}
+         >
+            {/* Breadcumb */}
+            <Breadcrumb>
+               <Breadcrumb.Item>Home</Breadcrumb.Item>
+               <Breadcrumb.Item>
+                  <a href=''>Application Center</a>
+               </Breadcrumb.Item>
+               <Breadcrumb.Item>
+                  <a href=''>Application List</a>
+               </Breadcrumb.Item>
+               <Breadcrumb.Item>An Application</Breadcrumb.Item>
+            </Breadcrumb>
+            {/* End breadcumb */}
+            <Title>All Profile</Title>
+            <SearchProfiles selected={selected} />
+            <TableProfile
+               profiles={profiles}
+               step={step}
+               status={status}
+               editProfile={editProfile}
+               handleSingleRow={handleSingleRow}
+               handleMultiRow={handleMultiRow}
+               selected={selected}
+               tableLoading={tableLoading}
+            />
+         </Space>
       </div>
    );
 }
