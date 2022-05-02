@@ -39,7 +39,6 @@ const CandidateSearchPage = (props) => {
                campaign_technique: searchFilter.campaign_technique,
                page,
             });
-            console.log('🚀 ~ pagination', response);
             setCampaignSearchResult(response);
             setLoading(false);
          } catch (error) {
