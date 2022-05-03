@@ -95,6 +95,7 @@ Route::prefix('/v1/profile')->group(function () {
         Route::patch('/reject', 'rejectProfile');
         Route::post('/create', 'create');
         Route::get('/statistics', 'statistics');
+        Route::get('/detail', 'detail');
         Route::patch('/', 'editProfile');
     });
 });

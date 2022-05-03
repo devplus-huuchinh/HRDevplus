@@ -10,6 +10,7 @@ class Profile extends Model
 {
     use HasFactory;
     use Filterable;
+    protected $with = ['technique'];
 
     protected $fillable = [
         'name',
@@ -38,5 +39,10 @@ class Profile extends Model
     public function profile_technique()
     {
         return $this->hasMany(Profile_technique::class);
+    }
+
+    public function technique()
+    {
+        return $this->belongsToMany(technique::class, 'profile_techniques');
     }
 }

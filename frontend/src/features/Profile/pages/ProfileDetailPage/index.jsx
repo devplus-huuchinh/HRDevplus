@@ -1,12 +1,24 @@
 import { Image, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import React from 'react';
+import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import ProfileDetail from '../../components/ProfileDetail';
 import './profileDetailPage.scss';
+import profileApi from '../../../../api/profileApi';
 
 // ProfileDetailPage.propTypes = {};
 
 function ProfileDetailPage(props) {
+   const { id } = useParams();
+   const [data, setData] = useState();
+   useEffect(() => {
+      const getProfileDetail = async () => {
+         const profileDetailRes = await profileApi.profileDetail({ id: id });
+         console.log(profileDetailRes);
+         // setData(profileDetailRes);
+      };
+      getProfileDetail();
+   }, [id]);
    return (
       <div className='profile-detail-container'>
          <div className='profile-detail__wrapper'>

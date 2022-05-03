@@ -66,7 +66,6 @@ function EditCampaignPage(props) {
       };
       getCampaignDetail();
    }, [id]);
-   console.log(campaignDetail);
 
    const handleEditor = (value) => {
       setDescription(value);

@@ -63,4 +63,9 @@ class ProfileRepo extends EloquentRepo
    {
       return $this->model->count();
    }
+
+   public function getDetail($id)
+   {
+      return $this->model->where('id', $id)->with(['technique'])->with('position')->first();
+   }
 }
