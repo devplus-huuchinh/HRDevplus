@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\CampaignRepo;
+use App\Repositories\CampaignTechniqueRepo;
+use App\Repositories\PositionCampaignRepo;
 use App\Repositories\PositionRepo;
 use App\Repositories\TechniqueRepo;
 use Illuminate\Http\Request;
@@ -20,9 +22,12 @@ class CampaignController extends Controller
     private $profileService;
     private $profileTechniqueService;
     private $userService;
+    private $campaignRepo;
+    private $campaignTechniqueRepo;
+    private $positionCampaignRepo;
 
     // constructor
-    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo, ProfileService $profileService, ProfileTechniqueService $profileTechniqueService, UserService $userService)
+    public function __construct(CampaignService $campaignService, TechniqueRepo $techniqueRepo, PositionRepo $positionRepo, ProfileService $profileService, ProfileTechniqueService $profileTechniqueService, UserService $userService, CampaignRepo $campaignRepo, CampaignTechniqueRepo $campaignTechniqueRepo, PositionCampaignRepo $positionCampaignRepo)
     {
         $this->campaignService = $campaignService;
         $this->positionRepo = $positionRepo;
@@ -30,6 +35,9 @@ class CampaignController extends Controller
         $this->profileService = $profileService;
         $this->profileTechniqueService = $profileTechniqueService;
         $this->userService = $userService;
+        $this->campaignRepo = $campaignRepo;
+        $this->campaignTechniqueRepo = $campaignTechniqueRepo;
+        $this->positionCampaignRepo = $positionCampaignRepo;
     }
 
     // show all campaign
@@ -141,5 +149,33 @@ class CampaignController extends Controller
             'users' => $this->userService->userCount(),
         ];
         return $count;
+    }
+
+    public function editInfo(Request $request)
+    {
+        // try {
+        $campaignEdited = $this->campaignRepo->editInfo($request);
+        $techniqueEdited = $this->campaignTechniqueRepo->updateTechniqueByCampaign($campaignEdited->id, $request->technique);
+        $positionEdited = $this->positionCampaignRepo->updatePositionByCampaign($campaignEdited->id, $request->position);
+
+        return response()->json($request);
+        // } catch (\Throwable $th) {
+        //     return response()->json(
+        //         [
+        //             'message' => 'edit_info_campaign_fail',
+        //             'error' => $th,
+        //         ],
+        //         500
+        //     );
+        // }
+    }
+
+    public function editActive(Request $request)
+    {
+        // return response()->json([
+        //     "id" => $request->id, "bool" => $request->isActive
+        // ]);
+        $editActive = $this->campaignRepo->editActive($request->id, $request->isActive);
+        return response()->json(["message" => "success"]);
     }
 }

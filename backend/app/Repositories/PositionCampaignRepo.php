@@ -25,4 +25,15 @@ class PositionCampaignRepo extends EloquentRepo
          return response()->json(["error" => $th]);
       }
    }
+
+   public function updatePositionByCampaign($campaign_id, $positionArr)
+   {
+      //remove 
+      $deleted = $this->model->where('campaign_id', $campaign_id)->delete();
+      $arrData = [];
+      foreach ($positionArr as $item) {
+         array_push($arrData, ["campaign_id" => $campaign_id, "position_id" => $item]);
+      }
+      return $this->model->insert($arrData);
+   }
 }

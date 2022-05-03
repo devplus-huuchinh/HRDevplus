@@ -24,6 +24,7 @@ import Editor from '../../../../UI/Editor/Editor';
 import { Section } from '../../../Home/components/Section/Section.styles';
 import Breadcrumbs from '../../../Home/components/BreadCrumb';
 import './CreateCampaign.scss';
+import CampaignForm from '../../components/CampaignForm';
 
 CreateCampaign.propTypes = {};
 
@@ -72,7 +73,7 @@ function CreateCampaign(props) {
          return history.goBack();
       }
 
-      message.error('Create successfully');
+      message.error('Create failed');
    };
 
    const normFile = (e) => {
@@ -105,7 +106,16 @@ function CreateCampaign(props) {
                      <Title className='create__heading' level={3}>
                         Create Campaign
                      </Title>
-                     <Form
+                     <CampaignForm
+                        dropList={dropList}
+                        onFinish={onFinish}
+                        normFile={normFile}
+                        uploadCampaignImgToFirebase={
+                           uploadCampaignImgToFirebase
+                        }
+                        handleEditor={handleEditor}
+                     />
+                     {/* <Form
                         name='basic'
                         initialValues={{ quantity: 1 }}
                         onFinish={onFinish}
@@ -291,7 +301,7 @@ function CreateCampaign(props) {
                               </Form.Item>
                            </Space>
                         </Space>
-                     </Form>
+                     </Form> */}
                   </div>
                </Layout>
             </Spin>
