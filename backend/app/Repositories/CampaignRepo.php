@@ -43,4 +43,8 @@ class CampaignRepo extends EloquentRepo
     {
         return $this->model->with(['technique:name', 'position:name'])->where('id', $campaignId)->first();
     }
+    public function getByCampaignId($id)
+    {
+        return $this->model->where('id', $id)->with('profile')->first();
+    }
 }

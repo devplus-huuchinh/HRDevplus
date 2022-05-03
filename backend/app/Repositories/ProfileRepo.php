@@ -11,24 +11,24 @@ class ProfileRepo extends EloquentRepo
       return Profile::class;
    }
 
-   public function getByCampaignId($id)
-   {
-      return $this->model->where('campaign_id', $id)->with('position')->get();
-   }
+   // public function getByCampaignId($id)
+   // {
+   //    return $this->model->where('campaign_id', $id)->with('campaign')->with('position')->get();
+   // }
 
-   public function editStepById($id, $value)
-   {
-      $profile = $this->model->find($id);
-      $profile->step = $value;
-      $profile->save();
-   }
+   // public function editStepById($id, $value)
+   // {
+   //    $profile = $this->model->find($id);
+   //    $profile->step = $value;
+   //    $profile->save();
+   // }
 
-   public function editStatusById($id, $value)
-   {
-      $profile = $this->model->find($id);
-      $profile->status = $value;
-      $profile->save();
-   }
+   // public function editStatusById($id, $value)
+   // {
+   //    $profile = $this->model->find($id);
+   //    $profile->status = $value;
+   //    $profile->save();
+   // }
 
    public function create($profileFormData)
    {
@@ -44,5 +44,13 @@ class ProfileRepo extends EloquentRepo
          'status' => 'PENDING',
          'step' => 'NEW',
       ]);
+   }
+
+   public function edit($id, $step, $status)
+   {
+      $profile = $this->model->find($id);
+      $profile->step = $step;
+      $profile->status = $status;
+      $profile->save();
    }
 }

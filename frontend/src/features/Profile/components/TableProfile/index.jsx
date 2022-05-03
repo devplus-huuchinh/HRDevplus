@@ -7,25 +7,29 @@ import { useHistory } from 'react-router-dom';
 TableProfile.propTypes = {
    profiles: PropTypes.array,
    step: PropTypes.array,
-   status: PropTypes.array,
+   // status: PropTypes.array,
    editProfile: PropTypes.func,
    handleSingleRow: PropTypes.func,
    handleMultiRow: PropTypes.func,
    setSelected: PropTypes.array,
    tableLoading: PropTypes.bool,
+   handleNextStep: PropTypes.func,
+   handleReject: PropTypes.func,
 };
 
 function TableProfile(props) {
    //PROPS
    const {
       profiles,
-      status,
+      // status,
       step,
       editProfile,
       handleSingleRow,
       handleMultiRow,
       selected,
       tableLoading,
+      handleNextStep,
+      handleReject,
    } = props;
 
    //USE HISTORY
@@ -58,26 +62,19 @@ function TableProfile(props) {
          ),
       },
       {
-         title: 'Position',
-         dataIndex: 'position',
-         render: (record) => <Tag color='#55acee'>{record.name}</Tag>,
-      },
-
-      {
          title: 'Step',
          // dataIndex: 'step',
          render: (record) => (
             <Select
-               defaultValue={record.step}
+               value={record.step}
                style={{ width: 120 }}
-               onChange={(value) =>
-                  handleChangeStep({ id: record.id, value: value })
-               }
+               onChange={(value) => editProfile(record.id, value)}
+               disabled={record.status === 'REJECT' ? true : false}
             >
-               {step &&
+               {step.length > 0 &&
                   step.map((item) => (
-                     <Option key={item} value={item}>
-                        {item}
+                     <Option key={item.key} value={item.value}>
+                        {item.value}
                      </Option>
                   ))}
             </Select>
@@ -86,22 +83,12 @@ function TableProfile(props) {
       {
          title: 'Status',
          // dataIndex: 'status',
-         render: (record) => (
-            <Select
-               defaultValue={record.status}
-               style={{ width: 120 }}
-               onChange={(value) =>
-                  handleChangeStatus({ id: record.id, value: value })
-               }
-            >
-               {status &&
-                  status.map((item) => (
-                     <Option key={item} value={item}>
-                        {item}
-                     </Option>
-                  ))}
-            </Select>
-         ),
+         render: (record) =>
+            record.status === 'REJECT' ? (
+               <p style={{ color: 'red' }}>{record.status}</p>
+            ) : (
+               <p>{record.status}</p>
+            ),
       },
       {
          title: 'Detail',
@@ -110,6 +97,28 @@ function TableProfile(props) {
             <Button type='primary' onClick={() => handleShowDetail(record)}>
                Detail
             </Button>
+         ),
+      },
+      {
+         title: 'Actions',
+         render: (record) => (
+            <div>
+               <Button
+                  disabled={record.step === 'EMPLOYEE' ? true : false}
+                  type='primary'
+                  style={{ backgroundColor: 'green', marginRight: '10px' }}
+                  onClick={() => handleNextStep(record.id, record.step)}
+               >
+                  Accept
+               </Button>
+               <Button
+                  type='primary'
+                  style={{ backgroundColor: 'red' }}
+                  onClick={() => handleReject(record.id)}
+               >
+                  Reject
+               </Button>
+            </div>
          ),
       },
    ];
@@ -130,14 +139,6 @@ function TableProfile(props) {
 
    //Drop list
    const { Option } = Select;
-
-   function handleChangeStep(data) {
-      editProfile('step', data);
-   }
-
-   function handleChangeStatus(data) {
-      editProfile('status', data);
-   }
 
    const handleShowDetail = (id) => {
       return history.push(`/dashboard/profile/detail/${id}`);

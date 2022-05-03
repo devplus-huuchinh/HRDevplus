@@ -13,9 +13,10 @@ function ProfilesPage(props) {
    //STATE
    const [profiles, setProfiles] = useState([]);
    const [step, setStep] = useState([]);
-   const [status, setStatus] = useState([]);
+   // const [status, setStatus] = useState([]);
    const [selected, setSelected] = useState([]);
    const [tableLoading, setTableLoading] = useState(true);
+   const [campaign, setCampaign] = useState({});
 
    //EFFECT
    useEffect(() => {
@@ -26,9 +27,9 @@ function ProfilesPage(props) {
          const dropProfile = await profileApi.dropdownData();
          console.log('ProfilesRes', ProfilesRes);
          setTableLoading(false);
-         setProfiles(ProfilesRes);
-         setStep(dropProfile.step);
-         setStatus(dropProfile.status);
+         setProfiles(ProfilesRes.profile);
+         setStep(dropProfile);
+         setCampaign(ProfilesRes);
       };
       getAllProfileInDb();
    }, [id]);
@@ -43,9 +44,39 @@ function ProfilesPage(props) {
 
    const { Title } = Typography;
 
-   const editProfile = async (editCol, data) => {
-      const test = await profileApi.editStep({ field: editCol, data });
-      console.log(test);
+   const editProfile = async (id, step) => {
+      let status;
+      switch (step) {
+         case 'NEW':
+            status = 'PENDING';
+            break;
+         case 'TEST':
+            status = 'PROCESSING';
+            break;
+         case 'INTERVIEW':
+            status = 'PROCESSING';
+            break;
+         case 'CONFIRM':
+            status = 'PROCESSING';
+            break;
+         case 'CONSIDER':
+            status = 'PROCESSING';
+            break;
+         case 'EMPLOYEE':
+            status = 'APPROVE';
+            break;
+      }
+      const index = profiles.findIndex((item) => item.id === id);
+      setProfiles((pre) => {
+         pre[index].status = status;
+         pre[index].step = step;
+         return [...pre];
+      });
+      const UpdateRes = await profileApi.editStep({
+         id: id,
+         step: step,
+         status: status,
+      });
       return openNotificationWithIcon('success');
    };
 
@@ -74,19 +105,78 @@ function ProfilesPage(props) {
       });
    };
 
+   const handleNextStep = async (id, currentStep) => {
+      let stepUpdated;
+      let statusUpdated;
+      switch (currentStep) {
+         case 'NEW':
+            stepUpdated = 'TEST';
+            statusUpdated = 'PROCESSING';
+            break;
+         case 'TEST':
+            stepUpdated = 'INTERVIEW';
+            statusUpdated = 'PROCESSING';
+            break;
+         case 'INTERVIEW':
+            stepUpdated = 'CONFIRM';
+            statusUpdated = 'PROCESSING';
+            break;
+         case 'CONFIRM':
+            stepUpdated = 'CONSIDER';
+            statusUpdated = 'PROCESSING';
+            break;
+         case 'CONSIDER':
+            stepUpdated = 'EMPLOYEE';
+            statusUpdated = 'APPROVE';
+            break;
+         case 'EMPLOYEE':
+            stepUpdated = 'NULL';
+            statusUpdated = 'APPROVE';
+            break;
+      }
+      const index = profiles.findIndex((item) => item.id === id);
+      setProfiles((pre) => {
+         pre[index].status = statusUpdated;
+         pre[index].step = stepUpdated;
+         return [...pre];
+      });
+      const UpdateRes = await profileApi.editStep({
+         id: id,
+         status: statusUpdated,
+         step: stepUpdated,
+      });
+      return openNotificationWithIcon('success');
+   };
+
+   const handleReject = async (id) => {
+      const index = profiles.findIndex((item) => item.id === id);
+      setProfiles((pre) => {
+         pre[index].status = 'REJECT';
+         return [...pre];
+      });
+      const UpdateRes = await profileApi.editStep({
+         id: id,
+         status: 'REJECT',
+         step: profiles[index].step,
+      });
+      return openNotificationWithIcon('success');
+   };
+
    return (
       <div className='profiles-container'>
-         <Title>Campaign name</Title>
+         <Title>{campaign.name}</Title>
          <SearchProfiles selected={selected} />
          <TableProfile
             profiles={profiles}
             step={step}
-            status={status}
+            // status={status}
             editProfile={editProfile}
             handleSingleRow={handleSingleRow}
             handleMultiRow={handleMultiRow}
             selected={selected}
             tableLoading={tableLoading}
+            handleNextStep={handleNextStep}
+            handleReject={handleReject}
          />
       </div>
    );
