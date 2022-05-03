@@ -2,7 +2,7 @@ import axiosClient from './axiosClient';
 
 const authApi = {
    csrfCookie: (data) => {
-      const baseURL = 'https://localhost:8900/sanctum/csrf-cookie';
+      const baseURL = `${process.env.REACT_APP_NAME}/sanctum/csrf-cookie`;
       return axiosClient.get(baseURL, data);
    },
 
