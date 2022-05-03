@@ -1,7 +1,8 @@
-import { notification, Space, Typography } from 'antd';
+import { notification, Pagination, Space, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import profileApi from '../../../../api/profileApi';
+import searchApi from '../../../../api/searchApi';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
 import './profilesPage.scss';
@@ -17,22 +18,39 @@ function ProfilesPage(props) {
    const [selected, setSelected] = useState([]);
    const [tableLoading, setTableLoading] = useState(true);
    const [campaign, setCampaign] = useState({});
+   const [pagination, setPagination] = useState({});
+   console.log('🚀 ~ pagination', pagination);
+   const [page, setPage] = useState(1);
+   const [searchFormData, setSearchFormData] = useState({
+      first_name: '',
+      email: '',
+      phone_numb: '',
+      status: [],
+      campaign_id: id,
+   });
 
    //EFFECT
    useEffect(() => {
       const getAllProfileInDb = async () => {
+         setTableLoading(true);
          const ProfilesRes = await profileApi.getAllProfile({
             campaign_id: id,
          });
+         const searchResponse = await searchApi.searchProfile({
+            ...searchFormData,
+            campaign_id: id,
+            page,
+         });
          const dropProfile = await profileApi.dropdownData();
-         console.log('ProfilesRes', ProfilesRes);
+
          setTableLoading(false);
-         setProfiles(ProfilesRes.profile);
+         setProfiles(searchResponse.data);
          setStep(dropProfile);
          setCampaign(ProfilesRes);
+         setPagination(searchResponse);
       };
       getAllProfileInDb();
-   }, [id]);
+   }, [id, searchFormData, page]);
 
    //NOTIFICATION
    const openNotificationWithIcon = (type) => {
@@ -40,6 +58,14 @@ function ProfilesPage(props) {
          message: 'Update successful',
          duration: 2,
       });
+   };
+
+   const handleChangeSearchFormData = (formData) => {
+      setSearchFormData(formData);
+   };
+
+   const handleChangePage = (value) => {
+      setPage(value);
    };
 
    const { Title } = Typography;
@@ -165,7 +191,6 @@ function ProfilesPage(props) {
    return (
       <div className='profiles-container'>
          <Title>{campaign.name}</Title>
-         <SearchProfiles selected={selected} />
          <TableProfile
             profiles={profiles}
             step={step}
@@ -177,6 +202,19 @@ function ProfilesPage(props) {
             tableLoading={tableLoading}
             handleNextStep={handleNextStep}
             handleReject={handleReject}
+         />
+         {Object.keys(pagination).length > 0 && (
+            <Pagination
+               current={page}
+               total={pagination?.total}
+               pageSize={pagination?.per_page}
+               onChange={handleChangePage}
+            />
+         )}
+         <SearchProfiles
+            selected={selected}
+            handleChangeSearchFormData={handleChangeSearchFormData}
+            campaignId={id}
          />
       </div>
    );

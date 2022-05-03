@@ -63,6 +63,7 @@ Route::prefix('/v1/search')->group(
         Route::controller(SearchController::class)->group(
             function () {
                 Route::get('/campaign-search', 'searchCampaign');
+                Route::get('/profile-search', 'searchProfile');
             }
         );
     }

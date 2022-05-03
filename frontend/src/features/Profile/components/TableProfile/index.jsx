@@ -154,8 +154,8 @@ function TableProfile(props) {
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={profiles}
-            pagination={{ pageSize: 5 }}
             loading={tableLoading}
+            pagination={false}
          />
       </div>
    );
