@@ -44,18 +44,18 @@ class Campaign extends Model
 
     public function campaign_technique()
     {
-        return $this->hasMany(campaign_technique::class);
+        return $this->hasMany(Campaign_technique::class);
     }
 
     //relationship with position
     public function position()
     {
-        return $this->belongsToMany(position::class, 'position_campaigns');
+        return $this->belongsToMany(Position::class, 'position_campaigns');
     }
 
     // relationship with technique
     public function technique()
     {
-        return $this->belongsToMany(technique::class, 'campaign_techniques');
+        return $this->belongsToMany(Technique::class, 'campaign_techniques');
     }
 }
