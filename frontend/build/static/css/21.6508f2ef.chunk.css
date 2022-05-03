@@ -1,0 +1,2 @@
+.home-search{display:flex;width:100%;align-items:center;padding:20px 10px;background:rgba(0,0,0,.03);grid-gap:10px;gap:10px;justify-content:flex-end;border-radius:5px}@media screen and (max-width:767px){.home-search{padding-top:20px}}.home-search .ant-input-group-wrapper.ant-input-search{max-width:600px;margin-left:auto;margin-right:auto}.custom-tag{padding:0 5px;border-radius:7px;font-weight:700;width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;color:#fff}
+/*# sourceMappingURL=21.6508f2ef.chunk.css.map */
