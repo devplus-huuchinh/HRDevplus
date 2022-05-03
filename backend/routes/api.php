@@ -74,6 +74,10 @@ Route::prefix('/v1/mail')->group(
             function () {
                 Route::get('/receive-confirmation', 'ReceiveConfirmationMail');
                 Route::get('/reject-cv', 'RejectCVMail');
+                Route::get('/invite-test', 'InviteTest');
+                Route::get('/invite-interview', 'InviteInterview');
+                Route::get('/reject-after-test', 'RejectAfterTest');
+                Route::get('/accept-cv', 'AcceptCV');
             }
         );
     }
