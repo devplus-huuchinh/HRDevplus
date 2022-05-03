@@ -82,7 +82,7 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'avatars',
+         directory: 'cv',
       });
       console.log('🚀 ~ fileUrl', fileUrl);
    };
@@ -97,7 +97,7 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'cv',
+         directory: 'avatars',
       });
       setAvatar({
          loading: false,
