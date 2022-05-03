@@ -3,12 +3,10 @@
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Api\EmailController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TechniqueController;
-use App\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -74,7 +72,8 @@ Route::prefix('/v1/mail')->group(
     function () {
         Route::controller(EmailController::class)->group(
             function () {
-                // Route::get('/reset-password', 'resetPassword');
+                Route::get('/receive-confirmation', 'ReceiveConfirmationMail');
+                Route::get('/reject-cv', 'RejectCVMail');
             }
         );
     }
@@ -93,7 +92,9 @@ Route::prefix('/v1/profiles')->group(function () {
 
 Route::prefix('/v1/profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
-        Route::patch('/reject', 'rejectProfile');
+        // Route::patch('/reject', 'rejectProfile');
+        Route::post('/create', 'create');
+        Route::get('/statistics', 'statistics');
         Route::patch('/', 'editProfile');
     });
 });
@@ -118,15 +119,15 @@ Route::prefix('/v1/position')->group(
     }
 );
 
-Route::prefix('/v1/profile')->group(
-    function () {
-        Route::controller(ProfileController::class)->group(
-            function () {
-                Route::post('/create', 'create');
-            }
-        );
-    }
-);
+// Route::prefix('/v1/profile')->group(
+//     function () {
+//         Route::controller(ProfileController::class)->group(
+//             function () {
+
+//             }
+//         );
+//     }
+// );
 
 Route::name('api.posts.')->group(
     function () {
@@ -138,16 +139,10 @@ Route::prefix('v1/campaign')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::controller(CampaignController::class)->group(function () {
             Route::get('/droplist', 'getDropList');
+            Route::get('/statistics', 'statistics');
+            Route::get('/count', 'count');
             Route::get('/', 'index');
             Route::post('/', 'newCampaign');
         });
     });
 });
-
-// Route::prefix('v1/position')->group(function () {
-//     Route::middleware(['auth:sanctum'])->group(function () {
-//         Route::controller(PositionController::class)->group(function () {
-//             Route::get('/', 'index');
-//         });
-//     });
-// });

@@ -43,8 +43,19 @@ class CampaignRepo extends EloquentRepo
     {
         return $this->model->with(['technique:name', 'position:name'])->where('id', $campaignId)->first();
     }
+
     public function getByCampaignId($id)
     {
         return $this->model->where('id', $id)->with('profile')->first();
+    }
+
+    public function getAllByYear($year)
+    {
+        return $this->model->whereYear('created_at', $year)->orderBy('created_at', 'asc')->get()->all();
+    }
+
+    public function countCampaigns()
+    {
+        return $this->model->count();
     }
 }

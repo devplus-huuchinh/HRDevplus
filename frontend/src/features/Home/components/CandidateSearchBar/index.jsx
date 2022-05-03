@@ -5,12 +5,10 @@ import './CandidateSearchBar.scss';
 
 CandidateSearchBar.propTypes = {
    handleSubmitCandidateSearch: PropTypes.func,
-   defaultValue: PropTypes.string,
 };
 
 CandidateSearchBar.defaultProps = {
    handleSubmitCandidateSearch: null,
-   defaultValue: '',
 };
 
 const { Search } = Input;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { notification, Space, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import profileApi from '../../../../api/profileApi';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
-import { Typography, notification } from 'antd';
 import './profilesPage.scss';
-import profileApi from '../../../../api/profileApi';
 
 function ProfilesPage(props) {
    //PARAM

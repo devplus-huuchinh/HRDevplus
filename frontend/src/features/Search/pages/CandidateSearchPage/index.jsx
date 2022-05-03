@@ -1,69 +1,76 @@
-import { Spin, Typography } from 'antd';
+import { FilterOutlined } from '@ant-design/icons';
+import { Pagination, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import searchApi from '../../../../api/searchApi';
-import useQuery from '../../../../library/hooks/useQuery';
 import CandidateSearchBar from '../../../Home/components/CandidateSearchBar';
 import CandidateSearchResult from '../../components/CandidateSearchResult';
 import CandidateSearchToolbar from '../../components/CandidateSearchToolbar';
 import './CandidateSearchPage.scss';
-import { FilterOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
 const CandidateSearchPage = (props) => {
-   const history = useHistory();
-   let query = useQuery();
-   let keyword = query.get('keyword');
+   let location = useLocation();
 
    const [campaignSearchResult, setCampaignSearchResult] = useState([]);
-   const [isSpin, setIsSpin] = useState(true);
-   const [campaignFilter, setCampaignFilter] = useState({
-      technique: 0,
-      position: 0,
+   const [page, setPage] = useState(1);
+   const [loading, setLoading] = useState(false);
+
+   const [searchFilter, setSearchFilter] = useState({
+      name: location.state?.name || '',
+      position_campaign: location.state?.position_campaign || [],
+      is_active: location.state?.is_active || [1],
+      start_date: location.state?.start_date || '1970-01-01',
+      end_date: location.state?.end_date || '2100-01-01',
+      campaign_technique: location.state?.campaign_technique || [],
    });
 
    useEffect(() => {
-      const searchCampaign = async () => {
-         resetFilterState();
-         const response = await searchApi.searchForCandidate({
-            name: keyword,
-            campaign_technique: campaignFilter.technique,
-            position_campaign: campaignFilter.position,
-            is_active: 1,
-         });
-         setIsSpin(false);
-         setCampaignSearchResult(response);
+      const searchCampaignsInDb = async () => {
+         try {
+            setLoading(true);
+            const response = await searchApi.searchForCandidate({
+               name: searchFilter.name,
+               position_campaign: searchFilter.position_campaign,
+               is_active: searchFilter.is_active,
+               start_date: searchFilter.start_date,
+               end_date: searchFilter.end_date,
+               campaign_technique: searchFilter.campaign_technique,
+               page,
+            });
+            setCampaignSearchResult(response);
+            setLoading(false);
+         } catch (error) {
+            console.log(error);
+         }
       };
-      searchCampaign();
-   }, [keyword, campaignFilter]);
+      searchCampaignsInDb();
+   }, [searchFilter, page]);
 
-   const handleSubmitCandidateSearch = (keyword) => {
-      resetFilterState();
-      history.push({
-         pathname: `/search/candidate`,
-         search: `?keyword=${keyword}`,
+   const handleChangeSearchFilter = (key, value) => {
+      setSearchFilter({ ...searchFilter, [key]: value });
+   };
+
+   const handleChangeSearchInput = (value) => {
+      setSearchFilter((prev) => {
+         return {
+            ...prev,
+            name: value,
+         };
       });
    };
 
-   const handleChangeCampaignFilter = (key, value) => {
-      setCampaignFilter({ ...campaignFilter, [key]: value });
-   };
-
-   const resetFilterState = () => {
-      setIsSpin(true);
-      setCampaignSearchResult((prev) => {
-         prev.length = 0;
-         return prev;
-      });
+   const handleChangePage = (pageNumber) => {
+      setPage(pageNumber);
    };
 
    return (
       <>
          <div style={{ marginBottom: 20 }}>
             <CandidateSearchBar
-               handleSubmitCandidateSearch={handleSubmitCandidateSearch}
-               defaultValue={keyword}
+               handleSubmitCandidateSearch={handleChangeSearchInput}
+               defaultValue={searchFilter.name}
             />
          </div>
          <div className='candidate-search-page'>
@@ -72,22 +79,30 @@ const CandidateSearchPage = (props) => {
                   <FilterOutlined /> Filter tool
                </Title>
                <CandidateSearchToolbar
-                  handleChangeCampaignFilter={handleChangeCampaignFilter}
-                  campaignFilter={campaignFilter}
+                  handleChangeSearchFilter={handleChangeSearchFilter}
                />
             </div>
             <div className='search--result'>
                <Title level={4} className='search--item'>
-                  Result for {keyword ? keyword : 'all'}
+                  Result for {searchFilter.name ? searchFilter.name : 'all'}
                </Title>
-               <Spin spinning={isSpin}>
-                  <div className='search--item'>
+               <div className='search--item'>
+                  <Spin spinning={loading}>
                      <CandidateSearchResult
-                        campaignSearchResult={campaignSearchResult}
-                        isSpin={isSpin}
+                        campaignSearchResult={campaignSearchResult.data}
                      />
-                  </div>
-               </Spin>
+                     {Object.keys(campaignSearchResult).length > 0 && (
+                        <div className='search--pagination'>
+                           <Pagination
+                              current={page}
+                              total={campaignSearchResult?.total}
+                              pageSize={campaignSearchResult?.per_page}
+                              onChange={handleChangePage}
+                           />
+                        </div>
+                     )}
+                  </Spin>
+               </div>
             </div>
          </div>
       </>

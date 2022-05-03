@@ -8,7 +8,7 @@ import loginImgBackground from '../../../../assets/images/sign.jpg';
 import LoginForm from '../../components/LoginForm';
 import './LoginPage.scss';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 function LoginPage(props) {
    const dispatch = useDispatch();
@@ -48,8 +48,7 @@ function LoginPage(props) {
             </div>
             <div className='login-page--form'>
                <div className='login-page--title'>
-                  <Title>Welcome back</Title>
-                  <Text>Welcome back! Please enter your details.</Text>
+                  <Text>ST United</Text>
                </div>
                <LoginForm handleLoginFormSubmit={handleLoginFormSubmit} />
             </div>

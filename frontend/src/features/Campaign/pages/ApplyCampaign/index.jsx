@@ -1,10 +1,17 @@
-import { message, Typography } from 'antd';
+import { message, Spin, Typography } from 'antd';
 import parse from 'html-react-parser';
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import {
+   useHistory,
+   useLocation,
+   useParams,
+   useRouteMatch,
+} from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
+import emailApi from '../../../../api/emailApi';
 import MainLayout from '../../../../containers/MainLayout';
 import uploadFile from '../../../../firebase/uploadFile';
+import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import ApplyForm from '../../components/ApplyForm';
 import './ApplyCampaign.scss';
 
@@ -13,10 +20,12 @@ const { Title, Paragraph } = Typography;
 function ApplyCampaign(props) {
    let location = useLocation();
    let history = useHistory();
+   let match = useRouteMatch();
 
    const { campaignId } = useParams();
    const { campaignDetail } = location.state;
 
+   const [formLoading, setFormLoading] = useState(false);
    const [isSticky, setSticky] = useState(false);
    const ref = useRef(null);
 
@@ -27,6 +36,8 @@ function ApplyCampaign(props) {
 
    const handleApplyCampaign = async (formData) => {
       try {
+         setFormLoading(true);
+
          const prepareDataInDb = {
             ...formData,
             campaignId,
@@ -36,10 +47,28 @@ function ApplyCampaign(props) {
          const response = await campaignApi.applyCampaign(prepareDataInDb);
 
          if (response.createCampaign.id && response.createCampaignTechnique) {
+            await emailApi.receiveConfirmation({
+               candidateName: response.createCampaign.last_name,
+               to: response.createCampaign.email,
+               position: campaignDetail.position.find(
+                  (i) =>
+                     i.pivot.position_id === response.createCampaign.position_id
+               ).name,
+            });
+
             message.success('Apply to campaign success!');
-            return history.push('/');
+            setFormLoading(false);
+
+            return history.push({
+               pathname: `${match.url}/thank-you`,
+               state: {
+                  candidateInfo: response.createCampaign,
+                  campaignDetail,
+               },
+            });
          }
 
+         setFormLoading(false);
          message.error('Something went wrong, please try again');
       } catch (error) {
          console.log(error);
@@ -53,7 +82,7 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'avatars',
+         directory: 'cv',
       });
       console.log('🚀 ~ fileUrl', fileUrl);
    };
@@ -68,7 +97,7 @@ function ApplyCampaign(props) {
          file,
          onSuccess,
          onError,
-         directory: 'cv',
+         directory: 'avatars',
       });
       setAvatar({
          loading: false,
@@ -78,7 +107,7 @@ function ApplyCampaign(props) {
 
    const handleScroll = () => {
       if (ref.current) {
-         setSticky(ref.current.getBoundingClientRect().top <= 60);
+         setSticky(ref.current.getBoundingClientRect().top <= 20);
       }
    };
 
@@ -93,8 +122,7 @@ function ApplyCampaign(props) {
       <>
          <MainLayout>
             <div>
-               Breadcrumb
-               {/* Please make breadcrumb here. Thanks */}
+               <BreadCrumbs campaignName={campaignDetail.name} />
             </div>
             <div className='apply__campaign'>
                <div className='apply__campaign--col'>
@@ -112,22 +140,24 @@ function ApplyCampaign(props) {
                   </div>
                </div>
                <div
-                  className={`apply__campaign--col sticky-wrapper${
+                  className={`apply__campaign--col-apply sticky-wrapper${
                      isSticky
-                        ? 'apply__campaign--col sticky--form'
-                        : 'apply__campaign--col '
+                        ? ' apply__campaign--col-apply sticky'
+                        : ' apply__campaign--col-apply '
                   }`}
                   ref={ref}
                >
-                  <ApplyForm
-                     handleApplyCampaign={handleApplyCampaign}
-                     uploadCVToFirebase={uploadCVToFirebase}
-                     uploadAvatarToFirebase={uploadAvatarToFirebase}
-                     avatar={avatar}
-                     campaignPosition={campaignDetail.position}
-                     campaignTechnique={campaignDetail.technique}
-                     campaignDescription={campaignDetail.description}
-                  />
+                  <Spin spinning={formLoading}>
+                     <ApplyForm
+                        handleApplyCampaign={handleApplyCampaign}
+                        uploadCVToFirebase={uploadCVToFirebase}
+                        uploadAvatarToFirebase={uploadAvatarToFirebase}
+                        avatar={avatar}
+                        campaignPosition={campaignDetail.position}
+                        campaignTechnique={campaignDetail.technique}
+                        campaignDescription={campaignDetail.description}
+                     />
+                  </Spin>
                </div>
             </div>
          </MainLayout>

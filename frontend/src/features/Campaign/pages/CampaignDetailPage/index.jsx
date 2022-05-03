@@ -1,9 +1,9 @@
-import { Breadcrumb, Col, Row, Space, Spin, Typography } from 'antd';
+import { Col, Row, Space, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import campaignApi from '../../../../api/campaignApi';
+import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import { Container } from '../../../Home/components/Container/Container.styles';
 import Footer from '../../../Home/components/Footer';
 import Header from '../../../Home/components/Header';
@@ -11,7 +11,6 @@ import { Section } from '../../../Home/components/Section/Section.styles';
 import CampaignDetail from '../../components/CampaignDetail';
 import Company from '../../components/Company';
 
-const { Text } = Typography;
 const CampaignDetailPageWrapper = styled.div`
    width: 100%;
    height: 100%;
@@ -80,17 +79,10 @@ function CampaignDetailPage(props) {
                   <Container>
                      <Space
                         direction='vertical'
-                        size='middle'
+                        size={0}
                         style={{ width: '100%' }}
                      >
-                        <Breadcrumb>
-                           <Breadcrumb.Item>
-                              <Link to='/'>Home</Link>
-                           </Breadcrumb.Item>
-                           <Breadcrumb.Item>
-                              <Text>{campaignDetail.name}</Text>
-                           </Breadcrumb.Item>
-                        </Breadcrumb>
+                        <BreadCrumbs campaignName={campaignDetail.name} />
 
                         <Row
                            gutter={[8, 8]}

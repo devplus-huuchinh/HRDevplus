@@ -1,0 +1,22 @@
+.dashboard-page {
+   padding: 30px 40px;
+
+   .dashboard--chart {
+      width: 48%;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px 25px;
+
+      .chart--title {
+         // font-size: 16px;
+         font-weight: normal;
+      }
+
+      @media screen and (max-width: 767px) {
+         width: 100%;
+      }
+      @media screen and (max-width: 557px) {
+         width: 100%;
+      }
+   }
+}

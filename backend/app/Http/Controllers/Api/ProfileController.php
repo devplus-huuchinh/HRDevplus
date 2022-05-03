@@ -69,4 +69,10 @@ class ProfileController extends Controller
         $createCampaign = $this->profileService->create($request->all());
         return response()->json($createCampaign);
     }
+
+    public function statistics(Request $request)
+    {
+        $allProfile = $this->ProfileService->profileStatistics($request->all());
+        return response()->json($allProfile);
+    }
 }

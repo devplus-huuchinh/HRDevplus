@@ -95,4 +95,9 @@ class UserRepo extends EloquentRepo
 
         return $status;
     }
+
+    public function countUsers()
+    {
+        return $this->model->count();
+    }
 }

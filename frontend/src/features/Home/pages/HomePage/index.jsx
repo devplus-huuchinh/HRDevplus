@@ -34,7 +34,14 @@ function HomePage(props) {
    const handleSubmitCandidateSearch = (keyword) => {
       history.push({
          pathname: `/search/candidate`,
-         search: `?keyword=${keyword}`,
+         state: {
+            name: keyword,
+            position_campaign: [],
+            campaign_technique: [],
+            is_active: [1],
+            start_date: '1970-01-01',
+            end_date: '2100-01-01',
+         },
       });
    };
 

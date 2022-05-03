@@ -40,4 +40,34 @@ class ProfileService
    {
       return $this->profileRepo->create($profileFormData);
    }
+
+   public function profileStatistics($request)
+   {
+      $year = $request['year'] ?? date('Y');
+      $allProfiles = $this->profileRepo->getProfileByYear($year);
+
+      $reduceData = array_reduce($allProfiles, function ($acc, $item) {
+         $month = $item['created_at']->format('F');
+         $searchInArray = array_search($month, array_column($acc, 'month'));
+
+         if (($searchInArray) !== false) {
+            $acc[$searchInArray]['count']++;
+            return $acc;
+         };
+
+         array_push($acc, [
+            'count' => 1,
+            'month' =>  $month,
+         ]);
+
+         return $acc;
+      }, array());
+
+      return $reduceData;
+   }
+
+   public function profileCount()
+   {
+      return $this->profileRepo->countProfiles();
+   }
 }

@@ -105,4 +105,9 @@ class UserService
             'message' => 'generate_link_error'
         ];
     }
+
+    public function userCount()
+    {
+        return $this->userRepo->countUsers();
+    }
 }

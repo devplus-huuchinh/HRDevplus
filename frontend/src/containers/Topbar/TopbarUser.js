@@ -14,6 +14,7 @@ export default function TopbarUser() {
    const [visible, setVisibility] = React.useState(false);
 
    const userAvatar = useSelector((state) => state.Auth.userData?.avatar);
+   const username = useSelector((state) => state.Auth.userData?.name);
    const blankAvatar = 'https://www.pngrepo.com/download/5125/avatar.png';
 
    const dispatch = useDispatch();
@@ -36,15 +37,6 @@ export default function TopbarUser() {
          <Link className='isoDropdownLink' to={'/dashboard/my-profile'}>
             <IntlMessages id='topbar.myprofile' />
          </Link>
-         <a className='isoDropdownLink' href='# '>
-            <IntlMessages id='themeSwitcher.settings' />
-         </a>
-         <a className='isoDropdownLink' href='# '>
-            <IntlMessages id='sidebar.feedback' />
-         </a>
-         <a className='isoDropdownLink' href='# '>
-            <IntlMessages id='topbar.help' />
-         </a>
          <Link
             className='isoDropdownLink'
             to='/dashboard/user-profile/change-password'
@@ -66,9 +58,12 @@ export default function TopbarUser() {
          arrowPointAtCenter={true}
          placement='bottomLeft'
       >
-         <div className='isoImgWrapper'>
-            <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
-            <span className='userActivity online' />
+         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className='isoImgWrapper'>
+               <img alt='user' src={userAvatar ? userAvatar : blankAvatar} />
+               <span className='userActivity online' />
+            </div>
+            <div style={{ color: '#fff' }}>{username}</div>
          </div>
       </Popover>
    );

@@ -53,4 +53,14 @@ class ProfileRepo extends EloquentRepo
       $profile->status = $status;
       $profile->save();
    }
+
+   public function getProfileByYear($year)
+   {
+      return $this->model->whereYear('created_at', $year)->orderBy('created_at', 'asc')->get()->all();
+   }
+
+   public function countProfiles()
+   {
+      return $this->model->count();
+   }
 }
