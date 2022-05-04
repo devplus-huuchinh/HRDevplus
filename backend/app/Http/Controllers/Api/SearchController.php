@@ -11,11 +11,11 @@ class SearchController extends Controller
 {
     public function searchCampaign(Request $request)
     {
-        return Campaign::filter($request->all())->paginateFilter(2);
+        return Campaign::filter($request->all())->paginateFilter(10);
     }
 
     public function searchProfile(Request $request)
     {
-        return Profile::filter($request->all())->paginateFilter(2);
+        return Profile::filter($request->all())->paginateFilter(10);
     }
 }

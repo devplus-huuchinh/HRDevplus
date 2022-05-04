@@ -85,6 +85,7 @@ function ApplyForm(props) {
                }}
             >
                <Image
+                  preview={false}
                   src={
                      'https://www.devplus.asia/assets/images/devplus/Artboard_2.png'
                   }
