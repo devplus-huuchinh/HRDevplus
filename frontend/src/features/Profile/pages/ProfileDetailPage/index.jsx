@@ -30,7 +30,9 @@ function ProfileDetailPage(props) {
    const [step, setStep] = useState([]);
    const [loading, setLoading] = useState(true);
    const [isModalVisible, setIsModalVisible] = useState(false);
+   const [confirmModal, setConfirmModal] = useState(false);
    const [acceptTime, setAcceptTime] = useState([]);
+   const [confirmModalTarget, setConfirmModalTarget] = useState({});
 
    useEffect(() => {
       const getProfileDetail = async () => {
@@ -235,6 +237,22 @@ function ProfileDetailPage(props) {
       setIsModalVisible(true);
    };
 
+   const ActiveConfirmModal = (value) => {
+      setConfirmModalTarget({
+         value: value,
+      });
+      setConfirmModal(true);
+   };
+
+   const handleCancel = () => {
+      setConfirmModal(false);
+   };
+
+   const handleOk = () => {
+      editProfile(data.id, confirmModalTarget.value);
+      setConfirmModal(false);
+   };
+
    return (
       <Spin spinning={loading}>
          <div className='profile-detail-container'>
@@ -321,13 +339,17 @@ function ProfileDetailPage(props) {
                                     <Select
                                        value={data.step}
                                        disabled={
-                                          data.status === 'REJECT'
+                                          data.status === 'REJECT' ||
+                                          data.step === 'EMPLOYEE'
                                              ? true
                                              : false
                                        }
                                        onChange={(value) =>
-                                          editProfile(data.id, value)
+                                          ActiveConfirmModal(value)
                                        }
+                                       // onChange={(value) =>
+                                       //    editProfile(data.id, value)
+                                       // }
                                     >
                                        {step.length > 0 &&
                                           step.map((item) => (
@@ -355,6 +377,10 @@ function ProfileDetailPage(props) {
                                     </Text>
                                     {data.status === 'REJECT' ? (
                                        <Text style={{ color: 'red' }}>
+                                          {data.status}
+                                       </Text>
+                                    ) : data.status === 'APPROVE' ? (
+                                       <Text style={{ color: 'green' }}>
                                           {data.status}
                                        </Text>
                                     ) : (
@@ -489,6 +515,20 @@ function ProfileDetailPage(props) {
                }}
                // onOk={onOk}
             />
+         </Modal>
+         <Modal
+            title='Are you sure about this?'
+            visible={confirmModal}
+            onOk={handleOk}
+            onCancel={handleCancel}
+         >
+            <p>
+               Change candidate{' '}
+               <b>
+                  {data.first_name} {data.last_name}
+               </b>
+               's step to <b>{confirmModalTarget.value}</b>
+            </p>
          </Modal>
       </Spin>
    );

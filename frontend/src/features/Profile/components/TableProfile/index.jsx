@@ -15,6 +15,7 @@ TableProfile.propTypes = {
    tableLoading: PropTypes.bool,
    handleNextStep: PropTypes.func,
    handleReject: PropTypes.func,
+   ActiveConfirmModal: PropTypes.func,
 };
 
 function TableProfile(props) {
@@ -30,6 +31,7 @@ function TableProfile(props) {
       tableLoading,
       handleNextStep,
       handleReject,
+      ActiveConfirmModal,
    } = props;
 
    //USE HISTORY
@@ -68,8 +70,20 @@ function TableProfile(props) {
             <Select
                value={record.step}
                style={{ width: 120 }}
-               onChange={(value) => editProfile(record.id, value)}
-               disabled={record.status === 'REJECT' ? true : false}
+               onChange={(value) => {
+                  ActiveConfirmModal(
+                     record.id,
+                     value,
+                     record.last_name,
+                     record.first_name
+                  );
+               }}
+               // onChange={(value) => editProfile(record.id, value)}
+               disabled={
+                  record.status === 'REJECT' || record.step === 'EMPLOYEE'
+                     ? true
+                     : false
+               }
             >
                {step.length > 0 &&
                   step.map((item) => (
@@ -86,6 +100,8 @@ function TableProfile(props) {
          render: (record) =>
             record.status === 'REJECT' ? (
                <p style={{ color: 'red' }}>{record.status}</p>
+            ) : record.status === 'APPROVE' ? (
+               <p style={{ color: 'green' }}>{record.status}</p>
             ) : (
                <p>{record.status}</p>
             ),
