@@ -1,5 +1,5 @@
 import { DownloadOutlined } from '@ant-design/icons';
-import { Button, notification } from 'antd';
+import { Button, notification, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CSVLink } from 'react-csv';
@@ -39,23 +39,25 @@ function ExportExcel(props) {
    };
 
    return (
-      <Button
-         type='primary'
-         icon={
-            <CSVLink
-               data={data ? structureData() : []}
-               filename={fileName}
-               onClick={(event) => {
-                  if (data.length === 0) {
-                     openNotificationWithIcon('error');
-                     return false;
-                  }
-               }}
-            >
-               <DownloadOutlined />
-            </CSVLink>
-         }
-      ></Button>
+      <Tooltip placement='top' title='Download CSV'>
+         <Button
+            type='primary'
+            icon={
+               <CSVLink
+                  data={data ? structureData() : []}
+                  filename={fileName}
+                  onClick={(event) => {
+                     if (data.length === 0) {
+                        openNotificationWithIcon('error');
+                        return false;
+                     }
+                  }}
+               >
+                  <DownloadOutlined />
+               </CSVLink>
+            }
+         ></Button>
+      </Tooltip>
    );
 }
 

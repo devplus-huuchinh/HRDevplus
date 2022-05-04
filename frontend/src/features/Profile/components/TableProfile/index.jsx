@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Avatar, Select, Button } from 'antd';
+import { Table, Avatar, Select, Button, Popconfirm } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
@@ -103,29 +103,71 @@ function TableProfile(props) {
          title: 'Actions',
          render: (record) => (
             <div>
-               <Button
+               <Popconfirm
+                  placement='topLeft'
+                  title='Are you sure?'
+                  onConfirm={() => handleNextStep(record.id, record.step)}
+                  okText='Yes'
+                  cancelText='No'
                   disabled={
                      record.step === 'EMPLOYEE' || record.status === 'REJECT'
                         ? true
                         : false
                   }
-                  type='primary'
-                  style={{ marginRight: '10px' }}
-                  onClick={() => handleNextStep(record.id, record.step)}
                >
-                  Accept
-               </Button>
-               <Button
+                  <Button
+                     disabled={
+                        record.step === 'EMPLOYEE' || record.status === 'REJECT'
+                           ? true
+                           : false
+                     }
+                     style={
+                        record.step === 'EMPLOYEE' || record.status === 'REJECT'
+                           ? {
+                                backgroundColor: '#eee',
+                                marginRight: '10px',
+                                color: '#B8B8B8',
+                             }
+                           : {
+                                marginRight: '10px',
+                                backgroundColor: '#4c956c',
+                                color: '#fff',
+                             }
+                     }
+                  >
+                     Accept
+                  </Button>
+               </Popconfirm>
+               <Popconfirm
+                  placement='topLeft'
+                  title='Are you sure?'
+                  onConfirm={() => handleReject(record.id)}
+                  okText='Yes'
+                  cancelText='No'
                   disabled={
                      record.status === 'REJECT' || record.step === 'EMPLOYEE'
                         ? true
                         : false
                   }
-                  type='ghost'
-                  onClick={() => handleReject(record.id)}
                >
-                  Reject
-               </Button>
+                  <Button
+                     disabled={
+                        record.status === 'REJECT' || record.step === 'EMPLOYEE'
+                           ? true
+                           : false
+                     }
+                     style={
+                        record.status === 'REJECT' || record.step === 'EMPLOYEE'
+                           ? { backgroundColor: '#eee', color: '#B8B8B8' }
+                           : {
+                                backgroundColor: '#e63946',
+                                color: '#fff',
+                             }
+                     }
+                  >
+                     Reject
+                  </Button>
+               </Popconfirm>
             </div>
          ),
       },

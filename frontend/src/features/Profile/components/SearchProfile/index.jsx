@@ -199,6 +199,7 @@ function SearchProfiles(props) {
                ) : (
                   ''
                )}
+
                <ExportExcel
                   className='search__export'
                   data={selected}

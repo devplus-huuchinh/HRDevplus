@@ -43,6 +43,6 @@ class Profile extends Model
 
     public function technique()
     {
-        return $this->belongsToMany(technique::class, 'profile_techniques');
+        return $this->belongsToMany(Technique::class, 'profile_techniques');
     }
 }
