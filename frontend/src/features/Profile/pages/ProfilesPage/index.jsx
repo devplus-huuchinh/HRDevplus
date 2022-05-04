@@ -25,8 +25,10 @@ function ProfilesPage(props) {
    const [page, setPage] = useState(1);
    const [position, setPosition] = useState([]);
    const [isModalVisible, setIsModalVisible] = useState(false);
+   const [confirmModal, setConfirmModal] = useState(false);
    const [acceptTime, setAcceptTime] = useState([]);
    const [targetId, setTargetId] = useState();
+   const [confirmModalTarget, setConfirmModalTarget] = useState({});
    const [searchFormData, setSearchFormData] = useState({
       first_name: '',
       email: '',
@@ -280,6 +282,24 @@ function ProfilesPage(props) {
       setIsModalVisible(true);
    };
 
+   const ActiveConfirmModal = (id, value, first_name, last_name) => {
+      setConfirmModalTarget({
+         id: id,
+         value: value,
+         name: `${first_name} ${last_name}`,
+      });
+      setConfirmModal(true);
+   };
+
+   const handleCancel = () => {
+      setConfirmModal(false);
+   };
+
+   const handleOk = () => {
+      editProfile(confirmModalTarget.id, confirmModalTarget.value);
+      setConfirmModal(false);
+   };
+
    return (
       <div className='profiles-container'>
          <Space
@@ -305,6 +325,7 @@ function ProfilesPage(props) {
                tableLoading={tableLoading}
                handleNextStep={handleNextStep}
                handleReject={handleReject}
+               ActiveConfirmModal={ActiveConfirmModal}
             />
             {Object.keys(pagination).length > 0 && (
                <Pagination
@@ -323,20 +344,24 @@ function ProfilesPage(props) {
                handleAcceptCv(targetId);
             }}
          >
-            {/* <DatePicker
-               showTime
-               onChange={(value) => {
-                  setInterViewTime(value);
-               }}
-            /> */}
             <RangePicker
                showTime={{ format: 'HH:mm' }}
                format='YYYY-MM-DD HH:mm'
                onChange={(value) => {
                   setAcceptTime(value);
                }}
-               // onOk={onOk}
             />
+         </Modal>
+         <Modal
+            title='Are you sure about this?'
+            visible={confirmModal}
+            onOk={handleOk}
+            onCancel={handleCancel}
+         >
+            <p>
+               Change candidate <b>{confirmModalTarget.name}</b>'s step to{' '}
+               <b>{confirmModalTarget.value}</b>
+            </p>
          </Modal>
       </div>
    );
