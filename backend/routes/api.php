@@ -79,24 +79,34 @@ Route::prefix('/v1/mail')->group(
     }
 );
 
-Route::name('api.posts.')->group(function () {
-    Route::get('v1/posts', [UserController::class, 'index'])->name('index');
-});
+Route::name('api.posts.')->group(
+    function () {
+        Route::get('v1/posts', [UserController::class, 'index'])->name('index');
+    }
+);
 
-Route::prefix('/v1/profiles')->group(function () {
-    Route::controller(ProfileController::class)->group(function () {
-        Route::get('/dropdownlist', 'dropdownlistData');
-        Route::get('/', 'all');
-    });
-});
+Route::prefix('/v1/profiles')->group(
+    function () {
+        Route::controller(ProfileController::class)->group(
+            function () {
+                Route::get('/dropdownlist', 'dropdownlistData');
+                Route::get('/', 'all');
+            }
+        );
+    }
+);
 
-Route::prefix('/v1/profile')->group(function () {
-    Route::controller(ProfileController::class)->group(function () {
-        Route::post('/create', 'create');
-        Route::get('/statistics', 'statistics');
-        Route::patch('/', 'editProfile');
-    });
-});
+Route::prefix('/v1/profile')->group(
+    function () {
+        Route::controller(ProfileController::class)->group(
+            function () {
+                Route::post('/create', 'create');
+                Route::get('/statistics', 'statistics');
+                Route::patch('/', 'editProfile');
+            }
+        );
+    }
+);
 
 Route::prefix('/v1/technique')->group(
     function () {
@@ -134,14 +144,20 @@ Route::name('api.posts.')->group(
     }
 );
 
-Route::prefix('v1/campaign')->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::controller(CampaignController::class)->group(function () {
-            Route::get('/droplist', 'getDropList');
-            Route::get('/statistics', 'statistics');
-            Route::get('/count', 'count');
-            Route::get('/', 'index');
-            Route::post('/', 'newCampaign');
-        });
-    });
-});
+Route::prefix('v1/campaign')->group(
+    function () {
+        Route::middleware(['auth:sanctum'])->group(
+            function () {
+                Route::controller(CampaignController::class)->group(
+                    function () {
+                        Route::get('/droplist', 'getDropList');
+                        Route::get('/statistics', 'statistics');
+                        Route::get('/count', 'count');
+                        Route::get('/', 'index');
+                        Route::post('/', 'newCampaign');
+                    }
+                );
+            }
+        );
+    }
+);
