@@ -1,42 +1,147 @@
-import { Input, Tag } from 'antd';
+import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import ExportExcel from '../ExportExcel/index';
 import './searchProfile.scss';
 
 SearchProfiles.propTypes = {
    selected: PropTypes.array,
+   handleChangeSearchFormData: PropTypes.func,
+   campaignId: PropTypes.string,
 };
 
+const { Option } = Select;
+
 function SearchProfiles(props) {
-   const { selected } = props;
-   const { Search } = Input;
+   const { selected, handleChangeSearchFormData, campaignId } = props;
+
+   const initialValues = {
+      first_name: '',
+      email: '',
+      phone_numb: '',
+      status: [],
+   };
+   const [collapse, setCollapse] = useState(false);
+
+   const handleChangeCollapse = () => {
+      setCollapse(!collapse);
+   };
+   const formRef = useRef(null);
+   const [form] = Form.useForm();
+   const onReset = () => {
+      formRef.current.resetFields();
+      handleChangeSearchFormData(initialValues);
+   };
    return (
       <div className='search_container'>
-         <Search
-            className='search__input_wrap'
-            placeholder='input search text'
-            enterButton='Search'
-            allowClear
-            //   onSearch={onSearch}
-         />
-         <div className='search__rightside_wrap'>
-            {selected.length !== 0 ? (
-               <Tag className='search__selected_tag' color='geekblue'>
-                  {selected.length === 1
-                     ? '1 user selected'
-                     : `${selected.length} users selected`}
-               </Tag>
-            ) : (
-               ''
-            )}
-
-            <ExportExcel
-               className='search__export'
-               data={selected}
-               fileName='Profiles'
-            />
-         </div>
+         <Space direction='vertical' size={'small'} style={{ display: 'flex' }}>
+            <div>
+               <Form
+                  ref={formRef}
+                  form={form}
+                  name='basic'
+                  autoComplete='off'
+                  initialValues={initialValues}
+                  onFinish={handleChangeSearchFormData}
+               >
+                  <Space
+                     direction='vertical'
+                     size={'small'}
+                     style={{ display: 'flex' }}
+                  >
+                     <Row
+                        className={collapse ? '' : 'collapse-hide'}
+                        gutter={[16, 16]}
+                        wrap
+                     >
+                        <Col xs={24} sm={24} md={12} lg={8}>
+                           <Form.Item label='Phone' name='phone_numb'>
+                              <Input />
+                           </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={12} lg={8}>
+                           <Form.Item label='Email' name='email'>
+                              <Input />
+                           </Form.Item>
+                        </Col>
+                     </Row>
+                     <Row gutter={[16, 16]} wrap>
+                        <Col xs={24} sm={24} md={12} lg={8}>
+                           <Form.Item label='First Name' name='first_name'>
+                              <Input />
+                           </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={12} lg={8}>
+                           <Form.Item label='Status' name='status'>
+                              <Select
+                                 mode='multiple'
+                                 allowClear
+                                 placeholder='Please select'
+                                 showArrow
+                                 style={{ width: '100%' }}
+                              >
+                                 <Option key='PENDING'>PENDING</Option>
+                                 <Option key='PROCESSING'>PROCESSING</Option>
+                                 <Option key='APPROVE'>APPROVE</Option>
+                                 <Option key='REJECT'>REJECT</Option>
+                              </Select>
+                           </Form.Item>
+                        </Col>
+                        <Col
+                           xs={24}
+                           sm={24}
+                           md={24}
+                           lg={8}
+                           style={{ textAlign: 'right' }}
+                        >
+                           <Space size={'small'} wrap>
+                              <Form.Item>
+                                 <Button type='primary' htmlType='submit'>
+                                    Submit
+                                 </Button>
+                              </Form.Item>
+                              <Form.Item>
+                                 <Button onClick={onReset}>Reset</Button>
+                              </Form.Item>
+                              <Form.Item>
+                                 <Button
+                                    onClick={handleChangeCollapse}
+                                    type='primary'
+                                    ghost
+                                 >
+                                    {collapse ? (
+                                       <UpOutlined />
+                                    ) : (
+                                       <DownOutlined />
+                                    )}
+                                    Collapse
+                                 </Button>
+                              </Form.Item>
+                           </Space>
+                        </Col>
+                     </Row>
+                  </Space>
+               </Form>
+            </div>
+            <hr />
+            <div className='search__rightside_wrap'>
+               {selected.length !== 0 ? (
+                  <Tag className='search__selected_tag' color='geekblue'>
+                     {selected.length === 1
+                        ? '1 user selected'
+                        : `${selected.length} users selected`}
+                  </Tag>
+               ) : (
+                  ''
+               )}
+               <ExportExcel
+                  className='search__export'
+                  data={selected}
+                  fileName='Profiles'
+               />
+            </div>
+         </Space>
       </div>
    );
 }
