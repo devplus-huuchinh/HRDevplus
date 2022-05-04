@@ -70,7 +70,9 @@ function ProfileDetailPage(props) {
                               color: '#fff',
                            }}
                         >
-                           {`${data.first_name} ${data.last_name}`}
+                           {data.first_name
+                              ? `${data.first_name} ${data.last_name}`
+                              : 'Candidate Name'}
                         </Title>
                         <Row gutter={[20, 20]}>
                            <Col xs={24} sm={24} md={24} lg={16}>
