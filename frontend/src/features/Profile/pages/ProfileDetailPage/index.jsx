@@ -6,6 +6,7 @@ import {
    Image,
    message,
    Modal,
+   Popconfirm,
    Row,
    Select,
    Space,
@@ -361,41 +362,90 @@ function ProfileDetailPage(props) {
                                     )}
                                  </div>
                                  <Space
-                                    size='small'
+                                    size={0}
                                     style={{
                                        display: 'flex',
                                        justifyContent: 'flex-end',
                                        marginTop: '15px',
                                     }}
                                  >
-                                    <Button
+                                    <Popconfirm
+                                       placement='topLeft'
+                                       title='Are you sure?'
+                                       onConfirm={() =>
+                                          handleNextStep(data.id, data.step)
+                                       }
+                                       okText='Yes'
+                                       cancelText='No'
                                        disabled={
                                           data.step === 'EMPLOYEE' ||
                                           data.status === 'REJECT'
                                              ? true
                                              : false
                                        }
-                                       type='primary'
-                                       style={{ marginRight: '10px' }}
-                                       onClick={() =>
-                                          handleNextStep(data.id, data.step)
-                                       }
                                     >
-                                       Accept
-                                    </Button>
-                                    <Button
+                                       <Button
+                                          disabled={
+                                             data.step === 'EMPLOYEE' ||
+                                             data.status === 'REJECT'
+                                                ? true
+                                                : false
+                                          }
+                                          style={
+                                             data.step === 'EMPLOYEE' ||
+                                             data.status === 'REJECT'
+                                                ? {
+                                                     backgroundColor: '#eee',
+                                                     color: '#B8B8B8',
+                                                     marginRight: '10px',
+                                                  }
+                                                : {
+                                                     marginRight: '10px',
+                                                     backgroundColor: '#4c956c',
+                                                     color: '#fff',
+                                                  }
+                                          }
+                                       >
+                                          Accept
+                                       </Button>
+                                    </Popconfirm>
+                                    <Popconfirm
+                                       placement='topLeft'
+                                       title='Are you sure?'
+                                       onConfirm={() => handleReject(data.id)}
+                                       okText='Yes'
+                                       cancelText='No'
                                        disabled={
                                           data.status === 'REJECT' ||
                                           data.step === 'EMPLOYEE'
                                              ? true
                                              : false
                                        }
-                                       type='primary'
-                                       onClick={() => handleReject(data.id)}
-                                       ghost
                                     >
-                                       Reject
-                                    </Button>
+                                       <Button
+                                          disabled={
+                                             data.status === 'REJECT' ||
+                                             data.step === 'EMPLOYEE'
+                                                ? true
+                                                : false
+                                          }
+                                          style={
+                                             data.status === 'REJECT' ||
+                                             data.step === 'EMPLOYEE'
+                                                ? {
+                                                     backgroundColor: '#eee',
+                                                     color: '#B8B8B8',
+                                                  }
+                                                : {
+                                                     backgroundColor: '#dc2f02',
+                                                     color: '#fff',
+                                                  }
+                                          }
+                                          ghost
+                                       >
+                                          Reject
+                                       </Button>
+                                    </Popconfirm>
                                  </Space>
                               </Space>
                            </Col>
