@@ -9,11 +9,6 @@ const options = [
       label: 'sidebar.campaign',
       leftIcon: 'ion-calendar',
    },
-   {
-      key: 'employee',
-      label: 'sidebar.employee',
-      leftIcon: 'ion-person',
-   },
 
    // {
    //    key: 'ecommerce',

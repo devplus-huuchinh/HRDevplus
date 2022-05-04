@@ -1,5 +1,5 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Spin, Table, Tag, Slider, Switch, message } from 'antd';
+import { Button, message, Spin, Switch, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
