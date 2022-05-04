@@ -158,6 +158,7 @@ function ProfileDetailPage(props) {
                         width='100%'
                         height='800px'
                         allowFullScreen={true}
+                        title='Candidate CV'
                      ></iframe>
                   )}
                </div>
