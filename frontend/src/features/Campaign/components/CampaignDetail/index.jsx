@@ -26,11 +26,17 @@ const CampaignDetailWrapper = styled.div`
    border-radius: 10px;
    position: relative;
    .campaign__detail--header {
-      wwidth: 100%;
-      .ant-space-item {
-         width: 100%;
+      width: 100%;
+      padding: 0 10px;
+      @media screen and (max-width: 768px) {
          display: flex;
+         flex-direction: column;
+         gap: 20px !important;
+         align-items: center;
          justify-content: center;
+         .campaign__detail--title {
+            text-align: center;
+         }
       }
    }
 `;
@@ -82,26 +88,27 @@ function CampaignDetail(props) {
             ref={ref}
          >
             <Space
-               direction='vertical'
                size={'small'}
                style={{
                   width: '100%',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '20px 0',
+                  justifyContent: 'space-between',
+                  padding: '15px 0',
                   borderBottom: '1px solid #e8e8e8',
                   backgroundColor: '#fff',
                }}
                className='campaign__detail--header'
             >
-               <Title level={3}>{campaignName}</Title>
+               <Title level={3} className='campaign__detail--title'>
+                  {campaignName}
+               </Title>
 
                <Button
-                  type='primary'
-                  danger
                   style={{
-                     width: '100%',
-                     maxWidth: '700px',
+                     width: '200px',
+                     border: 'none',
+                     color: '#fff',
+                     background: '#4c956c',
                   }}
                   onClick={onClick}
                >

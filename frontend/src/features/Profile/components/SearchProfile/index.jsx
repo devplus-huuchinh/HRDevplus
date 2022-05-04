@@ -56,71 +56,134 @@ function SearchProfiles(props) {
                         gutter={[16, 16]}
                         wrap
                      >
-                        <Col xs={24} sm={24} md={12} lg={8}>
-                           <Form.Item label='Phone' name='phone_numb'>
-                              <Input />
-                           </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} lg={8}>
-                           <Form.Item label='Email' name='email'>
-                              <Input />
-                           </Form.Item>
-                        </Col>
+                        {collapse ? (
+                           <>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Phone' name='phone_numb'>
+                                    <Input />
+                                 </Form.Item>
+                              </Col>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Email' name='email'>
+                                    <Input />
+                                 </Form.Item>
+                              </Col>
+                              <Col
+                                 xs={24}
+                                 sm={24}
+                                 md={24}
+                                 lg={8}
+                                 style={{ textAlign: 'right' }}
+                              >
+                                 <Space size={'small'} wrap>
+                                    <Form.Item>
+                                       <Button type='primary' htmlType='submit'>
+                                          Submit
+                                       </Button>
+                                    </Form.Item>
+                                    <Form.Item>
+                                       <Button onClick={onReset}>Reset</Button>
+                                    </Form.Item>
+                                    <Form.Item>
+                                       <Button
+                                          onClick={handleChangeCollapse}
+                                          type='primary'
+                                          ghost
+                                       >
+                                          {collapse ? (
+                                             <>
+                                                <UpOutlined /> Collapse
+                                             </>
+                                          ) : (
+                                             <>
+                                                <DownOutlined /> Expand
+                                             </>
+                                          )}
+                                       </Button>
+                                    </Form.Item>
+                                 </Space>
+                              </Col>
+                           </>
+                        ) : (
+                           <></>
+                        )}
                      </Row>
                      <Row gutter={[16, 16]} wrap>
-                        <Col xs={24} sm={24} md={12} lg={8}>
-                           <Form.Item label='First Name' name='first_name'>
-                              <Input />
-                           </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={12} lg={8}>
-                           <Form.Item label='Status' name='status'>
-                              <Select
-                                 mode='multiple'
-                                 allowClear
-                                 placeholder='Please select'
-                                 showArrow
-                                 style={{ width: '100%' }}
+                        {collapse ? (
+                           <>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Name' name='first_name'>
+                                    <Input />
+                                 </Form.Item>
+                              </Col>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Status' name='status'>
+                                    <Select
+                                       mode='multiple'
+                                       allowClear
+                                       placeholder='Please select'
+                                       showArrow
+                                       style={{ width: '100%' }}
+                                    >
+                                       <Option key='PENDING'>PENDING</Option>
+                                       <Option key='PROCESSING'>
+                                          PROCESSING
+                                       </Option>
+                                       <Option key='APPROVE'>APPROVE</Option>
+                                       <Option key='REJECT'>REJECT</Option>
+                                    </Select>
+                                 </Form.Item>
+                              </Col>
+                           </>
+                        ) : (
+                           <>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Phone' name='phone_numb'>
+                                    <Input />
+                                 </Form.Item>
+                              </Col>
+                              <Col xs={24} sm={24} md={12} lg={8}>
+                                 <Form.Item label='Email' name='email'>
+                                    <Input />
+                                 </Form.Item>
+                              </Col>
+                              <Col
+                                 xs={24}
+                                 sm={24}
+                                 md={24}
+                                 lg={8}
+                                 style={{ textAlign: 'right' }}
                               >
-                                 <Option key='PENDING'>PENDING</Option>
-                                 <Option key='PROCESSING'>PROCESSING</Option>
-                                 <Option key='APPROVE'>APPROVE</Option>
-                                 <Option key='REJECT'>REJECT</Option>
-                              </Select>
-                           </Form.Item>
-                        </Col>
-                        <Col
-                           xs={24}
-                           sm={24}
-                           md={24}
-                           lg={8}
-                           style={{ textAlign: 'right' }}
-                        >
-                           <Space size={'small'} wrap>
-                              <Form.Item>
-                                 <Button type='primary' htmlType='submit'>
-                                    Submit
-                                 </Button>
-                              </Form.Item>
-                              <Form.Item>
-                                 <Button onClick={onReset}>Reset</Button>
-                              </Form.Item>
-                              <Form.Item>
-                                 <Button
-                                    onClick={handleChangeCollapse}
-                                    type='primary'
-                                    ghost
-                                 >
-                                    {collapse ? (
-                                       <UpOutlined />
-                                    ) : (
-                                       <DownOutlined />
-                                    )}
-                                    Collapse
-                                 </Button>
-                              </Form.Item>
-                           </Space>
-                        </Col>
+                                 <Space size={'small'} wrap>
+                                    <Form.Item>
+                                       <Button type='primary' htmlType='submit'>
+                                          Submit
+                                       </Button>
+                                    </Form.Item>
+                                    <Form.Item>
+                                       <Button onClick={onReset}>Reset</Button>
+                                    </Form.Item>
+                                    <Form.Item>
+                                       <Button
+                                          onClick={handleChangeCollapse}
+                                          type='primary'
+                                          ghost
+                                       >
+                                          {collapse ? (
+                                             <>
+                                                <UpOutlined /> Collapse
+                                             </>
+                                          ) : (
+                                             <>
+                                                <DownOutlined /> Expand
+                                             </>
+                                          )}
+                                       </Button>
+                                    </Form.Item>
+                                 </Space>
+                              </Col>
+                           </>
+                        )}
                      </Row>
                   </Space>
                </Form>
