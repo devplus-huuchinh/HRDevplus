@@ -96,11 +96,11 @@ function ViewCampaign(props) {
       {
          title: 'Name',
          dataIndex: 'name',
-         width: '25%',
       },
       {
          title: 'Position',
          dataIndex: 'position',
+         width: '8%',
          render: (tags) => (
             <>
                {tags.map((tag) => {
@@ -109,33 +109,36 @@ function ViewCampaign(props) {
                      color = 'volcano';
                   }
                   return (
-                     <Tag color={color} key={tag.name}>
+                     <Tag
+                        color={color}
+                        key={tag.name}
+                        style={{ marginBottom: 3 }}
+                     >
                         {tag.name.toUpperCase()}
                      </Tag>
                   );
                })}
             </>
          ),
-         width: '20%',
       },
       {
          title: 'Address',
          dataIndex: 'address',
-         width: '15%',
       },
       {
          title: 'Start Date',
          dataIndex: 'start_date',
-         width: '20%',
+         width: '12%',
       },
       {
          title: 'End Date',
          dataIndex: 'end_date',
-         width: '20%',
+         width: '12%',
       },
       {
          title: 'Technology',
          dataIndex: 'technique',
+         width: '8%',
          render: (tags) => (
             <>
                {tags.map((tag) => {
@@ -144,7 +147,11 @@ function ViewCampaign(props) {
                      color = 'volcano';
                   }
                   return (
-                     <Tag color={color} key={tag.name}>
+                     <Tag
+                        color={color}
+                        key={tag.name}
+                        style={{ marginBottom: 3 }}
+                     >
                         {tag.name}
                      </Tag>
                   );
@@ -154,43 +161,6 @@ function ViewCampaign(props) {
       },
       {
          title: 'Active',
-         dataIndex: 'is_active',
-         width: '20%',
-         render: (tags) => (
-            <>
-               <Tag>{tags ? 'true' : 'false'}</Tag>
-            </>
-         ),
-      },
-      {
-         title: 'Detail',
-         dataIndex: 'id',
-         render: (record) => (
-            <Button
-               type='primary'
-               onClick={() => history.push(`/dashboard/profile/${record}`)}
-            >
-               Detail
-            </Button>
-         ),
-      },
-      {
-         title: 'Edit',
-         dataIndex: 'id',
-         render: (record) => (
-            <Button
-               type='primary'
-               onClick={() =>
-                  history.push(`/dashboard/campaign/edit/${record}`)
-               }
-            >
-               Edit
-            </Button>
-         ),
-      },
-      {
-         title: 'Active',
-         // dataIndex: 'id',
          render: (record) => (
             <Switch
                size='small'
@@ -201,6 +171,51 @@ function ViewCampaign(props) {
             />
          ),
       },
+      {
+         title: 'Action',
+         width: '20%',
+         render: (record) => (
+            <div>
+               <Button
+                  type='primary'
+                  style={{ marginRight: '10px' }}
+                  onClick={() =>
+                     history.push(`/dashboard/campaign/${record.id}/profile`)
+                  }
+               >
+                  List CVs
+               </Button>
+               <Button
+                  type='primary'
+                  onClick={() =>
+                     history.push(`/dashboard/campaign/edit/${record.id}`)
+                  }
+               >
+                  Edit
+               </Button>
+            </div>
+         ),
+      },
+      // {
+      //    title: 'Edit',
+      //    dataIndex: 'id',
+      //    render: (record) => (
+
+      //    ),
+      // },
+      // {
+      //    title: 'Active',
+      //    // dataIndex: 'id',
+      //    render: (record) => (
+      //       <Switch
+      //          size='small'
+      //          checked={record.is_active}
+      //          onChange={(value) => {
+      //             handleActive(value, record.id);
+      //          }}
+      //       />
+      //    ),
+      // },
    ];
 
    const handleActive = async (isActive, id) => {
