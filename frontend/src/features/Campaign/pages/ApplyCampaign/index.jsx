@@ -26,6 +26,7 @@ function ApplyCampaign(props) {
    const { campaignDetail } = location.state;
 
    const [formLoading, setFormLoading] = useState(false);
+   const [submitBlock, setSubmitBlock] = useState(false);
 
    const [avatar, setAvatar] = useState({
       loading: false,
@@ -76,12 +77,14 @@ function ApplyCampaign(props) {
    const uploadCVToFirebase = async (options) => {
       const { file, onSuccess, onError } = options;
 
+      setSubmitBlock(true);
       const fileUrl = await uploadFile({
          file,
          onSuccess,
          onError,
          directory: 'cv',
       });
+      setSubmitBlock(false);
       console.log('🚀 ~ fileUrl', fileUrl);
    };
 
@@ -131,6 +134,7 @@ function ApplyCampaign(props) {
                         uploadCVToFirebase={uploadCVToFirebase}
                         uploadAvatarToFirebase={uploadAvatarToFirebase}
                         avatar={avatar}
+                        submitBlock={submitBlock}
                         campaignPosition={campaignDetail.position}
                         campaignTechnique={campaignDetail.technique}
                         campaignDescription={campaignDetail.description}

@@ -22,12 +22,14 @@ ApplyForm.propTypes = {
    handleApplyCampaign: PropTypes.func,
    uploadAvatarToFirebase: PropTypes.func,
    uploadCVToFirebase: PropTypes.func,
+   submitBlock: PropTypes.bool,
 };
 
 ApplyForm.defaultProps = {
    handleApplyCampaign: null,
    uploadAvatarToFirebase: null,
    uploadCVToFirebase: null,
+   submitBlock: false,
 };
 
 const { Title } = Typography;
@@ -41,6 +43,7 @@ function ApplyForm(props) {
       avatar,
       campaignPosition,
       campaignTechnique,
+      submitBlock,
    } = props;
 
    let history = useHistory();
@@ -257,7 +260,11 @@ function ApplyForm(props) {
                         Back
                      </Button>
 
-                     <Button type='primary' htmlType='submit'>
+                     <Button
+                        type='primary'
+                        htmlType='submit'
+                        disabled={avatar.loading || submitBlock ? true : false}
+                     >
                         Apply
                      </Button>
                   </div>
