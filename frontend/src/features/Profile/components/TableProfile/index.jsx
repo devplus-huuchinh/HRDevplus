@@ -94,7 +94,7 @@ function TableProfile(props) {
          title: 'Detail',
          dataIndex: 'id',
          render: (record) => (
-            <Button type='primary' onClick={() => handleShowDetail(record)}>
+            <Button type='ghost' onClick={() => handleShowDetail(record)}>
                Detail
             </Button>
          ),
@@ -110,15 +110,14 @@ function TableProfile(props) {
                         : false
                   }
                   type='primary'
-                  style={{ backgroundColor: 'green', marginRight: '10px' }}
+                  style={{ marginRight: '10px' }}
                   onClick={() => handleNextStep(record.id, record.step)}
                >
                   Accept
                </Button>
                <Button
                   disabled={record.status === 'REJECT' ? true : false}
-                  type='primary'
-                  style={{ backgroundColor: 'red' }}
+                  type='ghost'
                   onClick={() => handleReject(record.id)}
                >
                   Reject
@@ -129,7 +128,7 @@ function TableProfile(props) {
    ];
 
    const rowSelection = {
-      selectedRowKeys: selected.map[(1, 2)],
+      selectedRowKeys: selected.map((i) => i.id),
       getCheckboxProps: (record) => ({
          disabled: record.name === 'Disabled User',
          name: record.name,

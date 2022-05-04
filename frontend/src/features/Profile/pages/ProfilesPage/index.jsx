@@ -1,4 +1,12 @@
-import { notification, Pagination, Space, Typography, message } from 'antd';
+import {
+   notification,
+   Pagination,
+   Space,
+   Typography,
+   message,
+   Modal,
+   DatePicker,
+} from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import profileApi from '../../../../api/profileApi';
@@ -7,6 +15,7 @@ import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
 import emailApi from '../../../../api/emailApi';
 import './profilesPage.scss';
+import positionApi from '../../../../api/positionApi';
 
 function ProfilesPage(props) {
    //PARAM
@@ -22,6 +31,10 @@ function ProfilesPage(props) {
    const [pagination, setPagination] = useState({});
    console.log('🚀 ~ pagination', pagination);
    const [page, setPage] = useState(1);
+   const [position, setPosition] = useState([]);
+   const [isModalVisible, setIsModalVisible] = useState(false);
+   const [acceptTime, setAcceptTime] = useState([]);
+   const [targetId, setTargetId] = useState();
    const [searchFormData, setSearchFormData] = useState({
       first_name: '',
       email: '',
@@ -43,7 +56,8 @@ function ProfilesPage(props) {
             page,
          });
          const dropProfile = await profileApi.dropdownData();
-
+         const position = await positionApi.getAll();
+         setPosition(position);
          setTableLoading(false);
          setProfiles(searchResponse.data);
          setStep(dropProfile);
@@ -53,13 +67,14 @@ function ProfilesPage(props) {
       getAllProfileInDb();
    }, [id, searchFormData, page]);
 
+   const { RangePicker } = DatePicker;
    //NOTIFICATION
-   const openNotificationWithIcon = (type) => {
-      notification[type]({
-         message: 'Update successful',
-         duration: 2,
-      });
-   };
+   // const openNotificationWithIcon = (type) => {
+   //    notification[type]({
+   //       message: 'Update successful',
+   //       duration: 2,
+   //    });
+   // };
 
    const handleChangeSearchFormData = (formData) => {
       setSearchFormData(formData);
@@ -79,9 +94,11 @@ function ProfilesPage(props) {
             break;
          case 'TEST':
             status = 'PROCESSING';
+            await handleInviteTest(id);
             break;
          case 'INTERVIEW':
             status = 'PROCESSING';
+            await handleInviteInterview(id);
             break;
          case 'CONFIRM':
             status = 'PROCESSING';
@@ -91,6 +108,7 @@ function ProfilesPage(props) {
             break;
          case 'EMPLOYEE':
             status = 'APPROVE';
+            modalAccept(id);
             break;
       }
       const index = profiles.findIndex((item) => item.id === id);
@@ -104,7 +122,7 @@ function ProfilesPage(props) {
          step: step,
          status: status,
       });
-      return openNotificationWithIcon('success');
+      // return openNotificationWithIcon('success');
    };
 
    const handleSingleRow = (status, data) => {
@@ -139,10 +157,12 @@ function ProfilesPage(props) {
          case 'NEW':
             stepUpdated = 'TEST';
             statusUpdated = 'PROCESSING';
+            await handleInviteTest(id);
             break;
          case 'TEST':
             stepUpdated = 'INTERVIEW';
             statusUpdated = 'PROCESSING';
+            await handleInviteInterview(id);
             break;
          case 'INTERVIEW':
             stepUpdated = 'CONFIRM';
@@ -155,6 +175,7 @@ function ProfilesPage(props) {
          case 'CONSIDER':
             stepUpdated = 'EMPLOYEE';
             statusUpdated = 'APPROVE';
+            modalAccept(id);
             break;
          case 'EMPLOYEE':
             stepUpdated = 'NULL';
@@ -172,11 +193,23 @@ function ProfilesPage(props) {
          status: statusUpdated,
          step: stepUpdated,
       });
-      return openNotificationWithIcon('success');
+      // return openNotificationWithIcon('success');
    };
 
    const handleReject = async (id) => {
       const index = profiles.findIndex((item) => item.id === id);
+      const currentStep = profiles[index].step;
+      switch (currentStep) {
+         case 'NEW':
+            await handleRejectCv(id);
+            break;
+         case 'TEST':
+            await handleRejectAfterTest(id);
+            break;
+         case 'INTERVIEW':
+            await handleRejectAfterTest(id);
+            break;
+      }
       setProfiles((pre) => {
          pre[index].status = 'REJECT';
          return [...pre];
@@ -186,33 +219,70 @@ function ProfilesPage(props) {
          status: 'REJECT',
          step: profiles[index].step,
       });
-      return openNotificationWithIcon('success');
+      // return openNotificationWithIcon('success');
    };
 
-   const handleInviteTest = async () => {
-      const inviteTest = await emailApi.inviteTest();
+   console.log(profiles);
+   const handleInviteTest = async (id) => {
+      const candidate = profiles.find((item) => item.id === id);
+      const inviteTest = await emailApi.inviteTest({
+         candidateName: `${candidate.last_name} ${candidate.first_name}`,
+         position: position.find((item) => item.id === candidate.position_id)
+            .name,
+         to: candidate.email,
+      });
       return message.success('Mail has sent successfully');
    };
 
-   const handleInviteInterview = async () => {
-      const inviteInterview = await emailApi.inviteInterview();
+   const handleInviteInterview = async (id) => {
+      const candidate = profiles.find((item) => item.id === id);
+      const inviteInterview = await emailApi.inviteInterview({
+         candidateName: `${candidate.last_name} ${candidate.first_name}`,
+         position: position.find((item) => item.id === candidate.position_id)
+            .name,
+         to: candidate.email,
+      });
       return message.success('Mail has sent successfully');
    };
 
-   const handleAcceptCv = async () => {
-      const acceptCv = await emailApi.acceptCv();
+   const handleAcceptCv = async (id) => {
+      const candidate = profiles.find((item) => item.id === id);
+      const acceptCv = await emailApi.acceptCv({
+         candidateName: `${candidate.last_name} ${candidate.first_name}`,
+         to: candidate.email,
+         start_date: acceptTime[0].format('YYYY-MM-DD HH:mm'),
+         end_date: acceptTime[1].format('YYYY-MM-DD HH:mm'),
+         position: position.find((item) => item.id === candidate.position_id)
+            .name,
+      });
       return message.success('Mail has sent successfully');
    };
 
-   const handleRejectCv = async () => {
-      const rejectCv = await emailApi.rejectCv();
+   const handleRejectCv = async (id) => {
+      const candidate = profiles.find((item) => item.id === id);
+      const rejectCv = await emailApi.rejectCv({
+         candidateName: `${candidate.last_name} ${candidate.first_name}`,
+         to: candidate.email,
+      });
       return message.success('Reject mail has sent successfully');
    };
 
-   const handleRejectAfterTest = async () => {
-      const rejectAfterTest = await emailApi.rejectAfterTest();
+   const handleRejectAfterTest = async (id) => {
+      const candidate = profiles.find((item) => item.id === id);
+      const rejectAfterTest = await emailApi.rejectAfterTest({
+         candidateName: `${candidate.last_name} ${candidate.first_name}`,
+         to: candidate.email,
+      });
       return message.success('Reject mail has sent successfully');
    };
+
+   //Handle modal
+   const modalAccept = (id) => {
+      setTargetId(id);
+      setIsModalVisible(true);
+   };
+
+   console.log(campaign);
 
    return (
       <div className='profiles-container'>
@@ -220,7 +290,6 @@ function ProfilesPage(props) {
          <TableProfile
             profiles={profiles}
             step={step}
-            // status={status}
             editProfile={editProfile}
             handleSingleRow={handleSingleRow}
             handleMultiRow={handleMultiRow}
@@ -241,7 +310,31 @@ function ProfilesPage(props) {
             selected={selected}
             handleChangeSearchFormData={handleChangeSearchFormData}
             campaignId={id}
+            campaign={campaign}
          />
+         <Modal
+            title='Time'
+            visible={isModalVisible}
+            onOk={() => {
+               setIsModalVisible(false);
+               handleAcceptCv(targetId);
+            }}
+         >
+            {/* <DatePicker
+               showTime
+               onChange={(value) => {
+                  setInterViewTime(value);
+               }}
+            /> */}
+            <RangePicker
+               showTime={{ format: 'HH:mm' }}
+               format='YYYY-MM-DD HH:mm'
+               onChange={(value) => {
+                  setAcceptTime(value);
+               }}
+               // onOk={onOk}
+            />
+         </Modal>
       </div>
    );
 }

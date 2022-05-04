@@ -8,12 +8,13 @@ SearchProfiles.propTypes = {
    selected: PropTypes.array,
    handleChangeSearchFormData: PropTypes.func,
    campaignId: PropTypes.string,
+   campaign: PropTypes.object,
 };
 
 const { Option } = Select;
 
 function SearchProfiles(props) {
-   const { selected, handleChangeSearchFormData, campaignId } = props;
+   const { selected, handleChangeSearchFormData, campaignId, campaign } = props;
 
    const initialValues = {
       first_name: '',
@@ -76,6 +77,7 @@ function SearchProfiles(props) {
             <ExportExcel
                className='search__export'
                data={selected}
+               campaign={campaign}
                fileName='Profiles'
             />
          </div>

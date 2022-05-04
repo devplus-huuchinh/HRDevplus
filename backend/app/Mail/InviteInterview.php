@@ -33,7 +33,6 @@ class InviteInterview extends Mailable
             ->with([
                 'position' => $this->mailData['position'],
                 'candidate_name' => $this->mailData['candidateName'],
-                'at' => $this->mailData['at'],
             ]);
     }
 }

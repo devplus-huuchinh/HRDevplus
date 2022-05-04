@@ -28,8 +28,7 @@
       <p>
          DATE & TIME:
       <ul>
-         <li>At {{ $at }} (Offline)</li>
-         <li>Please click the link below and select 1 available time (Online)
+         <li>Please click the link below and select 1 available time
             (https://calendly.com/stunited/interview)</li>
       </ul>
       </p>
