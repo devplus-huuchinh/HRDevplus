@@ -36,10 +36,13 @@ class ProfileController extends Controller
     public function dropdownlistData()
     {
         try {
-            return response()->json([
-                'status' => ProfileStatus::getKeys(),
-                'step' => ProfileStep::getKeys(),
-            ]);
+            $key = ProfileStep::getKeys();
+            $value = ProfileStep::getValues();
+            $status = [];
+            for ($index = 0; $index < count($key); $index++) {
+                array_push($status, ["key" => $key[$index], "value" => $value[$index]]);
+            }
+            return response()->json($status);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'get_dropdownlist',
@@ -51,11 +54,8 @@ class ProfileController extends Controller
     public function editProfile(request $request)
     {
         try {
-            $test = $this->ProfileService->editProfileSer($request);
-            return response()->json($test);
-            // return response()->json([
-            //     'message' => 'edit_success',
-            // ], 200);
+            $updated = $this->ProfileRepo->edit($request->id, $request->step, $request->status);
+            return response()->json($updated);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'edit_profile_error',

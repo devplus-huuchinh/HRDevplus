@@ -11,10 +11,10 @@ use BenSampo\Enum\Enum;
  */
 final class ProfileStep extends Enum
 {
-    const NEWS = "NEWS";
-    const TEST =   "TEST";
-    const INTERVIEW = "INTERVIEW";
-    const CONFIRM = "CONFIRM";
-    const CONSIDER = "CONSIDER";
-    const EMPLOYEE =   "EMPLOYEE";
+    const key1 = "NEW";
+    const key2 = "TEST";
+    const key3 = "INTERVIEW";
+    const key4 = "CONFIRM";
+    const key5 = "CONSIDER";
+    const key6 = "EMPLOYEE";
 }
