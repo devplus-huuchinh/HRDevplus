@@ -1,42 +1,111 @@
-import { LinkOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { ContactsOutlined, UserOutlined } from '@ant-design/icons';
+import { Col, Row, Space, Tag, Typography } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
 import './profileDetail.scss';
 
-ProfileDetail.propTypes = {};
+ProfileDetail.propTypes = {
+   data: PropTypes.object,
+};
+const { Text, Title } = Typography;
 function ProfileDetail(props) {
+   const { data } = props;
+
    return (
-      <div className='profileDetail-container'>
-         <p className='profileDetail__name'>sexy meoww</p>
-         <p className='profileDetail__title'>Contact</p>
-         <div className='profileDetail__content-wrapper'>
-            <p className='profileDetail__label'>Email:</p>
-            <p className='profileDetail__info'>sexymeoww@gmail.com</p>
-         </div>
-         <div className='profileDetail__content-wrapper'>
-            <p className='profileDetail__label'>Phone Number:</p>
-            <p className='profileDetail__info'>5226324568</p>
-         </div>
-         <p className='profileDetail__title'>Advanced skill</p>
-         <div className='profileDetail__content-wrapper'>
-            <p className='profileDetail__label'>Technique:</p>
-            <p className='profileDetail__info'>React</p>
-         </div>
-         <div className='profileDetail__content-wrapper'>
-            <p className='profileDetail__label'>Position:</p>
-            <p className='profileDetail__info'>Project manager</p>
-         </div>
-         <p className='profileDetail__title'>Curriculum vitae</p>
-         <div className='profileDetail__Url-wrapper'>
-            <p className='profileDetail__label'>Url: </p>
-            <Button
-               className='profileDetail__btn'
-               type='primary'
-               shape='circle'
-               icon={<LinkOutlined />}
-            />
-         </div>
-      </div>
+      <Row gutter={[20, 20]}>
+         <Col xs={24} sm={24} md={12} lg={12}>
+            <Title level={5}>
+               <Space
+                  size={'small'}
+                  style={{
+                     padding: '10px 5px',
+                     display: 'flex',
+                     borderBottom: '1px solid #ccc',
+                  }}
+               >
+                  <ContactsOutlined />
+                  Contact
+               </Space>
+            </Title>
+            <Space
+               direction='vertical'
+               size='middle'
+               style={{ display: 'flex' }}
+               wrap
+            >
+               <Space
+                  direction='vertical'
+                  size={'small'}
+                  style={{ display: 'flex' }}
+                  wrap
+               >
+                  <p
+                     className='profileDetail__label'
+                     style={{ fontWeight: ' bold' }}
+                  >
+                     Email:
+                  </p>
+                  <p className='profileDetail__info'>{data.email}</p>
+               </Space>
+               <Space
+                  direction='vertical'
+                  size={'small'}
+                  style={{ display: 'flex' }}
+               >
+                  <p
+                     className='profileDetail__label'
+                     style={{ fontWeight: ' bold' }}
+                  >
+                     Phone Number:
+                  </p>
+                  <p className='profileDetail__info'>{data.phone_numb}</p>
+               </Space>
+            </Space>
+         </Col>
+         <Col xs={24} sm={24} md={12} lg={12}>
+            <Title level={5} style={{}}>
+               <Space
+                  size={'small'}
+                  style={{
+                     padding: '10px 5px',
+                     display: 'flex',
+                     borderBottom: '1px solid #ccc',
+                  }}
+               >
+                  <UserOutlined />
+                  Advanced skill
+               </Space>
+            </Title>
+            <Space
+               direction='vertical'
+               size='middle'
+               style={{ display: 'flex' }}
+            >
+               <Space
+                  direction='vertical'
+                  size={'small'}
+                  style={{ display: 'flex' }}
+               >
+                  <Text style={{ fontWeight: ' bold' }}>Technique</Text>
+                  <p className='profileDetail__info'>
+                     {data.technique?.map((i) => (
+                        <Tag key={i.id}>{i.name}</Tag>
+                     ))}
+                  </p>
+               </Space>
+               <Space
+                  direction='vertical'
+                  size={'small'}
+                  style={{ display: 'flex' }}
+               >
+                  <Text style={{ fontWeight: ' bold' }}>Position</Text>
+                  <p className='profileDetail__info'>
+                     <Tag>{data.position?.name}</Tag>
+                  </p>
+               </Space>
+            </Space>
+         </Col>
+      </Row>
    );
 }
 

@@ -1,7 +1,8 @@
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Spin, Table, Tag } from 'antd';
+import { Button, message, Spin, Switch, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import campaignApi from '../../../../api/campaignApi';
 import positionApi from '../../../../api/positionApi';
 import searchApi from '../../../../api/searchApi';
 import BreadCrumbs from '../../../Home/components/BreadCrumb';
@@ -157,7 +158,7 @@ function ViewCampaign(props) {
          width: '20%',
          render: (tags) => (
             <>
-               <Tag>{tags === 0 ? 'false' : 'true'}</Tag>
+               <Tag>{tags ? 'true' : 'false'}</Tag>
             </>
          ),
       },
@@ -173,7 +174,50 @@ function ViewCampaign(props) {
             </Button>
          ),
       },
+      {
+         title: 'Edit',
+         dataIndex: 'id',
+         render: (record) => (
+            <Button
+               type='primary'
+               onClick={() =>
+                  history.push(`/dashboard/campaign/edit/${record}`)
+               }
+            >
+               Edit
+            </Button>
+         ),
+      },
+      {
+         title: 'Active',
+         // dataIndex: 'id',
+         render: (record) => (
+            <Switch
+               size='small'
+               checked={record.is_active}
+               onChange={(value) => {
+                  handleActive(value, record.id);
+               }}
+            />
+         ),
+      },
    ];
+
+   const handleActive = async (isActive, id) => {
+      const index = data.data.findIndex((item) => item.id === id);
+      setData((pre) => {
+         pre.data[index].is_active = isActive;
+         return { ...pre };
+      });
+      const updateActiveStatusRes = await campaignApi.editActive({
+         isActive: isActive,
+         id: id,
+      });
+      if (updateActiveStatusRes.message === 'success') {
+         return message.success('Edit active status successfully');
+      }
+      return message.success('Edit active status failed');
+   };
 
    return (
       <div className='view-campaign'>

@@ -75,4 +75,12 @@ class ProfileController extends Controller
         $allProfile = $this->ProfileService->profileStatistics($request->all());
         return response()->json($allProfile);
     }
+
+    public function detail(Request $request)
+    {
+
+        $intId =  intval($request['id']);
+        $profile = $this->ProfileRepo->getDetail($intId);
+        return response()->json($profile);
+    }
 }

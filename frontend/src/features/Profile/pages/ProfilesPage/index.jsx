@@ -1,4 +1,4 @@
-import { notification, Pagination, Space } from 'antd';
+import { notification, Pagination, Space, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import profileApi from '../../../../api/profileApi';
@@ -6,6 +6,7 @@ import searchApi from '../../../../api/searchApi';
 import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
+import emailApi from '../../../../api/emailApi';
 import './profilesPage.scss';
 
 function ProfilesPage(props) {
@@ -185,6 +186,31 @@ function ProfilesPage(props) {
          step: profiles[index].step,
       });
       return openNotificationWithIcon('success');
+   };
+
+   const handleInviteTest = async () => {
+      const inviteTest = await emailApi.inviteTest();
+      return message.success('Mail has sent successfully');
+   };
+
+   const handleInviteInterview = async () => {
+      const inviteInterview = await emailApi.inviteInterview();
+      return message.success('Mail has sent successfully');
+   };
+
+   const handleAcceptCv = async () => {
+      const acceptCv = await emailApi.acceptCv();
+      return message.success('Mail has sent successfully');
+   };
+
+   const handleRejectCv = async () => {
+      const rejectCv = await emailApi.rejectCv();
+      return message.success('Reject mail has sent successfully');
+   };
+
+   const handleRejectAfterTest = async () => {
+      const rejectAfterTest = await emailApi.rejectAfterTest();
+      return message.success('Reject mail has sent successfully');
    };
 
    return (

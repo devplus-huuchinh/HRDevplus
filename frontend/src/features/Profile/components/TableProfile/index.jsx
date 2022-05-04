@@ -104,7 +104,11 @@ function TableProfile(props) {
          render: (record) => (
             <div>
                <Button
-                  disabled={record.step === 'EMPLOYEE' ? true : false}
+                  disabled={
+                     record.step === 'EMPLOYEE' || record.status === 'REJECT'
+                        ? true
+                        : false
+                  }
                   type='primary'
                   style={{ backgroundColor: 'green', marginRight: '10px' }}
                   onClick={() => handleNextStep(record.id, record.step)}
@@ -112,6 +116,7 @@ function TableProfile(props) {
                   Accept
                </Button>
                <Button
+                  disabled={record.status === 'REJECT' ? true : false}
                   type='primary'
                   style={{ backgroundColor: 'red' }}
                   onClick={() => handleReject(record.id)}

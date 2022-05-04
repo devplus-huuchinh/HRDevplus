@@ -4,10 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css';
 import QuillEditor from './Editor.style';
 
-Editor.propTypes = {};
-
 function Editor(props) {
-   const { onChange } = props;
+   const { onChange, defaultValue } = props;
 
    const options = {
       theme: 'snow',
@@ -34,7 +32,10 @@ function Editor(props) {
 
    return (
       <QuillEditor>
-         <ReactQuill {...options} />
+         <ReactQuill
+            {...options}
+            defaultValue={defaultValue ? defaultValue : ''}
+         />
       </QuillEditor>
    );
 }

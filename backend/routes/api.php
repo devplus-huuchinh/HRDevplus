@@ -101,18 +101,15 @@ Route::prefix('/v1/profiles')->group(
     }
 );
 
-Route::prefix('/v1/profile')->group(
-    function () {
-        Route::controller(ProfileController::class)->group(
-            function () {
-                // Route::patch('/reject', 'rejectProfile');
-                Route::post('/create', 'create');
-                Route::get('/statistics', 'statistics');
-                Route::patch('/', 'editProfile');
-            }
-        );
-    }
-);
+Route::prefix('/v1/profile')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::patch('/reject', 'rejectProfile');
+        Route::post('/create', 'create');
+        Route::get('/statistics', 'statistics');
+        Route::get('/detail', 'detail');
+        Route::patch('/', 'editProfile');
+    });
+});
 
 Route::prefix('/v1/technique')->group(
     function () {
@@ -150,20 +147,16 @@ Route::name('api.posts.')->group(
     }
 );
 
-Route::prefix('v1/campaign')->group(
-    function () {
-        Route::middleware(['auth:sanctum'])->group(
-            function () {
-                Route::controller(CampaignController::class)->group(
-                    function () {
-                        Route::get('/droplist', 'getDropList');
-                        Route::get('/statistics', 'statistics');
-                        Route::get('/count', 'count');
-                        Route::get('/', 'index');
-                        Route::post('/', 'newCampaign');
-                    }
-                );
-            }
-        );
-    }
-);
+Route::prefix('v1/campaign')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::controller(CampaignController::class)->group(function () {
+            Route::get('/droplist', 'getDropList');
+            Route::get('/statistics', 'statistics');
+            Route::get('/count', 'count');
+            Route::patch('/edit', 'editInfo');
+            Route::patch('/active', 'editActive');
+            Route::get('/', 'index');
+            Route::post('/', 'newCampaign');
+        });
+    });
+});

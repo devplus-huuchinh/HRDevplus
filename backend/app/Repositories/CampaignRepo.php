@@ -58,4 +58,25 @@ class CampaignRepo extends EloquentRepo
     {
         return $this->model->count();
     }
+
+    public function editInfo($request)
+    {
+        $campaign = $this->model->find($request->id);
+        $campaign->name = $request->name;
+        $campaign->address = $request->address;
+        $campaign->start_date = $request->start_date;
+        $campaign->end_date = $request->end_date;
+        $campaign->quantity = $request->quantity;
+        $campaign->description = $request->description;
+        $campaign->save();
+        return $campaign;
+    }
+
+    public function editActive($id, $isActive)
+    {
+        $campaign = $this->model->find($id);
+        $campaign->is_active = $isActive;
+        $campaign->save();
+        return $campaign;
+    }
 }

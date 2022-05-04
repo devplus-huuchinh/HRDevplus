@@ -50,6 +50,16 @@ const campaignApi = {
       const url = '/campaign/count';
       return axiosClient.get(url);
    },
+
+   editCampaign: (data) => {
+      const url = '/campaign/edit';
+      return axiosClient.patch(url, data);
+   },
+
+   editActive: (data) => {
+      const url = '/campaign/active';
+      return axiosClient.patch(url, data);
+   },
 };
 
 export default campaignApi;

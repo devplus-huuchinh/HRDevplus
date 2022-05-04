@@ -18,5 +18,10 @@ const profileApi = {
       const url = '/profile/statistics';
       return axiosClient.get(url, { params });
    },
+
+   profileDetail: (params) => {
+      const url = '/profile/detail';
+      return axiosClient.get(url, { params });
+   },
 };
 export default profileApi;

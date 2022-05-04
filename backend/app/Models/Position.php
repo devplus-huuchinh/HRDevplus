@@ -21,6 +21,6 @@ class Position extends Model
     }
     public function profile_campaign()
     {
-        return $this->hasMany(Position_campaign::class);
+        return $this->hasMany(position_campaign::class);
     }
 }
