@@ -116,7 +116,11 @@ function TableProfile(props) {
                   Accept
                </Button>
                <Button
-                  disabled={record.status === 'REJECT' ? true : false}
+                  disabled={
+                     record.status === 'REJECT' || record.step === 'EMPLOYEE'
+                        ? true
+                        : false
+                  }
                   type='ghost'
                   onClick={() => handleReject(record.id)}
                >
