@@ -8,17 +8,20 @@ import PropTypes from 'prop-types';
 BreadCrumbs.propTypes = {
    campaignName: PropTypes.string,
    profileName: PropTypes.string,
+   campaignEdit: PropTypes.string,
 };
 
 BreadCrumbs.defaultProps = {
    campaignName: '',
    profileName: '',
+   campaignEdit: '',
 };
 
 function BreadCrumbs(props) {
-   const { campaignName, profileName } = props;
+   const { campaignName, profileName, campaignEdit } = props;
    const DynamicCampaignBreadcrumb = () => <span>{campaignName}</span>;
    const DynamicProfileBreadcrumb = () => <span>{profileName}</span>;
+   const DynamicEditProfileBreadcrumb = () => <span>{campaignEdit}</span>;
 
    const routes = [
       {
@@ -28,6 +31,10 @@ function BreadCrumbs(props) {
       {
          path: '/dashboard/profile/:profileId',
          breadcrumb: DynamicProfileBreadcrumb,
+      },
+      {
+         path: '/dashboard/campaign/edit/:campaignId',
+         breadcrumb: DynamicEditProfileBreadcrumb,
       },
    ];
 

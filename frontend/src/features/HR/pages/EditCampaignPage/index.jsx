@@ -1,31 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { Layout, message, Spin, Typography } from 'antd';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import campaignApi from '../../../../api/campaignApi';
 import Breadcrumbs from '../../../Home/components/BreadCrumb';
-import {
-   Button,
-   Col,
-   DatePicker,
-   Form,
-   Input,
-   InputNumber,
-   Layout,
-   message,
-   Row,
-   Select,
-   Space,
-   Spin,
-   Tag,
-   Typography,
-   Upload,
-} from 'antd';
 import { Section } from '../../../Home/components/Section/Section.styles';
 import CampaignForm from '../../components/CampaignForm';
-import moment from 'moment';
 
 const { Title } = Typography;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 function EditCampaignPage(props) {
    const { id } = useParams();
@@ -86,18 +68,18 @@ function EditCampaignPage(props) {
       const response = await campaignApi.editCampaign(newData);
       console.log('NEWONE', response);
       setLoading(false);
-      if (response === true) {
-         message.success('Create successfully');
+      if (Object.keys(response).length > 0) {
+         message.success('Edit successfully');
          return history.goBack();
       }
 
-      message.error('Create failed');
+      message.error('Edit failed');
    };
 
    return (
       <>
          <div className='create__breadcrumb'>
-            <Breadcrumbs />
+            <Breadcrumbs campaignEdit={campaignDetail?.name || 'Loading...'} />
          </div>
          <Section style={{ padding: '30px 20px' }}>
             <Spin spinning={loading}>

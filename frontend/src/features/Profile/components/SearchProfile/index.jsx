@@ -1,5 +1,5 @@
-import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import ExportExcel from '../ExportExcel/index';
@@ -9,12 +9,13 @@ SearchProfiles.propTypes = {
    selected: PropTypes.array,
    handleChangeSearchFormData: PropTypes.func,
    campaignId: PropTypes.string,
+   campaign: PropTypes.object,
 };
 
 const { Option } = Select;
 
 function SearchProfiles(props) {
-   const { selected, handleChangeSearchFormData, campaignId } = props;
+   const { selected, handleChangeSearchFormData, campaign } = props;
 
    const initialValues = {
       first_name: '',
@@ -138,6 +139,7 @@ function SearchProfiles(props) {
                <ExportExcel
                   className='search__export'
                   data={selected}
+                  campaign={campaign}
                   fileName='Profiles'
                />
             </div>
