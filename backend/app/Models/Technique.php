@@ -17,7 +17,7 @@ class Technique extends Model
 
     public function profile_technique()
     {
-        return $this->hasMany(Profile_technique::class);
+        return $this->hasMany(profile_technique::class);
     }
 
     public function campaign_technique()

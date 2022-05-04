@@ -7,20 +7,27 @@ import PropTypes from 'prop-types';
 
 BreadCrumbs.propTypes = {
    campaignName: PropTypes.string,
+   profileName: PropTypes.string,
 };
 
 BreadCrumbs.defaultProps = {
    campaignName: '',
+   profileName: '',
 };
 
 function BreadCrumbs(props) {
-   const { campaignName } = props;
+   const { campaignName, profileName } = props;
    const DynamicCampaignBreadcrumb = () => <span>{campaignName}</span>;
+   const DynamicProfileBreadcrumb = () => <span>{profileName}</span>;
 
    const routes = [
       {
          path: '/campaign/:campaignId',
          breadcrumb: DynamicCampaignBreadcrumb,
+      },
+      {
+         path: '/dashboard/profile/:profileId',
+         breadcrumb: DynamicProfileBreadcrumb,
       },
    ];
 

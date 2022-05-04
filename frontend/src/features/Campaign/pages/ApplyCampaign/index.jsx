@@ -1,6 +1,6 @@
 import { message, Spin, Typography } from 'antd';
 import parse from 'html-react-parser';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
    useHistory,
    useLocation,
@@ -26,8 +26,6 @@ function ApplyCampaign(props) {
    const { campaignDetail } = location.state;
 
    const [formLoading, setFormLoading] = useState(false);
-   const [isSticky, setSticky] = useState(false);
-   const ref = useRef(null);
 
    const [avatar, setAvatar] = useState({
       loading: false,
@@ -105,19 +103,6 @@ function ApplyCampaign(props) {
       });
    };
 
-   const handleScroll = () => {
-      if (ref.current) {
-         setSticky(ref.current.getBoundingClientRect().top <= 20);
-      }
-   };
-
-   useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-         window.removeEventListener('scroll', handleScroll);
-      };
-   }, []);
-
    return (
       <>
          <MainLayout>
@@ -139,14 +124,7 @@ function ApplyCampaign(props) {
                      </Paragraph>
                   </div>
                </div>
-               <div
-                  className={`apply__campaign--col-apply sticky-wrapper${
-                     isSticky
-                        ? ' apply__campaign--col-apply sticky'
-                        : ' apply__campaign--col-apply '
-                  }`}
-                  ref={ref}
-               >
+               <div className='apply__campaign--col-apply'>
                   <Spin spinning={formLoading}>
                      <ApplyForm
                         handleApplyCampaign={handleApplyCampaign}
