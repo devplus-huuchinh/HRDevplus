@@ -158,7 +158,7 @@ function ViewCampaign(props) {
          width: '20%',
          render: (tags) => (
             <>
-               <Tag>{tags === 0 ? 'false' : 'true'}</Tag>
+               <Tag>{tags ? 'true' : 'false'}</Tag>
             </>
          ),
       },
