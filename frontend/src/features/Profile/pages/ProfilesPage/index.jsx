@@ -1,8 +1,9 @@
-import { notification, Pagination, Space, Typography } from 'antd';
+import { notification, Pagination, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import profileApi from '../../../../api/profileApi';
 import searchApi from '../../../../api/searchApi';
+import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
 import './profilesPage.scss';
@@ -67,8 +68,6 @@ function ProfilesPage(props) {
    const handleChangePage = (value) => {
       setPage(value);
    };
-
-   const { Title } = Typography;
 
    const editProfile = async (id, step) => {
       let status;
@@ -190,32 +189,38 @@ function ProfilesPage(props) {
 
    return (
       <div className='profiles-container'>
-         <Title>{campaign.name}</Title>
-         <TableProfile
-            profiles={profiles}
-            step={step}
-            // status={status}
-            editProfile={editProfile}
-            handleSingleRow={handleSingleRow}
-            handleMultiRow={handleMultiRow}
-            selected={selected}
-            tableLoading={tableLoading}
-            handleNextStep={handleNextStep}
-            handleReject={handleReject}
-         />
-         {Object.keys(pagination).length > 0 && (
-            <Pagination
-               current={page}
-               total={pagination?.total}
-               pageSize={pagination?.per_page}
-               onChange={handleChangePage}
+         <Space
+            direction='vertical'
+            size={'middle'}
+            style={{ display: 'flex' }}
+         >
+            <BreadCrumbs profileName={campaign.name} />
+            <SearchProfiles
+               selected={selected}
+               handleChangeSearchFormData={handleChangeSearchFormData}
+               campaignId={id}
             />
-         )}
-         <SearchProfiles
-            selected={selected}
-            handleChangeSearchFormData={handleChangeSearchFormData}
-            campaignId={id}
-         />
+            <TableProfile
+               profiles={profiles}
+               step={step}
+               // status={status}
+               editProfile={editProfile}
+               handleSingleRow={handleSingleRow}
+               handleMultiRow={handleMultiRow}
+               selected={selected}
+               tableLoading={tableLoading}
+               handleNextStep={handleNextStep}
+               handleReject={handleReject}
+            />
+            {Object.keys(pagination).length > 0 && (
+               <Pagination
+                  current={page}
+                  total={pagination?.total}
+                  pageSize={pagination?.per_page}
+                  onChange={handleChangePage}
+               />
+            )}
+         </Space>
       </div>
    );
 }

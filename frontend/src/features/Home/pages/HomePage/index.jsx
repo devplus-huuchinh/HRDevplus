@@ -79,7 +79,7 @@ function HomePage(props) {
                            className='campaign-title'
                         >
                            <CaretRightOutlined />
-                           Our Campaigns
+                           Recruitment
                         </Title>
                      </Col>
                   </Row>
