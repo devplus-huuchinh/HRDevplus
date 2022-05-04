@@ -2,22 +2,22 @@ import { SettingOutlined } from '@ant-design/icons';
 import {
    Button,
    Col,
+   DatePicker,
    Image,
+   message,
+   Modal,
    Row,
    Select,
    Space,
    Spin,
    Typography,
-   message,
-   DatePicker,
-   Modal,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import emailApi from '../../../../api/emailApi';
 import profileApi from '../../../../api/profileApi';
 import ProfileDetail from '../../components/ProfileDetail';
 import './profileDetailPage.scss';
-import emailApi from '../../../../api/emailApi';
 
 // ProfileDetailPage.propTypes = {};
 const { Option } = Select;
@@ -37,7 +37,6 @@ function ProfileDetailPage(props) {
             const profileDetailRes = await profileApi.profileDetail({ id: id });
             const dropProfile = await profileApi.dropdownData();
             setStep(dropProfile);
-            console.log(profileDetailRes);
             setLoading(false);
             setData(profileDetailRes);
          } catch (error) {
@@ -73,13 +72,16 @@ function ProfileDetailPage(props) {
             status = 'APPROVE';
             modalAccept();
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
       setData({
          ...data,
          step: step,
          status: status,
       });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          step: step,
          status: status,
@@ -90,7 +92,7 @@ function ProfileDetailPage(props) {
    //email
    const handleInviteTest = async (id) => {
       // const candidate = profiles.find((item) => item.id === id);
-      const inviteTest = await emailApi.inviteTest({
+      await emailApi.inviteTest({
          candidateName: `${data.last_name} ${data.first_name}`,
          position: data.position.name,
          to: data.email,
@@ -100,7 +102,7 @@ function ProfileDetailPage(props) {
 
    const handleInviteInterview = async (id) => {
       // const candidate = profiles.find((item) => item.id === id);
-      const inviteInterview = await emailApi.inviteInterview({
+      await emailApi.inviteInterview({
          candidateName: `${data.last_name} ${data.first_name}`,
          position: data.position.name,
          to: data.email,
@@ -110,7 +112,7 @@ function ProfileDetailPage(props) {
 
    const handleAcceptCv = async () => {
       // const candidate = profiles.find((item) => item.id === id);
-      const acceptCv = await emailApi.acceptCv({
+      await emailApi.acceptCv({
          candidateName: `${data.last_name} ${data.first_name}`,
          to: data.email,
          start_date: acceptTime[0].format('YYYY-MM-DD HH:mm'),
@@ -122,7 +124,7 @@ function ProfileDetailPage(props) {
 
    const handleRejectCv = async (id) => {
       // const candidate = profiles.find((item) => item.id === id);
-      const rejectCv = await emailApi.rejectCv({
+      await emailApi.rejectCv({
          candidateName: `${data.last_name} ${data.first_name}`,
          to: data.email,
       });
@@ -131,7 +133,7 @@ function ProfileDetailPage(props) {
 
    const handleRejectAfterTest = async (id) => {
       // const candidate = profiles.find((item) => item.id === id);
-      const rejectAfterTest = await emailApi.rejectAfterTest({
+      await emailApi.rejectAfterTest({
          candidateName: `${data.last_name} ${data.first_name}`,
          to: data.email,
       });
@@ -169,6 +171,9 @@ function ProfileDetailPage(props) {
             stepUpdated = 'NULL';
             statusUpdated = 'APPROVE';
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
 
       // const index = profiles.findIndex((item) => item.id === id);
@@ -182,7 +187,7 @@ function ProfileDetailPage(props) {
          step: stepUpdated,
          status: statusUpdated,
       });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          status: statusUpdated,
          step: stepUpdated,
@@ -203,6 +208,9 @@ function ProfileDetailPage(props) {
          case 'INTERVIEW':
             await handleRejectAfterTest(id);
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
       setData({
          ...data,
@@ -213,7 +221,7 @@ function ProfileDetailPage(props) {
       //    // pre[index].status = 'REJECT';
       //    return [...pre];
       // });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          status: 'REJECT',
          step: data.step,

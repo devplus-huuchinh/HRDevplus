@@ -1,21 +1,14 @@
-import {
-   notification,
-   Pagination,
-   Space,
-   message,
-   DatePicker,
-   Modal,
-} from 'antd';
+import { DatePicker, message, Modal, Pagination, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import emailApi from '../../../../api/emailApi';
+import positionApi from '../../../../api/positionApi';
 import profileApi from '../../../../api/profileApi';
 import searchApi from '../../../../api/searchApi';
 import BreadCrumbs from '../../../Home/components/BreadCrumb';
 import SearchProfiles from '../../components/SearchProfile';
 import TableProfile from '../../components/TableProfile';
-import emailApi from '../../../../api/emailApi';
 import './profilesPage.scss';
-import positionApi from '../../../../api/positionApi';
 
 function ProfilesPage(props) {
    //PARAM
@@ -29,7 +22,6 @@ function ProfilesPage(props) {
    const [tableLoading, setTableLoading] = useState(true);
    const [campaign, setCampaign] = useState({});
    const [pagination, setPagination] = useState({});
-   console.log('🚀 ~ pagination', pagination);
    const [page, setPage] = useState(1);
    const [position, setPosition] = useState([]);
    const [isModalVisible, setIsModalVisible] = useState(false);
@@ -108,6 +100,9 @@ function ProfilesPage(props) {
             status = 'APPROVE';
             modalAccept(id);
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
       const index = profiles.findIndex((item) => item.id === id);
       setProfiles((pre) => {
@@ -115,7 +110,7 @@ function ProfilesPage(props) {
          pre[index].step = step;
          return [...pre];
       });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          step: step,
          status: status,
@@ -179,6 +174,9 @@ function ProfilesPage(props) {
             stepUpdated = 'NULL';
             statusUpdated = 'APPROVE';
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
       const index = profiles.findIndex((item) => item.id === id);
       setProfiles((pre) => {
@@ -186,7 +184,7 @@ function ProfilesPage(props) {
          pre[index].step = stepUpdated;
          return [...pre];
       });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          status: statusUpdated,
          step: stepUpdated,
@@ -207,12 +205,15 @@ function ProfilesPage(props) {
          case 'INTERVIEW':
             await handleRejectAfterTest(id);
             break;
+         default:
+            message.error('Something went wrong');
+            break;
       }
       setProfiles((pre) => {
          pre[index].status = 'REJECT';
          return [...pre];
       });
-      const UpdateRes = await profileApi.editStep({
+      await profileApi.editStep({
          id: id,
          status: 'REJECT',
          step: profiles[index].step,
@@ -220,10 +221,9 @@ function ProfilesPage(props) {
       // return openNotificationWithIcon('success');
    };
 
-   console.log(profiles);
    const handleInviteTest = async (id) => {
       const candidate = profiles.find((item) => item.id === id);
-      const inviteTest = await emailApi.inviteTest({
+      await emailApi.inviteTest({
          candidateName: `${candidate.last_name} ${candidate.first_name}`,
          position: position.find((item) => item.id === candidate.position_id)
             .name,
@@ -234,7 +234,7 @@ function ProfilesPage(props) {
 
    const handleInviteInterview = async (id) => {
       const candidate = profiles.find((item) => item.id === id);
-      const inviteInterview = await emailApi.inviteInterview({
+      await emailApi.inviteInterview({
          candidateName: `${candidate.last_name} ${candidate.first_name}`,
          position: position.find((item) => item.id === candidate.position_id)
             .name,
@@ -245,7 +245,7 @@ function ProfilesPage(props) {
 
    const handleAcceptCv = async (id) => {
       const candidate = profiles.find((item) => item.id === id);
-      const acceptCv = await emailApi.acceptCv({
+      await emailApi.acceptCv({
          candidateName: `${candidate.last_name} ${candidate.first_name}`,
          to: candidate.email,
          start_date: acceptTime[0].format('YYYY-MM-DD HH:mm'),
@@ -258,7 +258,7 @@ function ProfilesPage(props) {
 
    const handleRejectCv = async (id) => {
       const candidate = profiles.find((item) => item.id === id);
-      const rejectCv = await emailApi.rejectCv({
+      await emailApi.rejectCv({
          candidateName: `${candidate.last_name} ${candidate.first_name}`,
          to: candidate.email,
       });
@@ -267,7 +267,7 @@ function ProfilesPage(props) {
 
    const handleRejectAfterTest = async (id) => {
       const candidate = profiles.find((item) => item.id === id);
-      const rejectAfterTest = await emailApi.rejectAfterTest({
+      await emailApi.rejectAfterTest({
          candidateName: `${candidate.last_name} ${candidate.first_name}`,
          to: candidate.email,
       });
@@ -279,8 +279,6 @@ function ProfilesPage(props) {
       setTargetId(id);
       setIsModalVisible(true);
    };
-
-   console.log(campaign);
 
    return (
       <div className='profiles-container'>

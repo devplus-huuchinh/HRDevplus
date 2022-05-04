@@ -1,5 +1,5 @@
-import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import ExportExcel from '../ExportExcel/index';
@@ -15,7 +15,7 @@ SearchProfiles.propTypes = {
 const { Option } = Select;
 
 function SearchProfiles(props) {
-   const { selected, handleChangeSearchFormData, campaignId, campaign } = props;
+   const { selected, handleChangeSearchFormData, campaign } = props;
 
    const initialValues = {
       first_name: '',

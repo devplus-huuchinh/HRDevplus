@@ -1,7 +1,7 @@
 import { DownloadOutlined } from '@ant-design/icons';
 import { Button, notification } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CSVLink } from 'react-csv';
 
 ExportExcel.propTypes = {

@@ -1,36 +1,16 @@
-import { PlusOutlined } from '@ant-design/icons';
-import {
-   Button,
-   Col,
-   DatePicker,
-   Form,
-   Input,
-   InputNumber,
-   Layout,
-   message,
-   Row,
-   Select,
-   Space,
-   Spin,
-   Tag,
-   Typography,
-   Upload,
-} from 'antd';
+import { Layout, message, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import campaignApi from '../../../../api/campaignApi';
 import uploadFile from '../../../../firebase/uploadFile';
-import Editor from '../../../../UI/Editor/Editor';
-import { Section } from '../../../Home/components/Section/Section.styles';
 import Breadcrumbs from '../../../Home/components/BreadCrumb';
-import './CreateCampaign.scss';
+import { Section } from '../../../Home/components/Section/Section.styles';
 import CampaignForm from '../../components/CampaignForm';
+import './CreateCampaign.scss';
 
 CreateCampaign.propTypes = {};
 
 const { Title } = Typography;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 function CreateCampaign(props) {
    const history = useHistory();
