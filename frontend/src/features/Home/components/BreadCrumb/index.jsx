@@ -20,8 +20,9 @@ BreadCrumbs.defaultProps = {
 function BreadCrumbs(props) {
    const { campaignName, profileName, campaignEdit } = props;
    const DynamicCampaignBreadcrumb = () => <span>{campaignName}</span>;
-   const DynamicProfileBreadcrumb = () => <span>{profileName}</span>;
+   const DynamicProfileListBreadcrumb = () => <span>{campaignName}</span>;
    const DynamicEditProfileBreadcrumb = () => <span>{campaignEdit}</span>;
+   const DynamicProfileDetailBreadcrumb = () => <span>{profileName}</span>;
 
    const routes = [
       {
@@ -29,12 +30,16 @@ function BreadCrumbs(props) {
          breadcrumb: DynamicCampaignBreadcrumb,
       },
       {
-         path: '/dashboard/profile/:profileId',
-         breadcrumb: DynamicProfileBreadcrumb,
+         path: '/dashboard/campaign/:id',
+         breadcrumb: DynamicProfileListBreadcrumb,
       },
       {
          path: '/dashboard/campaign/edit/:campaignId',
          breadcrumb: DynamicEditProfileBreadcrumb,
+      },
+      {
+         path: '/dashboard/profile/detail/:profileId',
+         breadcrumb: DynamicProfileDetailBreadcrumb,
       },
    ];
 

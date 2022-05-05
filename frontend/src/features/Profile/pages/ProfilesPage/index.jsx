@@ -307,7 +307,7 @@ function ProfilesPage(props) {
             size={'middle'}
             style={{ display: 'flex' }}
          >
-            <BreadCrumbs profileName={campaign.name} />
+            <BreadCrumbs campaignName={campaign.name || 'Loading...'} />
             <SearchProfiles
                selected={selected}
                handleChangeSearchFormData={handleChangeSearchFormData}
