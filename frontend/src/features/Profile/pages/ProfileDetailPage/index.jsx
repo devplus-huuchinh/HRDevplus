@@ -1,4 +1,4 @@
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, LeftOutlined } from '@ant-design/icons';
 import {
    Button,
    Col,
@@ -19,12 +19,14 @@ import emailApi from '../../../../api/emailApi';
 import profileApi from '../../../../api/profileApi';
 import ProfileDetail from '../../components/ProfileDetail';
 import './profileDetailPage.scss';
+import { useHistory } from 'react-router';
 
 // ProfileDetailPage.propTypes = {};
 const { Option } = Select;
 const { Title, Text } = Typography;
 
 function ProfileDetailPage(props) {
+   let history = useHistory();
    const { id } = useParams();
    const [data, setData] = useState({});
    const [step, setStep] = useState([]);
@@ -256,6 +258,12 @@ function ProfileDetailPage(props) {
    return (
       <Spin spinning={loading}>
          <div className='profile-detail-container'>
+            {/* <BreadCrumbs
+               profileName={`${data.first_name || 'Loading...'} ${
+                  data.last_name || ''
+               }`}
+            /> */}
+
             <Space
                direction='vertical'
                size={20}
@@ -263,17 +271,27 @@ function ProfileDetailPage(props) {
                   display: 'flex',
                }}
             >
+               <Button
+                  type='primary'
+                  ghost
+                  icon={<LeftOutlined />}
+                  onClick={() => history.goBack()}
+               >
+                  Back
+               </Button>
                <Row
                   gutter={[30, 16]}
                   style={{
                      background: '#fff',
                      padding: '20px 10px',
                      borderRadius: '6px',
+                     marginLeft: '0 !important',
+                     marginRight: '0 !important',
                   }}
                >
                   <Col xs={24} sm={24} md={6}>
                      <Image
-                        preview={false}
+                        preview={true}
                         className='profile-detail__left-image'
                         src={data.image_url}
                         style={{ borderRadius: '6px' }}
