@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from 'recharts';
+// import {
+//    AreaChart,
+//    Area,
+//    XAxis,
+//    YAxis,
+//    CartesianGrid,
+//    Tooltip,
+// } from 'recharts';
 import ChartWrapper from '../../Charts.styles';
 
 export default class extends Component {
-  render() {
-    const { datas, width, height, colors } = this.props;
-    return (
-      <ChartWrapper className="isoChartWrapper">
-        <AreaChart
+   render() {
+      // const { datas, width, height, colors } = this.props;
+      return (
+         <ChartWrapper className='isoChartWrapper'>
+            {/* <AreaChart
           width={width}
           height={height}
           data={datas}
@@ -45,8 +45,8 @@ export default class extends Component {
             stroke={colors[2]}
             fill={colors[2]}
           />
-        </AreaChart>
-      </ChartWrapper>
-    );
-  }
+        </AreaChart> */}
+         </ChartWrapper>
+      );
+   }
 }

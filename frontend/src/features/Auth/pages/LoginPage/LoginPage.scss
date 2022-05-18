@@ -1,0 +1,57 @@
+.login-page {
+   display: flex;
+   height: 100vh;
+   overflow: hidden;
+
+   .login-page--background {
+      flex: 2;
+      height: 100%;
+
+      .login-page--image {
+         height: 100%;
+         width: 100%;
+         object-fit: cover;
+      }
+   }
+
+   .login-page--title {
+      padding: 0px 120px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1;
+
+      h1 {
+         font-size: 34px;
+         line-height: 1;
+      }
+
+      span {
+         text-transform: uppercase;
+         color: rgb(120, 129, 149);
+         font-weight: 300;
+         font-size: 25px;
+      }
+
+      @media screen and (max-width: 767px) {
+         padding: 0px 30px;
+      }
+   }
+
+   .login-page--form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin-top: 50px;
+   }
+
+   @media screen and (max-width: 767px) {
+      padding: 30px 0px;
+      flex-direction: column;
+
+      .login-page--background {
+         display: none;
+      }
+   }
+}

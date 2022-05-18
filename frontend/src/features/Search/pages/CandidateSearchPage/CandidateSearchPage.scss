@@ -1,0 +1,28 @@
+.candidate-search-page {
+   display: flex;
+   gap: 40px;
+   min-height: 500px;
+
+   .search--filter {
+      flex: 1;
+   }
+
+   .search--result {
+      flex: 8;
+   }
+
+   .search--item {
+      margin-bottom: 20px;
+   }
+
+   .search--pagination {
+      margin-top: 20px;
+      width: 100%;
+      text-align: end;
+   }
+
+   @media screen and (max-width: 1024px) {
+      flex-direction: column;
+      gap: 20px;
+   }
+}

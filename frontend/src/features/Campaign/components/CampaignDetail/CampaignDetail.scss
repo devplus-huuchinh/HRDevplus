@@ -1,0 +1,18 @@
+.sticky {
+   position: sticky;
+   top: 0;
+   z-index: 100;
+   transition: all 0.25s linear;
+}
+.sticky .sticky-inner {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   z-index: 9999;
+   transition: all 0.25s linear;
+}
+.campaign__detail--title {
+   margin-bottom: 0px !important;
+   line-height: 1 !important;
+   flex: 1;
+}

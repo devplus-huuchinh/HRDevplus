@@ -1,0 +1,62 @@
+.login-form {
+   width: 100%;
+   padding: 0px 60px;
+
+   @media screen and (max-width: 767px) {
+      padding: 0px 30px;
+   }
+
+   .login-form--label {
+      // font-size: 13px;
+      font-weight: 400;
+      color: gray;
+   }
+
+   .login-form--inputWrap {
+      padding-top: 10px;
+      .login-form--input {
+         border-radius: 8px;
+         padding: 9px 12px;
+         font-size: 16px;
+
+         &:placeholder-shown {
+            font-size: 14px;
+         }
+      }
+   }
+
+   .login-form--submit {
+      border-radius: 8px;
+      height: 45px;
+      // background: #5959d9;
+      border-color: transparent;
+      font-size: 15px;
+      margin-top: 10px;
+   }
+
+   .login-form--google {
+      border-radius: 8px;
+      height: 45px;
+      border-color: #5959d9;
+      color: #5959d9;
+      font-size: 15px;
+      margin-top: 15px;
+   }
+
+   .login-form--helper {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-weight: 400;
+      color: #5959d9;
+   }
+
+   .login-form--signUp {
+      text-align: center;
+
+      a {
+         font-weight: 700;
+         // color: #5959d9;
+      }
+   }
+}

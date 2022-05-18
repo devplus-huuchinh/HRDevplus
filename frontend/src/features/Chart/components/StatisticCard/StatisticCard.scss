@@ -1,0 +1,37 @@
+.statistic-card {
+   display: flex;
+   color: #fff;
+
+   .card--icon {
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+      background-color: #665ca7;
+      padding: 16px 28px;
+      font-size: 30px;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+         margin-top: 10px;
+      }
+   }
+
+   .card--content {
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+      padding: 16px 28px;
+      justify-content: center;
+      align-items: center;
+      background-color: #7266ba;
+      width: 100%;
+
+      .card--number {
+         font-size: 20px;
+         font-weight: bold;
+      }
+
+      .card--title {
+         font-size: 16px;
+      }
+   }
+}

@@ -1,0 +1,62 @@
+.apply__campaign {
+   display: flex;
+   align-items: flex-start;
+   gap: 20px;
+   margin-top: 30px;
+
+   .apply__campaign--col {
+      width: calc(55% - 20px);
+      scroll-padding-top: 20px;
+      max-height: 710.77px;
+      background-color: #fffefc;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+         width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+         background-color: #f5f5f5;
+      }
+
+      &::-webkit-scrollbar-thumb {
+         background-color: darkgrey;
+         border-radius: 10px;
+      }
+   }
+   .apply__campaign--col-apply {
+      width: 45%;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+   }
+   .apply__campaign--col-apply.sticky {
+      top: 20px;
+   }
+   .apply__description {
+      height: 100%;
+      width: 100%;
+      padding: 30px 20px;
+      border-radius: 10px;
+      text-align: justify;
+   }
+   @media screen and (max-width: 1024px) {
+      flex-direction: column-reverse;
+      .apply__campaign--col {
+         width: 100%;
+      }
+      .apply__campaign--col-apply {
+         width: 100%;
+      }
+      .apply__campaign--col-apply.sticky {
+         position: relative;
+         top: 0;
+      }
+   }
+}
+@media screen and (max-width: 1024px) {
+   .breadcrumb-sticky.sticky {
+      position: relative;
+      top: 0;
+   }
+}

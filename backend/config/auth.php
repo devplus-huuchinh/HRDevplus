@@ -114,4 +114,6 @@ return [
 
     'password_timeout' => 10800,
 
+
+    'client_url' => env('SANCTUM_STATEFUL_DOMAINS'),
 ];

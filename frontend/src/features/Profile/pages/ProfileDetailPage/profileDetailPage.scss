@@ -1,0 +1,15 @@
+.profile-detail-container {
+   padding: 25px;
+   .action__dropdown {
+      .ant-select {
+         width: 100%;
+      }
+   }
+
+   .profile-detail__left-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+   }
+}
